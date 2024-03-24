@@ -14,16 +14,14 @@ export const signIn = createAsyncThunk(
   "user/signIn",
   async (userInfo, thunkAPI) => {
     try {
-      console.log(userInfo);
       //   const response = await signApi.post(
       //     "/auth/signin",
       //     JSON.stringify(userInfo)
       //   );
       const response = await axios.post(
-        "http://localhost:8081/api/v1/auth/signin",
+        "http://10.101.20.11:8081/api/v1/auth/signin",
         userInfo
       );
-      console.log(response.data);
       SecureStore.setItemAsync("bearerToken", response.data.token);
       //   Cookies.set('bearerToken', response.data.token, { expires: 60 });
       return response.data;
@@ -74,8 +72,8 @@ export const signInSlice = createSlice({
     builder
       .addCase(signIn.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.token = SecureStore.getItemAsync("bearerToken");
-        console.log("succeeded");
+        state.token = SecureStore.getItem("bearerToken");
+        // console.log(SecureStore.getItem("bearerToken"));
       })
       .addCase(signIn.pending, (state) => {
         state.status = "pending";

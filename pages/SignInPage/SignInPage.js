@@ -26,23 +26,23 @@ export default function SignInPage({ navigation }) {
   };
 
   const signInHandler = () => {
-    // dispatch(signIn(userInformation));
-    fetch("http://localhost:8081/api/v1/auth/signin", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userInformation),
-    });
+    dispatch(signIn(userInformation));
+    // fetch("http://10.101.20.11:8081/api/v1/auth/signin", {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(userInformation),
+    // });
   };
   // yunusemrepak@windowslive.com
 
-  // useEffect(() => {
-  //   if (token) {
-  //     navigation.navigate("Introduction");
-  //   }
-  // }, [token]);
+  useEffect(() => {
+    if (token) {
+      navigation.navigate("Introduction");
+    }
+  }, [token]);
 
   return (
     <SafeAreaView style={styles.container}>
