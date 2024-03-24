@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-// import stopSlice from '../redux/stopSlice';
+import signInSlice from '../redux/SignIn/signInSlice';
 
 export const store = configureStore({
     reducer: {
-    //   stopRedux: stopSlice,
+      signIn: signInSlice,
     },
   })

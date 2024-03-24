@@ -2,14 +2,18 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
+import { useDispatch } from "react-redux";
+import { signInActions } from "../../redux/SignIn/signInSlice";
 
 export default function IntroductionPage({ navigation }) {
+  const dispatch = useDispatch();
+
   const navigateSignIn = () => {
     navigation.navigate("SignIn");
   };
 
-  const navigateSignUp = () => {
-    navigation.navigate("SignUp");
+  const signOut = () => {
+    dispatch(signInActions.signOut());
   };
 
   return (
@@ -19,9 +23,11 @@ export default function IntroductionPage({ navigation }) {
           <Text>Sign In</Text>
         </View>
       </Pressable>
-      <Pressable onPress={navigateSignUp}>
-        <View style={styles.signUpContainer}>
-          <Text>Sign Up</Text>
+      <Pressable onPress={signOut}>
+        <View
+          style={styles.signUpContainer}
+        >
+          <Text>Sign Out</Text>
         </View>
       </Pressable>
     </SafeAreaView>
