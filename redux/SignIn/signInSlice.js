@@ -14,16 +14,15 @@ export const signIn = createAsyncThunk(
   "user/signIn",
   async (userInfo, thunkAPI) => {
     try {
-      //   const response = await signApi.post(
-      //     "/auth/signin",
-      //     JSON.stringify(userInfo)
-      //   );
-      const response = await axios.post(
-        "http://10.101.20.11:8081/api/v1/auth/signin",
-        userInfo
+      const response = await signApi.post(
+        "/auth/signin",
+        JSON.stringify(userInfo)
       );
-      SecureStore.setItemAsync("bearerToken", response.data.token);
-      //   Cookies.set('bearerToken', response.data.token, { expires: 60 });
+      // const response = await axios.post(
+      //   "http://10.101.20.11:8081/api/v1/auth/signin",
+      //   userInfo
+      // );
+      SecureStore.setItem("bearerToken", response.data.token);
       return response.data;
     } catch (error) {
       console.log("catch");
@@ -35,8 +34,8 @@ export const signIn = createAsyncThunk(
 export const signInSlice = createSlice({
   name: "signIn",
   initialState: {
-    // token: getToken(),
-    token: "",
+    token: getToken(),
+    // token: "",
     status: "idle",
     error: null,
     userInformation: {
@@ -45,6 +44,7 @@ export const signInSlice = createSlice({
     },
     isClickedToSignInButton: false,
     eyeIsClicked: false,
+    isLoggedIn: false,
   },
   reducers: {
     setEmail: (state, action) => {
@@ -54,9 +54,9 @@ export const signInSlice = createSlice({
       state.userInformation.password = action.payload;
     },
     signOut: (state) => {
+      SecureStore.deleteItemAsync("bearerToken");
       state.token = null;
       state.status = "idle";
-      SecureStore.deleteItemAsync("bearerToken");
     },
     changeStatus: (state) => {
       state.status = "idle";
@@ -67,13 +67,15 @@ export const signInSlice = createSlice({
     setEyeIsClicked: (state) => {
       state.eyeIsClicked = !state.eyeIsClicked;
     },
+    setIsLoggedIn: (state) => {
+      state.isLoggedIn = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(signIn.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.token = SecureStore.getItem("bearerToken");
-        // console.log(SecureStore.getItem("bearerToken"));
       })
       .addCase(signIn.pending, (state) => {
         state.status = "pending";

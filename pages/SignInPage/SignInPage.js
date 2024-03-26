@@ -9,90 +9,46 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn, signInActions } from "../../redux/SignIn/signInSlice";
 import { useEffect } from "react";
+import SignInForm from "../../components/Forms/SignInForm/SignInForm";
 
 export default function SignInPage({ navigation }) {
   const dispatch = useDispatch();
 
-  const userInformation = useSelector((state) => state.signIn.userInformation);
-  const isEyeClicked = useSelector((state) => state.signIn.eyeIsClicked);
   const token = useSelector((state) => state.signIn.token);
 
   const navigateSignUp = () => {
-    navigation.navigate("SignUp");
+    navigation.navigate("SignUpFirst");
   };
 
-  const setPasswordEye = () => {
-    dispatch(signInActions.setEyeIsClicked());
+  const signOut = () => {
+    navigation.navigate("Introduction");
   };
 
-  const signInHandler = () => {
-    dispatch(signIn(userInformation));
-    // fetch("http://10.101.20.11:8081/api/v1/auth/signin", {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(userInformation),
-    // });
-  };
   // yunusemrepak@windowslive.com
 
   useEffect(() => {
     if (token) {
-      navigation.navigate("Introduction");
+      navigation.navigate("Profile");
     }
   }, [token]);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <View style={styles.logo}>
         <Logo />
       </View>
-      <View style={styles.form}>
-        <View style={styles.inputs}>
-          <TextInput
-            label="Email"
-            // value={email}
-            onChangeText={(text) => dispatch(signInActions.setEmail(text))}
-            mode="outlined"
-            style={styles.email}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-          <TextInput
-            label="Password"
-            // value={email}
-            onChangeText={(text) => dispatch(signInActions.setPassword(text))}
-            mode="outlined"
-            style={styles.password}
-            secureTextEntry={isEyeClicked ? false : true}
-            autoCapitalize="none"
-            right={
-              <TextInput.Icon
-                icon={isEyeClicked ? "eye-off" : "eye"}
-                onPress={setPasswordEye}
-              />
-            }
-          />
-        </View>
-        <Pressable style={styles.forgotPassword}>
-          <View>
-            <Text style={styles.forgotText}>Forgot Password</Text>
-          </View>
+      <SignInForm navigation={navigation} />
+      <View style={styles.newToEFP}>
+        <Text style={styles.efpText}>New to EFP?</Text>
+        <Pressable onPress={navigateSignUp}>
+          <Text style={styles.signUpButton}>Sign Up</Text>
         </Pressable>
-        <Pressable style={styles.signInButton} onPress={signInHandler}>
-          <View>
-            <Text style={styles.signInButtonText}>Sign In</Text>
-          </View>
-        </Pressable>
-        <View style={styles.newToEFP}>
-          <Text style={styles.efpText}>New to EFP?</Text>
-          <Pressable onPress={navigateSignUp}>
-            <Text style={styles.signUpButton}>Sign Up</Text>
-          </Pressable>
-        </View>
       </View>
+      <Pressable onPress={signOut}>
+        <View style={styles.signContainer}>
+          <Text style={styles.text}>Sign Out</Text>
+        </View>
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -104,6 +60,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     paddingTop: DEVICE_HEIGHT / 5,
+  },
+  logo: {
+    marginBottom: DEVICE_HEIGHT / 40,
   },
   form: {
     alignItems: "center",
@@ -155,5 +114,17 @@ const styles = StyleSheet.create({
     color: "blue",
     textDecorationLine: "underline",
     fontSize: DEVICE_WIDTH / 24,
+  },
+
+  signContainer: {
+    marginTop: DEVICE_HEIGHT / 20,
+    backgroundColor: "red",
+    width: DEVICE_WIDTH / 5,
+    height: DEVICE_HEIGHT / 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    color: "white",
   },
 });
