@@ -2,58 +2,40 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import signApi from "../apis/signApi";
 
-// export const signUp = createAsyncThunk(
-//   "user/signup",
-//   async (userInfo, thunkAPI) => {
-//     try {
-//       const response = await signApi.post(
-//         "/auth/signup",
-//         JSON.stringify(userInfo)
-//       );
-//       return response.data;
-//     } catch (error) {
-//       if (!error.response) {
-//         return thunkAPI.rejectWithValue({
-//           message: "No response from server. Please try again later.",
-//         });
-//       }
-//       if (error.response && !error.response.data) {
-//         return thunkAPI.rejectWithValue({
-//           message: "Server error without data.",
-//         });
-//       }
-//       return thunkAPI.rejectWithValue(error.response.data);
-//     }
-//   }
-// );
+export const signUp = createAsyncThunk(
+  "userr/signUpp",
+  async (userInfo, thunkAPI) => {
+    try {
+      const response = await signApi.post(
+        "/auth/signup",
+        JSON.stringify(userInfo)
+      );
+      return response.data;
+    } catch (error) {
+      console.log("catch");
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
-// export const signUpActivate = createAsyncThunk(
-//   "userr/signupactivate",
-//   async (verifyInformation, thunkAPI) => {
-//     try {
-//       const response = await signApi.post(
-//         "/auth/activate",
-//         JSON.stringify(verifyInformation)
-//       );
-//       return response.data;
-//     } catch (error) {
-//       if (!error.response) {
-//         return thunkAPI.rejectWithValue({
-//           message: "No response from server. Please try again later.",
-//         });
-//       }
-//       if (error.response && !error.response.data) {
-//         return thunkAPI.rejectWithValue({
-//           message: "Server error without data.",
-//         });
-//       }
-//       return thunkAPI.rejectWithValue(error.response.data);
-//     }
-//   }
-// );
+export const signUpActivate = createAsyncThunk(
+  "userr/signVerifyy",
+  async (verifyInformation, thunkAPI) => {
+    try {
+      const response = await signApi.post(
+        "/auth/activate",
+        JSON.stringify(verifyInformation)
+      );
+      return response.data;
+    } catch (error) {
+      console.log("catch");
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const signUpSlice = createSlice({
-  name: "signUp",
+  name: "signUpp",
   initialState: {
     signUpStatus: "idle",
     verifyStatus: "idle",
@@ -126,29 +108,31 @@ export const signUpSlice = createSlice({
       state.eyeIsClicked = !state.eyeIsClicked;
     },
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addCase(signUp.fulfilled, (state, action) => {
-  //       state.signUpStatus = "succeeded";
-  //     })
-  //     .addCase(signUp.pending, (state, action) => {
-  //       state.signUpStatus = "pending";
-  //     })
-  //     .addCase(signUp.rejected, (state, action) => {
-  //       state.signUpStatus = "failed";
-  //     })
+  extraReducers: (builder) => {
+    builder
+      .addCase(signUp.fulfilled, (state, action) => {
+        state.signUpStatus = "succeeded";
+        console.log("succeeded");
+      })
+      .addCase(signUp.pending, (state, action) => {
+        state.signUpStatus = "pending";
+      })
+      .addCase(signUp.rejected, (state, action) => {
+        state.signUpStatus = "failed";
+        console.log("failed");
+      })
 
-  //     .addCase(signUpActivate.fulfilled, (state, action) => {
-  //       state.verifyStatus = "succeeded";
-  //       state.isVerifySuccessful = action.payload.isSuccessful;
-  //     })
-  //     .addCase(signUpActivate.pending, (state, action) => {
-  //       state.verifyStatus = "pending";
-  //     })
-  //     .addCase(signUpActivate.rejected, (state, action) => {
-  //       state.verifyStatus = "failed";
-  //     });
-  // },
+      .addCase(signUpActivate.fulfilled, (state, action) => {
+        state.verifyStatus = "succeeded";
+        state.isVerifySuccessful = action.payload.isSuccessful;
+      })
+      .addCase(signUpActivate.pending, (state, action) => {
+        state.verifyStatus = "pending";
+      })
+      .addCase(signUpActivate.rejected, (state, action) => {
+        state.verifyStatus = "failed";
+      });
+  },
 });
 
 export const signUpActions = signUpSlice.actions;

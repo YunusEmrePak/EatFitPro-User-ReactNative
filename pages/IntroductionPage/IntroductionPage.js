@@ -19,10 +19,6 @@ export default function IntroductionPage({ navigation }) {
     navigation.navigate("SignUpFirst");
   };
 
-  const signOut = () => {
-    dispatch(signInActions.signOut());
-  };
-
   useEffect(() => {
     if (token) {
       navigation.navigate("Profile");
@@ -41,18 +37,13 @@ export default function IntroductionPage({ navigation }) {
           <Text style={styles.text}>Sign Up</Text>
         </View>
       </Pressable>
-      <Pressable onPress={signOut}>
-        <View style={styles.signContainer}>
-          <Text style={styles.text}>Sign Out</Text>
-        </View>
-      </Pressable>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: DEVICE_HEIGHT,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",

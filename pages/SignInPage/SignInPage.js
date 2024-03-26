@@ -55,7 +55,7 @@ export default function SignInPage({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: DEVICE_HEIGHT,
     backgroundColor: "white",
     alignItems: "center",
     justifyContent: "flex-start",

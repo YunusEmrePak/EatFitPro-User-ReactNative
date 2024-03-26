@@ -9,6 +9,9 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import SignInPage from "./pages/SignInPage/SignInPage";
 import SignUpFirstPage from "./pages/SignUpPage/SignUpFirstPage";
 import SignUpSecondPage from "./pages/SignUpPage/SignUpSecondPage";
+import SignUpVerifyPage from "./pages/SignUpPage/SignUpVerifyPage";
+import ForgotPasswordFirstPage from "./pages/ForgotPassword/ForgotPasswordFirstPage";
+import ForgotPasswordSecondPage from "./pages/ForgotPassword/ForgotPasswordSecondPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +38,21 @@ const App = () => {
           <Stack.Screen
             name="SignUpSecond"
             component={SignUpSecondPage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SignUpVerify"
+            component={SignUpVerifyPage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ForgotPasswordFirst"
+            component={ForgotPasswordFirstPage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ForgotPasswordSecond"
+            component={ForgotPasswordSecondPage}
             options={{ headerShown: false }}
           />
           <Stack.Screen

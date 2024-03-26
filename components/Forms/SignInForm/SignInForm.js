@@ -21,6 +21,10 @@ export default function SignInForm({ navigation }) {
     dispatch(signInActions.setEyeIsClicked());
   };
 
+  const navigateToForgotPasswordPage = () => {
+    navigation.navigate("ForgotPasswordFirst")
+  };
+
   const signInHandler = () => {
     if (email.trim() !== "" && password.trim() !== "") {
       dispatch(signIn(userInformation));
@@ -70,7 +74,7 @@ export default function SignInForm({ navigation }) {
           }
         />
       </View>
-      <Pressable style={styles.forgotPassword}>
+      <Pressable style={styles.forgotPassword} onPress={navigateToForgotPasswordPage}>
         <View>
           <Text style={styles.forgotText}>Forgot Password</Text>
         </View>

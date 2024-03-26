@@ -33,24 +33,24 @@ export default function SignUpFirstForm({ navigation }) {
   };
 
   const signUpHandler = () => {
-    // if (
-    //   name.trim() !== "" &&
-    //   surname.trim() !== "" &&
-    //   email.trim() !== "" &&
-    //   password.trim() !== ""
-    // ) {
-    navigation.navigate("SignUpSecond");
-    // } else {
-    //     console.log("Information is not full.")
-    //   toast.error("Please fill in all required fields to continue.", {
-    //     position: "bottom-left",
-    //     autoClose: 5000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //   });
-    // }
+    if (
+      name.trim() !== "" &&
+      surname.trim() !== "" &&
+      email.trim() !== "" &&
+      password.trim() !== ""
+    ) {
+      navigation.navigate("SignUpSecond");
+    } else {
+      console.log("Information is not full.");
+      // toast.error("Please fill in all required fields to continue.", {
+      //   position: "bottom-left",
+      //   autoClose: 5000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      // });
+    }
   };
   // yunusemrepak@windowslive.com
 
@@ -69,14 +69,12 @@ export default function SignUpFirstForm({ navigation }) {
             onChangeText={(text) => dispatch(signUpActions.setName(text))}
             mode="outlined"
             style={styles.name}
-            autoCapitalize="none"
           />
           <TextInput
             label="Surname"
             onChangeText={(text) => dispatch(signUpActions.setSurname(text))}
             mode="outlined"
             style={styles.surname}
-            autoCapitalize="none"
           />
         </View>
         <TextInput

@@ -5,24 +5,24 @@ import SignUpSecondForm from "../../components/Forms/SignUpForm/SignUpSecondForm
 import Logo from "../../components/Logo/Logo";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 import { Provider } from "react-native-paper";
+import { signUpActions } from "../../redux/SignIn/signUpSlice";
+import { useDispatch } from "react-redux";
+import ForgotPasswordFirstForm from "../../components/Forms/ForgotPasswordForm/ForgotPasswordFirstForm";
 
-export default function SignUpSecondPage({ navigation }) {
+export default function ForgotPasswordFirstPage({ navigation }) {
+  const dispatch = useDispatch();
+
   const navigateSignIn = () => {
     navigation.navigate("SignIn");
   };
+
   return (
     <Provider>
       <SafeAreaView style={styles.container}>
         <View style={styles.logo}>
           <Logo />
         </View>
-        <SignUpSecondForm navigation={navigation} />
-        <View style={styles.haveAccount}>
-          <Text style={styles.haveText}>Already Have an Account?</Text>
-          <Pressable onPress={navigateSignIn}>
-            <Text style={styles.signInButton}>Sign In</Text>
-          </Pressable>
-        </View>
+        <ForgotPasswordFirstForm navigation={navigation} />
       </SafeAreaView>
     </Provider>
   );
@@ -30,11 +30,10 @@ export default function SignUpSecondPage({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    height: DEVICE_HEIGHT,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    height: DEVICE_HEIGHT,
   },
   logo: {
     marginBottom: DEVICE_HEIGHT / 40,
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width: DEVICE_WIDTH / 1.7,
+    width: DEVICE_WIDTH / 1.55,
   },
   haveText: {
     fontSize: DEVICE_WIDTH / 24,

@@ -13,7 +13,7 @@ import DropDown from "react-native-paper-dropdown";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
-import { signUpActions } from "../../../redux/SignIn/signUpSlice";
+import { signUp, signUpActions } from "../../../redux/SignIn/signUpSlice";
 
 export default function SignUpSecondForm({ navigation }) {
   const dispatch = useDispatch();
@@ -41,32 +41,34 @@ export default function SignUpSecondForm({ navigation }) {
   ];
 
   const signUpHandler = () => {
-    // if (
-    //   length.trim() !== "" &&
-    //   weight.trim() !== "" &&
-    //   age.trim() !== "" &&
-    //   gender.trim() !== ""
-    // ) {
-    // dispatch(signUp(userInformation));
-    console.log(userInformation);
-    // } else {
-    // toast.error("Please fill in all required fields to continue.", {
-    //   position: "bottom-left",
-    //   autoClose: 5000,
-    //   hideProgressBar: false,
-    //   closeOnClick: true,
-    //   pauseOnHover: true,
-    //   draggable: true,
-    // });
-    // }
+    if (
+      length.trim() !== "" &&
+      weight.trim() !== "" &&
+      age.trim() !== "" &&
+      gender.trim() !== ""
+    ) {
+      dispatch(signUp(userInformation));
+    //   console.log(userInformation);
+    } else {
+      console.log("Information is not full.");
+      // toast.error("Please fill in all required fields to continue.", {
+      //   position: "bottom-left",
+      //   autoClose: 5000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      // });
+    }
   };
   // yunusemrepak@windowslive.com
+  // kamil.aslan548@hotmail.com
 
-  //   useEffect(() => {
-  //     if (signUpStatus === "succeeded") {
-  //       navigate("/signUpVerifyPage");
-  //     }
-  //   }, [signUpStatus]);
+    useEffect(() => {
+      if (signUpStatus === "succeeded") {
+        navigation.navigate("SignUpVerify");
+      }
+    }, [signUpStatus]);
 
   return (
     <View style={styles.form}>
@@ -77,7 +79,6 @@ export default function SignUpSecondForm({ navigation }) {
             onChangeText={(text) => dispatch(signUpActions.setLength(text))}
             mode="outlined"
             style={styles.length}
-            autoCapitalize="none"
             keyboardType="numeric"
           />
           <TextInput
@@ -85,7 +86,6 @@ export default function SignUpSecondForm({ navigation }) {
             onChangeText={(text) => dispatch(signUpActions.setWeight(text))}
             mode="outlined"
             style={styles.weight}
-            autoCapitalize="none"
             keyboardType="numeric"
           />
         </View>
@@ -98,7 +98,7 @@ export default function SignUpSecondForm({ navigation }) {
           value={genderState}
           setValue={(val) => {
             setGenderState(val);
-            dispatch(signUpActions.setGender(val))
+            dispatch(signUpActions.setGender(val));
           }}
           list={genderList}
         />
@@ -107,7 +107,6 @@ export default function SignUpSecondForm({ navigation }) {
           onChangeText={(text) => dispatch(signUpActions.setAge(text))}
           mode="outlined"
           style={styles.age}
-          autoCapitalize="none"
           keyboardType="numeric"
         />
       </View>

@@ -27,7 +27,7 @@ export default function SignUpFirstPage({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: DEVICE_HEIGHT,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
