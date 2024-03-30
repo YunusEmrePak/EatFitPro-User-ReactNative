@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    width: DEVICE_WIDTH / 1.7,
+    width: DEVICE_WIDTH / 1.55,
   },
   haveText: {
     fontSize: DEVICE_WIDTH / 24,

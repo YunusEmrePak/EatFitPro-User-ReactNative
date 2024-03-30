@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import {
   TextInput,
   Appbar,
@@ -48,27 +48,25 @@ export default function SignUpSecondForm({ navigation }) {
       gender.trim() !== ""
     ) {
       dispatch(signUp(userInformation));
-    //   console.log(userInformation);
     } else {
-      console.log("Information is not full.");
-      // toast.error("Please fill in all required fields to continue.", {
-      //   position: "bottom-left",
-      //   autoClose: 5000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      // });
+      ToastAndroid.show(
+        "Please fill in all required fields to continue.",
+        ToastAndroid.LONG
+      );
     }
   };
   // yunusemrepak@windowslive.com
   // kamil.aslan548@hotmail.com
 
-    useEffect(() => {
-      if (signUpStatus === "succeeded") {
-        navigation.navigate("SignUpVerify");
-      }
-    }, [signUpStatus]);
+  useEffect(() => {
+    if (signUpStatus === "succeeded") {
+      ToastAndroid.show(
+        "We send a confirmation code to your mail box.",
+        ToastAndroid.SHORT
+      );
+      navigation.navigate("SignUpVerify");
+    }
+  }, [signUpStatus]);
 
   return (
     <View style={styles.form}>

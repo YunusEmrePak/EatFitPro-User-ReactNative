@@ -10,6 +10,7 @@ import * as SecureStore from "expo-secure-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { getToken } from "../../utils/getToken";
+import { ToastAndroid } from "react-native";
 
 export const signIn = createAsyncThunk(
   "user/signIn",
@@ -23,7 +24,6 @@ export const signIn = createAsyncThunk(
       // AsyncStorage.setItem("bearerToken", response.data.token);
       return response.data;
     } catch (error) {
-      console.log("catch");
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -57,6 +57,10 @@ export const signInSlice = createSlice({
       state.token = null;
       state.status = "idle";
     },
+    setTokenNull: (state) => {
+      state.token = null;
+      state.status = "idle";
+    },
     changeStatus: (state) => {
       state.status = "idle";
     },
@@ -69,29 +73,29 @@ export const signInSlice = createSlice({
     setIsLoggedIn: (state) => {
       state.isLoggedIn = action.payload;
     },
+    setInformationNull: (state) => {
+      state.userInformation = {
+        email: "",
+        password: "",
+      };
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(signIn.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
-        state.token = SecureStore.getItem("token");
-        // state.token = AsyncStorage.getItem("bearerToken");
+        state.token = action.payload.token;
+        setInformationNull();
       })
       .addCase(signIn.pending, (state) => {
         state.status = "pending";
       })
       .addCase(signIn.rejected, (state) => {
         state.status = "failed";
-        console.log("failed");
-        // toast.error("Email or password is invalid. Please try again!", {
-        //   position: "bottom-left",
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        // });
+        ToastAndroid.show(
+          "Email or password is invalid. Please try again!",
+          ToastAndroid.LONG
+        );
       });
   },
 });

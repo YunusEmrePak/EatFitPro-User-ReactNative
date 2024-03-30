@@ -9,6 +9,7 @@ import {
   getUserCalorieInfo,
   getUserInfo,
 } from "../../../redux/User/userInformationSlice";
+import * as SecureStore from "expo-secure-store";
 
 export default function SignInForm({ navigation }) {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ export default function SignInForm({ navigation }) {
     } else {
       ToastAndroid.show(
         "Please fill in all required fields to continue.",
-        ToastAndroid.SHORT
+        ToastAndroid.LONG
       );
     }
   };

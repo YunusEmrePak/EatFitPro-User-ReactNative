@@ -11,7 +11,6 @@ export default function ProfileUser({ navigation }) {
 
   const signOut = () => {
     dispatch(signInActions.signOut());
-    SecureStore.deleteItemAsync("token");
     navigation.navigate("Introduction");
   };
 

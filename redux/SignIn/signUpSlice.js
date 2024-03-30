@@ -12,7 +12,6 @@ export const signUp = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      console.log("catch");
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -28,7 +27,6 @@ export const signUpActivate = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      console.log("catch");
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -107,24 +105,39 @@ export const signUpSlice = createSlice({
     setEyeIsClicked: (state) => {
       state.eyeIsClicked = !state.eyeIsClicked;
     },
+    setInformationNull: (state) => {
+      state.userInformation = {
+        name: "",
+        surname: "",
+        email: "",
+        password: "",
+        length: "",
+        weight: "",
+        age: "",
+        gender: "",
+      };
+      state.verifyInformation = {
+        userEmail: null,
+        code: 0,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(signUp.fulfilled, (state, action) => {
         state.signUpStatus = "succeeded";
-        console.log("succeeded");
       })
       .addCase(signUp.pending, (state, action) => {
         state.signUpStatus = "pending";
       })
       .addCase(signUp.rejected, (state, action) => {
         state.signUpStatus = "failed";
-        console.log("failed");
       })
 
       .addCase(signUpActivate.fulfilled, (state, action) => {
         state.verifyStatus = "succeeded";
         state.isVerifySuccessful = action.payload.isSuccessful;
+        setInformationNull();
       })
       .addCase(signUpActivate.pending, (state, action) => {
         state.verifyStatus = "pending";

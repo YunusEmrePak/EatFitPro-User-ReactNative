@@ -67,7 +67,7 @@ export default function SignUpVerifyForm({ navigation }) {
       dispatch(signUpActions.setIsClickedToVerifyButton());
     } else if (isVerifySuccessful && verifyStatus === "succeeded") {
       dispatch(signUpActions.setResetStatus());
-      ToastAndroid.show("You signed up successfully.", ToastAndroid.SHORT);
+      ToastAndroid.show("Your account is created successfully.", ToastAndroid.SHORT);
       navigation.navigate("SignIn");
     }
   }, [verifyStatus]);

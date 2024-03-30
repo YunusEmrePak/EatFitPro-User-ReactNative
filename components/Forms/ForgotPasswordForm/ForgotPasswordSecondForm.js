@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import {
   TextInput,
   Appbar,
@@ -52,12 +52,11 @@ export default function ForgotPasswordSecondForm({ navigation }) {
   const changePasswordHandler = () => {
     dispatch(userForgotPasswordActions.setIsClickedToSecondPage());
     if (newPassword === confirmPassword) {
-      console.log(newPassword, confirmPassword, isClickedToSecondPage);
       dispatch(changePassword(passwordInformation));
       dispatch(userForgotPasswordActions.setIsClickedToSecondPage());
     } 
     else {
-      console.log("Password does not match.");
+      ToastAndroid.show("Password does not match.", ToastAndroid.SHORT);
     }
   };
   // yunusemrepak@windowslive.com

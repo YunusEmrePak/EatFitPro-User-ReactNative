@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import signApi from "../apis/signApi";
+import { ToastAndroid } from "react-native";
 
 export const sendEmail = createAsyncThunk(
   "user/forgotPassword",
@@ -93,6 +94,14 @@ export const userForgotPasswordSlice = createSlice({
     builder
       .addCase(sendEmail.fulfilled, (state, action) => {
         state.emailStatus = "succeeded";
+        if (action.payload.isSuccessful) {
+          ToastAndroid.show("Email is sent successfully.", ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show(
+            "Email does not exist. Please provide an exist email.",
+            ToastAndroid.SHORT
+          );
+        }
         state.emailIsSuccessful = action.payload.isSuccessful;
       })
       .addCase(sendEmail.pending, (state) => {
@@ -104,6 +113,14 @@ export const userForgotPasswordSlice = createSlice({
 
       .addCase(changePassword.fulfilled, (state, action) => {
         state.changeStatus = "succeeded";
+        if (action.payload.isSuccessful) {
+          ToastAndroid.show("Your password changed successfully.", ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show(
+            "Code you entered is not correct. Please provide a correct code.",
+            ToastAndroid.SHORT
+          );
+        }
         state.changeIsSuccessful = action.payload.isSuccessful;
       })
       .addCase(changePassword.pending, (state) => {

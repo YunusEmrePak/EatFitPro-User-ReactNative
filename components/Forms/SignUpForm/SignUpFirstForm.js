@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import {
   TextInput,
   Appbar,
@@ -41,15 +41,10 @@ export default function SignUpFirstForm({ navigation }) {
     ) {
       navigation.navigate("SignUpSecond");
     } else {
-      console.log("Information is not full.");
-      // toast.error("Please fill in all required fields to continue.", {
-      //   position: "bottom-left",
-      //   autoClose: 5000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      // });
+      ToastAndroid.show(
+        "Please fill in all required fields to continue.",
+        ToastAndroid.LONG
+      );
     }
   };
   // yunusemrepak@windowslive.com
