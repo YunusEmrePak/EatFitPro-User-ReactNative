@@ -54,12 +54,6 @@ export default function SignUpFirstForm({ navigation }) {
   };
   // yunusemrepak@windowslive.com
 
-  useEffect(() => {
-    if (token) {
-      navigation.navigate("Profile");
-    }
-  }, [token]);
-
   return (
     <View style={styles.form}>
       <View style={styles.inputs}>

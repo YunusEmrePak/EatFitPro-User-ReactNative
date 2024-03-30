@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+import 'react-native-gesture-handler';
 
 import IntroductionPage from "./pages/IntroductionPage/IntroductionPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
@@ -56,7 +57,7 @@ const App = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="Profile"
+            name="ProfilePage"
             component={ProfilePage}
             options={{ headerShown: false }}
           />

@@ -21,7 +21,7 @@ export default function IntroductionPage({ navigation }) {
 
   useEffect(() => {
     if (token) {
-      navigation.navigate("Profile");
+      navigation.navigate("ProfilePage");
     }
   }, [token]);
 

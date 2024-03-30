@@ -44,7 +44,7 @@ export default function SignInForm({ navigation }) {
 
   useEffect(() => {
     if (token) {
-      navigation.navigate("Profile");
+      navigation.navigate("ProfilePage");
     }
   }, [token]);
 
