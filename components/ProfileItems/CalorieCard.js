@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     borderRadius: DEVICE_WIDTH / 30,
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: DEVICE_HEIGHT / 40,
   },
   icon: {
     width: "20%",

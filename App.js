@@ -1,18 +1,18 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
+import 'react-native-gesture-handler';
 import { Provider } from "react-redux";
 import { store } from "./store/store";
-import 'react-native-gesture-handler';
 
+import ForgotPasswordFirstPage from "./pages/ForgotPassword/ForgotPasswordFirstPage";
+import ForgotPasswordSecondPage from "./pages/ForgotPassword/ForgotPasswordSecondPage";
 import IntroductionPage from "./pages/IntroductionPage/IntroductionPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import SignInPage from "./pages/SignInPage/SignInPage";
 import SignUpFirstPage from "./pages/SignUpPage/SignUpFirstPage";
 import SignUpSecondPage from "./pages/SignUpPage/SignUpSecondPage";
 import SignUpVerifyPage from "./pages/SignUpPage/SignUpVerifyPage";
-import ForgotPasswordFirstPage from "./pages/ForgotPassword/ForgotPasswordFirstPage";
-import ForgotPasswordSecondPage from "./pages/ForgotPassword/ForgotPasswordSecondPage";
 
 const Stack = createNativeStackNavigator();
 

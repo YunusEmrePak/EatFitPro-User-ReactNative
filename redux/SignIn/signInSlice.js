@@ -7,6 +7,7 @@ import signApi from "../apis/signApi";
 import axios from "axios";
 
 import * as SecureStore from "expo-secure-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { getToken } from "../../utils/getToken";
 
@@ -18,11 +19,8 @@ export const signIn = createAsyncThunk(
         "/auth/signin",
         JSON.stringify(userInfo)
       );
-      // const response = await axios.post(
-      //   "http://10.101.20.11:8081/api/v1/auth/signin",
-      //   userInfo
-      // );
-      SecureStore.setItem("bearerToken", response.data.token);
+      SecureStore.setItem("token", response.data.token);
+      // AsyncStorage.setItem("bearerToken", response.data.token);
       return response.data;
     } catch (error) {
       console.log("catch");
@@ -34,7 +32,7 @@ export const signIn = createAsyncThunk(
 export const signInSlice = createSlice({
   name: "signIn",
   initialState: {
-    token: getToken(),
+    token: SecureStore.getItem("token") || null,
     // token: "",
     status: "idle",
     error: null,
@@ -54,7 +52,8 @@ export const signInSlice = createSlice({
       state.userInformation.password = action.payload;
     },
     signOut: (state) => {
-      SecureStore.deleteItemAsync("bearerToken");
+      SecureStore.deleteItemAsync("token");
+      // AsyncStorage.removeItem("bearerToken");
       state.token = null;
       state.status = "idle";
     },
@@ -75,7 +74,9 @@ export const signInSlice = createSlice({
     builder
       .addCase(signIn.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.token = SecureStore.getItem("bearerToken");
+        console.log(action.payload);
+        state.token = SecureStore.getItem("token");
+        // state.token = AsyncStorage.getItem("bearerToken");
       })
       .addCase(signIn.pending, (state) => {
         state.status = "pending";

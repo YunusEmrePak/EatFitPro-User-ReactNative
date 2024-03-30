@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import { signInActions } from "../../redux/SignIn/signInSlice";
+import * as SecureStore from "expo-secure-store";
 
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 
@@ -10,6 +11,7 @@ export default function ProfileUser({ navigation }) {
 
   const signOut = () => {
     dispatch(signInActions.signOut());
+    SecureStore.deleteItemAsync("token");
     navigation.navigate("Introduction");
   };
 

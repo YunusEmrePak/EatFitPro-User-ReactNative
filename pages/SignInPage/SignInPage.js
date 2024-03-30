@@ -20,15 +20,10 @@ export default function SignInPage({ navigation }) {
     navigation.navigate("SignUpFirst");
   };
 
-  const signOut = () => {
-    navigation.navigate("Introduction");
-  };
-
-  // yunusemrepak@windowslive.com
-
   useEffect(() => {
     if (token) {
-      navigation.navigate("Profile");
+      // navigation.navigate("Profile");
+      navigation.navigate("Panel");
     }
   }, [token]);
 
@@ -44,11 +39,6 @@ export default function SignInPage({ navigation }) {
           <Text style={styles.signUpButton}>Sign Up</Text>
         </Pressable>
       </View>
-      <Pressable onPress={signOut}>
-        <View style={styles.signContainer}>
-          <Text style={styles.text}>Sign Out</Text>
-        </View>
-      </Pressable>
     </SafeAreaView>
   );
 }

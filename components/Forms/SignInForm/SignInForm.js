@@ -1,10 +1,14 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import { TextInput } from "react-native-paper";
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 import { signIn, signInActions } from "../../../redux/SignIn/signInSlice";
+import {
+  getUserCalorieInfo,
+  getUserInfo,
+} from "../../../redux/User/userInformationSlice";
 
 export default function SignInForm({ navigation }) {
   const dispatch = useDispatch();
@@ -16,34 +20,33 @@ export default function SignInForm({ navigation }) {
   const password = useSelector(
     (state) => state.signIn.userInformation.password
   );
+  const status = useSelector((state) => state.signIn.status);
 
   const setPasswordEye = () => {
     dispatch(signInActions.setEyeIsClicked());
   };
 
   const navigateToForgotPasswordPage = () => {
-    navigation.navigate("ForgotPasswordFirst")
+    navigation.navigate("ForgotPasswordFirst");
   };
 
   const signInHandler = () => {
     if (email.trim() !== "" && password.trim() !== "") {
       dispatch(signIn(userInformation));
     } else {
-      console.log("Information is not full.");
-      // toast.error("Please fill in all required fields to continue.", {
-      //   position: "bottom-left",
-      //   autoClose: 5000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      // });
+      ToastAndroid.show(
+        "Please fill in all required fields to continue.",
+        ToastAndroid.SHORT
+      );
     }
   };
   // yunusemrepak@windowslive.com
+  // kamil.aslan548@hotmail.com
 
   useEffect(() => {
     if (token) {
+      dispatch(getUserInfo());
+      dispatch(getUserCalorieInfo());
       navigation.navigate("ProfilePage");
     }
   }, [token]);
@@ -74,7 +77,10 @@ export default function SignInForm({ navigation }) {
           }
         />
       </View>
-      <Pressable style={styles.forgotPassword} onPress={navigateToForgotPasswordPage}>
+      <Pressable
+        style={styles.forgotPassword}
+        onPress={navigateToForgotPasswordPage}
+      >
         <View>
           <Text style={styles.forgotText}>Forgot Password</Text>
         </View>

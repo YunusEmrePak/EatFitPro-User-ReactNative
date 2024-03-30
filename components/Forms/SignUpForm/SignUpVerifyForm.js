@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import {
   TextInput,
   Appbar,
@@ -63,31 +63,24 @@ export default function SignUpVerifyForm({ navigation }) {
       isClickedToVerifyButton &&
       verifyStatus === "succeeded"
     ) {
-      //   toast.error("The code you entered is wrong. Please try again!", {
-      //     position: "bottom-left",
-      //     autoClose: 5000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //   });
+      ToastAndroid.show("Code you entered is wrong!", ToastAndroid.SHORT);
       dispatch(signUpActions.setIsClickedToVerifyButton());
     } else if (isVerifySuccessful && verifyStatus === "succeeded") {
       dispatch(signUpActions.setResetStatus());
+      ToastAndroid.show("You signed up successfully.", ToastAndroid.SHORT);
       navigation.navigate("SignIn");
     }
   }, [verifyStatus]);
 
   return (
     <View style={styles.form}>
-        <View style={styles.info}>
-          <Text style={styles.infoText}>
-            Please check your email for the verification code we've sent you.
-            Enter the code in the field below to complete your sign-up process.
-          </Text>
-        </View>
+      <View style={styles.info}>
+        <Text style={styles.infoText}>
+          Please check your email for the verification code we've sent you.
+          Enter the code in the field below to complete your sign-up process.
+        </Text>
+      </View>
       <View style={styles.inputs}>
-        
         <TextInput
           label="Code"
           onChangeText={(text) => dispatch(signUpActions.setCode(text))}
@@ -134,5 +127,5 @@ const styles = StyleSheet.create({
   infoText: {
     textAlign: "center",
     fontSize: DEVICE_WIDTH / 25,
-  }
+  },
 });
