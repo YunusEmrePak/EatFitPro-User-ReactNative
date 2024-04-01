@@ -1,7 +1,9 @@
 import axios from "axios";
 
+import { API_URL } from "../../constants/constants";
+
 const signApi = axios.create({
-  baseURL: "http://10.101.20.11:8081/api/v1",
+  baseURL: API_URL + "/api/v1",
   headers: {
     "Content-Type": "application/json",
   },

@@ -73,19 +73,16 @@ export const signInSlice = createSlice({
     setIsLoggedIn: (state) => {
       state.isLoggedIn = action.payload;
     },
-    setInformationNull: (state) => {
-      state.userInformation = {
-        email: "",
-        password: "",
-      };
-    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(signIn.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.token = action.payload.token;
-        setInformationNull();
+        state.userInformation = {
+          email: "",
+          password: "",
+        };
       })
       .addCase(signIn.pending, (state) => {
         state.status = "pending";

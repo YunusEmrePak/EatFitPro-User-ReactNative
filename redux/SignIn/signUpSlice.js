@@ -105,22 +105,6 @@ export const signUpSlice = createSlice({
     setEyeIsClicked: (state) => {
       state.eyeIsClicked = !state.eyeIsClicked;
     },
-    setInformationNull: (state) => {
-      state.userInformation = {
-        name: "",
-        surname: "",
-        email: "",
-        password: "",
-        length: "",
-        weight: "",
-        age: "",
-        gender: "",
-      };
-      state.verifyInformation = {
-        userEmail: null,
-        code: 0,
-      };
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -137,7 +121,20 @@ export const signUpSlice = createSlice({
       .addCase(signUpActivate.fulfilled, (state, action) => {
         state.verifyStatus = "succeeded";
         state.isVerifySuccessful = action.payload.isSuccessful;
-        setInformationNull();
+        state.userInformation = {
+          name: "",
+          surname: "",
+          email: "",
+          password: "",
+          length: "",
+          weight: "",
+          age: "",
+          gender: "",
+        };
+        state.verifyInformation = {
+          userEmail: null,
+          code: 0,
+        };
       })
       .addCase(signUpActivate.pending, (state, action) => {
         state.verifyStatus = "pending";
