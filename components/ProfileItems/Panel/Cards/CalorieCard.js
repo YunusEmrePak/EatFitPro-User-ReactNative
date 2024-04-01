@@ -1,6 +1,5 @@
 import { Text, StyleSheet, View, Image } from "react-native";
-import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
-import ConsumedImage from "../../assets/images/ProfileImages/salad.png";
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../../constants/constants";
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function CalorieCard({color, src, name, calorie}) {

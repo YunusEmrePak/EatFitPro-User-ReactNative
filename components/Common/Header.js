@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     width: DEVICE_WIDTH,
     height: DEVICE_HEIGHT / 10,
     alignItems: "center",
-    marginBottom: DEVICE_HEIGHT / 20,
+    marginBottom: DEVICE_HEIGHT / 40,
     backgroundColor: "#fff",
     flexDirection: "row",
     alignItems: "center",

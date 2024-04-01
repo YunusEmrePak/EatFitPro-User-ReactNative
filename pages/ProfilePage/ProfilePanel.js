@@ -1,68 +1,36 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 import { SafeAreaView } from "react-native-safe-area-context";
+import PagerView from "react-native-pager-view";
 
-import ConsumedImage from "../../assets/images/ProfileImages/salad.png";
-import BurnedImage from "../../assets/images/ProfileImages/speed.png";
-import BalanceImage from "../../assets/images/ProfileImages/balance.png";
-import CalorieCard from "../../components/ProfileItems/CalorieCard";
-import Header from "../../components/ProfileItems/Header";
+import CalorieCards from "../../components/ProfileItems/Panel/Cards/CalorieCards";
+import Header from "../../components/Common/Header";
+import Title from "../../components/Common/Title";
+
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getUserCalorieInfo } from "../../redux/User/userInformationSlice";
-
-const BurnedColor = {
-  first: "#FF5852",
-  second: "#FF8E4C",
-};
-
-const ConsumedColor = {
-  first: "#AB4599",
-  second: "#4F043F",
-};
-
-const BalanceColor = {
-  first: "#116391",
-  second: "#26A1B0",
-};
+import FoodTable from "../../components/ProfileItems/Panel/Tables/Food/FoodTable";
+import ActivityTable from "../../components/ProfileItems/Panel/Tables/Activity/ActivityTable";
+import TableButtons from "../../components/ProfileItems/Panel/Tables/Buttons/TableButtons";
 
 // kamil.aslan548@hotmail.com
 
 export default function ProfilePanel() {
   const dispatch = useDispatch();
 
-  const userCalorieInformation = useSelector(
-    (state) => state.userInformation.userCalorieInformation
-  );
-
-  const token = useSelector((state) => state.signIn.token);
-
-  useEffect(() => {
-    dispatch(getUserCalorieInfo());
-  }, [token]);
+  const tableName = useSelector((state) => state.tools.tableName);
 
   return (
     <SafeAreaView style={styles.container}>
       <Header />
-      <ScrollView>
-        <CalorieCard
-          color={BurnedColor}
-          src={BurnedImage}
-          name="Burned"
-          calorie={userCalorieInformation.totalBurnedCalories}
-        />
-        <CalorieCard
-          color={ConsumedColor}
-          src={ConsumedImage}
-          name="Consumed"
-          calorie={userCalorieInformation.totalConsumedCalories}
-        />
-        <CalorieCard
-          color={BalanceColor}
-          src={BalanceImage}
-          name="Calories Balance"
-          calorie={userCalorieInformation.balance}
-        />
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <Title title="Today" />
+        <CalorieCards />
+        <Title title="Today's Record" />
+        <TableButtons />
+        <View style={styles.pagerView}>
+          {tableName === "Food" && <FoodTable />}
+          {tableName === "Activity" && <ActivityTable />}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -71,6 +39,13 @@ export default function ProfilePanel() {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    paddingBottom: DEVICE_HEIGHT / 11,
+    paddingBottom: DEVICE_HEIGHT / 4.5,
+  },
+  scrollView: {
+    alignItems: "center",
+  },
+  pagerView: {
+    width: DEVICE_WIDTH / 1.2,
+    marginBottom: DEVICE_HEIGHT / 15,
   },
 });

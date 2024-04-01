@@ -1,13 +1,29 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signInActions } from "../../redux/SignIn/signInSlice";
-import * as SecureStore from "expo-secure-store";
+import { FontAwesome6 } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+
+import Header from "../../components/Common/Header";
 
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
+import UserName from "../../components/ProfileItems/User/UserName";
+import UserInformation from "../../components/ProfileItems/User/UserInformation";
+import { useEffect } from "react";
+
+const commonStyle = {
+  iconSize: DEVICE_WIDTH / 16,
+};
 
 export default function ProfileUser({ navigation }) {
   const dispatch = useDispatch();
+
+  const token = useSelector((state) => state.signIn.token);
+
+  const userInformation = useSelector(
+    (state) => state.userInformation.userInformation
+  );
 
   const signOut = () => {
     dispatch(signInActions.signOut());
@@ -16,24 +32,56 @@ export default function ProfileUser({ navigation }) {
 
   return (
     <SafeAreaView>
-      <Text>User Profile</Text>
-      <Pressable onPress={signOut}>
-        <View style={styles.signContainer}>
-          <Text style={styles.text}>Sign Out</Text>
+      <Header />
+      <View style={styles.safeArea}>
+        <View style={styles.container}>
+          <UserName
+            name={token && userInformation.name}
+            surname={token && userInformation.surname}
+            email={token && userInformation.email}
+          />
+          <UserInformation
+            age={token && userInformation.age}
+            weight={token && userInformation.weight}
+            height={token && userInformation.length}
+          />
         </View>
-      </Pressable>
+        <Pressable onPress={signOut}>
+          <LinearGradient
+            colors={["#333", "#666"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.signContainer}
+          >
+            <View style={styles.signContainer}>
+              <FontAwesome6
+                name="person-running"
+                size={commonStyle.iconSize}
+                color="white"
+              />
+              <Text style={styles.text}>Logout</Text>
+            </View>
+          </LinearGradient>
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  signContainer: {
-    marginBottom: DEVICE_HEIGHT / 20,
-    backgroundColor: "red",
-    width: DEVICE_WIDTH / 5,
-    height: DEVICE_HEIGHT / 20,
-    justifyContent: "center",
+  safeArea: {
+    justifyContent: "space-between",
+    height: DEVICE_HEIGHT / 1.3,
     alignItems: "center",
+  },
+  container: {},
+  signContainer: {
+    flexDirection: "row",
+    width: DEVICE_WIDTH / 4,
+    height: DEVICE_HEIGHT / 18,
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    borderRadius: DEVICE_WIDTH / 35,
   },
   text: {
     color: "white",
