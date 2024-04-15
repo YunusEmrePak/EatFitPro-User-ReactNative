@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import FoodTable from "../../components/ProfileItems/Panel/Tables/Food/FoodTable";
 import ActivityTable from "../../components/ProfileItems/Panel/Tables/Activity/ActivityTable";
 import TableButtons from "../../components/ProfileItems/Panel/Tables/Buttons/TableButtons";
+import { getUserCalorieInfo, getUserInfo } from "../../redux/User/userInformationSlice";
+import { useEffect } from "react";
 
 // kamil.aslan548@hotmail.com
 
@@ -18,6 +20,20 @@ export default function ProfilePanel() {
   const dispatch = useDispatch();
 
   const tableName = useSelector((state) => state.tools.tableName);
+
+  const token = useSelector((state) => state.signIn.token);
+  let refreshFood = useSelector((state) => state.userAddingFood.refresh);
+
+  let refreshActivity = useSelector(
+    (state) => state.userAddingActivity.refresh
+  );
+
+  useEffect(() => {
+    if (token && (refreshFood || refreshActivity)) {
+      dispatch(getUserInfo());
+      dispatch(getUserCalorieInfo());
+    }
+  }, [token, refreshFood, refreshActivity]);
 
   return (
     <SafeAreaView style={styles.container}>

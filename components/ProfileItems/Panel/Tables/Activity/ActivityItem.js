@@ -8,21 +8,21 @@ import { useDispatch } from "react-redux";
 
 // kamil.aslan548@hotmail.com
 
-export default function ActivityItem() {
+export default function ActivityItem({activityName, activityMinute, activityCalories}) {
   const dispatch = useDispatch();
 
   return (
     <View style={styles.item}>
       <View style={styles.name}>
         <Text style={styles.text} numberOfLines={1}>
-          Tomato
+          {activityName}
         </Text>
       </View>
       <View style={styles.mass}>
-        <Text style={styles.text}>50 gr</Text>
+        <Text style={styles.text}>{activityMinute} min</Text>
       </View>
       <View style={styles.calorie}>
-        <Text style={styles.text}>42 cal</Text>
+        <Text style={styles.text}>{activityCalories} cal</Text>
       </View>
     </View>
   );

@@ -31,6 +31,7 @@
     "react-native": "0.73.5",
     "react-native-mmkv": "^2.12.2",
     "react-native-pager-view": "^6.3.0",
+    "react-native-pagination": "^1.5.5",
     "react-native-paper": "^5.12.3",
     "react-native-paper-dropdown": "^1.0.7",
     "react-native-reanimated": "^3.8.1",

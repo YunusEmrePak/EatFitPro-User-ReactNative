@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import 'react-native-gesture-handler';
+import "react-native-gesture-handler";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 
@@ -13,6 +13,7 @@ import SignInPage from "./pages/SignInPage/SignInPage";
 import SignUpFirstPage from "./pages/SignUpPage/SignUpFirstPage";
 import SignUpSecondPage from "./pages/SignUpPage/SignUpSecondPage";
 import SignUpVerifyPage from "./pages/SignUpPage/SignUpVerifyPage";
+import FoodModal from "./components/ProfileItems/Panel/Tables/Food/FoodModal";
 
 const Stack = createNativeStackNavigator();
 

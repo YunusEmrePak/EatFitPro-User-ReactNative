@@ -8,21 +8,21 @@ import { useDispatch } from "react-redux";
 
 // kamil.aslan548@hotmail.com
 
-export default function FoodItem() {
+export default function FoodItem({foodName, foodMass, foodCalories}) {
   const dispatch = useDispatch();
 
   return (
     <View style={styles.item}>
       <View style={styles.name}>
         <Text style={styles.text} numberOfLines={1}>
-          Tomato
+          {foodName}
         </Text>
       </View>
       <View style={styles.mass}>
-        <Text style={styles.text}>50 gr</Text>
+        <Text style={styles.text}>{foodMass} gr</Text>
       </View>
       <View style={styles.calorie}>
-        <Text style={styles.text}>42 cal</Text>
+        <Text style={styles.text}>{foodCalories} cal</Text>
       </View>
     </View>
   );

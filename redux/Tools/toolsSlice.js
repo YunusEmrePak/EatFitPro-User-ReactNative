@@ -6,10 +6,18 @@ export const toolsSlice = createSlice({
     status: "idle",
     error: null,
     tableName: "Food",
+    foodModal: false,
+    activityModal: false,
   },
   reducers: {
     setTableName: (state, action) => {
       state.tableName = action.payload;
+    },
+    setFoodModalVisible: (state, action) => {
+      state.foodModal = !state.foodModal;
+    },
+    setActivityModalVisible: (state, action) => {
+      state.activityModal = !state.activityModal;
     },
   },
 });

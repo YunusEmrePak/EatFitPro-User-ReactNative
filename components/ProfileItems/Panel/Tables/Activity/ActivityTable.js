@@ -9,17 +9,35 @@ import { Fontisto } from "@expo/vector-icons";
 
 import { useDispatch, useSelector } from "react-redux";
 import ActivityItem from "./ActivityItem";
+import ActivityModal from "./ActivityModal";
+import { toolsActions } from "../../../../../redux/Tools/toolsSlice";
+import {
+  getActivities,
+  getActivityCategories,
+} from "../../../../../redux/User/userGettingActivitySlice";
 
 // kamil.aslan548@hotmail.com
 
 const commonStyle = {
-  fontSize: DEVICE_WIDTH / 18
-}
+  fontSize: DEVICE_WIDTH / 18,
+};
 
 export default function ActivityTable() {
   const dispatch = useDispatch();
 
-  const openModal = () => {};
+  const nullFilteredData = useSelector(
+    (state) => state.userGettingActivity.nullFilteredData
+  );
+  const token = useSelector((state) => state.signIn.token);
+  const activityList = useSelector(
+    (state) => state.userInformation.userActivityList
+  );
+
+  const openModal = () => {
+    dispatch(toolsActions.setActivityModalVisible());
+    dispatch(getActivities({ filteredData: nullFilteredData, page: 1 }));
+    dispatch(getActivityCategories());
+  };
 
   return (
     <View style={styles.container}>
@@ -29,17 +47,26 @@ export default function ActivityTable() {
           <Text>Activities</Text>
         </View>
         <View style={styles.activityCount}>
-          <Text>2</Text>
+          <Text>{activityList ? activityList.length : 0}</Text>
         </View>
       </View>
       <View style={styles.items}>
-        <ActivityItem />
-        <ActivityItem />
+        {token &&
+          activityList &&
+          activityList.map((item) => (
+            <ActivityItem
+              key={Math.random()}
+              activityName={item.activityDto.name}
+              activityMinute={parseInt(item.duration)}
+              activityCalories={parseInt(item.caloriesBurned)}
+            />
+          ))}
       </View>
       <Pressable style={styles.addNewButton} onPress={openModal}>
         <Fontisto name="plus-a" size={commonStyle.fontSize} color="black" />
         <Text style={styles.newText}>New</Text>
       </Pressable>
+      <ActivityModal />
     </View>
   );
 }

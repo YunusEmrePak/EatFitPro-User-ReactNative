@@ -9,17 +9,34 @@ import { Fontisto } from "@expo/vector-icons";
 
 import { useDispatch, useSelector } from "react-redux";
 import FoodItem from "./FoodItem";
+import { toolsActions } from "../../../../../redux/Tools/toolsSlice";
+import FoodModal from "./FoodModal";
+import {
+  getFoodCategories,
+  getFoods,
+} from "../../../../../redux/User/userGettingFoodSlice";
 
 // kamil.aslan548@hotmail.com
 
 const commonStyle = {
-  fontSize: DEVICE_WIDTH / 18
-}
+  fontSize: DEVICE_WIDTH / 18,
+};
 
 export default function FoodTable() {
   const dispatch = useDispatch();
 
-  const openModal = () => {};
+  const nullFilteredData = useSelector(
+    (state) => state.userGettingFood.nullFilteredData
+  );
+  const token = useSelector((state) => state.signIn.token);
+  const foodList = useSelector((state) => state.userInformation.userFoodList);
+
+  const openModal = () => {
+    dispatch(toolsActions.setFoodModalVisible());
+    dispatch(getFoods({ filteredData: nullFilteredData, page: 1 }));
+    dispatch(getFoodCategories());
+  };
+  
 
   return (
     <View style={styles.container}>
@@ -29,18 +46,26 @@ export default function FoodTable() {
           <Text>Consumed Foods</Text>
         </View>
         <View style={styles.foodCount}>
-          <Text>3</Text>
+          <Text>{foodList ? foodList.length : 0}</Text>
         </View>
       </View>
       <View style={styles.items}>
-        <FoodItem />
-        <FoodItem />
-        <FoodItem />
+        {token &&
+          foodList &&
+          foodList.map((item) => (
+            <FoodItem
+              key={Math.random()}
+              foodName={item.foodDto.name}
+              foodMass={item.mass}
+              foodCalories={item.calories}
+            />
+          ))}
       </View>
       <Pressable style={styles.addNewButton} onPress={openModal}>
         <Fontisto name="plus-a" size={commonStyle.fontSize} color="black" />
         <Text style={styles.newText}>New</Text>
       </Pressable>
+      <FoodModal />
     </View>
   );
 }
