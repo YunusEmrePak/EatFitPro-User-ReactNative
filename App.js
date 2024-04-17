@@ -31,12 +31,12 @@ const App = () => {
             name="SignIn"
             component={SignInPage}
             options={{ headerShown: false }}
-          />
+            />
           <Stack.Screen
             name="SignUpFirst"
             component={SignUpFirstPage}
             options={{ headerShown: false }}
-          />
+            />
           <Stack.Screen
             name="SignUpSecond"
             component={SignUpSecondPage}
@@ -46,22 +46,22 @@ const App = () => {
             name="SignUpVerify"
             component={SignUpVerifyPage}
             options={{ headerShown: false }}
-          />
+            />
           <Stack.Screen
             name="ForgotPasswordFirst"
             component={ForgotPasswordFirstPage}
             options={{ headerShown: false }}
-          />
+            />
           <Stack.Screen
             name="ForgotPasswordSecond"
             component={ForgotPasswordSecondPage}
             options={{ headerShown: false }}
-          />
+            />
           <Stack.Screen
             name="ProfilePage"
             component={ProfilePage}
             options={{ headerShown: false }}
-          />
+            />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

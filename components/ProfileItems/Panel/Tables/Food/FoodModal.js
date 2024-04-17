@@ -126,9 +126,8 @@ export default function FoodModal() {
                 }
               }}
               list={dropdownList}
-              key={(val) => {
-                val.id
-              }}
+              key={(val) => val.value}
+              dropDownItemTextStyle={{ fontSize: 14 }}
             />
             <TextInput
               label="Name"
@@ -141,7 +140,11 @@ export default function FoodModal() {
             <Pressable onPress={filterHandler}>
               <View style={styles.button}>
                 <Text style={styles.buttonText}>FIND</Text>
-                <Octicons name="search" size={DEVICE_WIDTH / 25} color="white" />
+                <Octicons
+                  name="search"
+                  size={DEVICE_WIDTH / 25}
+                  color="white"
+                />
               </View>
             </Pressable>
           </View>
@@ -227,7 +230,7 @@ const styles = StyleSheet.create({
     width: DEVICE_WIDTH / 2.2,
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: DEVICE_HEIGHT / 20
+    marginBottom: DEVICE_HEIGHT / 20,
   },
   dataTable: {},
   name: {
@@ -259,11 +262,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: DEVICE_WIDTH / 30
+    borderRadius: DEVICE_WIDTH / 30,
   },
   buttonText: {
     fontSize: DEVICE_WIDTH / 25,
     textAlign: "center",
-    color: "white"
+    color: "white",
   },
 });

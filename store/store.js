@@ -8,6 +8,7 @@ import userAddingFoodSlice from "../redux/User/userAddingFoodSlice";
 import userGettingFoodSlice from "../redux/User/userGettingFoodSlice";
 import userAddingActivitySlice from "../redux/User/userAddingActivitySlice";
 import userGettingActivitySlice from "../redux/User/userGettingActivitySlice";
+import userCalorieHistorySlice from "../redux/User/userCalorieHistorySlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,5 +21,6 @@ export const store = configureStore({
     userGettingFood: userGettingFoodSlice,
     userAddingActivity: userAddingActivitySlice,
     userGettingActivity: userGettingActivitySlice,
+    userCalorieHistory: userCalorieHistorySlice,
   },
 });

@@ -153,7 +153,7 @@ export default function ActivityModal() {
                 }
               }}
               list={dropdownList}
-              key={(val) => val.id}
+              key={val => val.value}
             />
             <TextInput
               label="Name"
