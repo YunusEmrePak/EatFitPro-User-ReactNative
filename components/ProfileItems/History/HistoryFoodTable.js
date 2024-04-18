@@ -17,7 +17,7 @@ const commonStyle = {
   fontSize: DEVICE_WIDTH / 20,
 };
 
-export default function HistoryFoodTable() {
+export default function HistoryFoodTable({ list }) {
   const dispatch = useDispatch();
 
   const nullFilteredData = useSelector(
@@ -34,14 +34,14 @@ export default function HistoryFoodTable() {
           <Text style={styles.titleText}>Consumed Foods</Text>
         </View>
         <View style={styles.foodCount}>
-          <Text>{foodList ? foodList.length : 0}</Text>
+          <Text>{list ? list.length : 0}</Text>
         </View>
       </View>
-      <ScrollView style={styles.items}>
+      <ScrollView nestedScrollEnabled={true}>
         {token &&
-          foodList &&
-          foodList.map((item) => (
-            <View style={styles.item}>
+          list &&
+          list.map((item) => (
+            <View style={styles.item} key={Math.random()}>
               <View style={styles.name}>
                 <Text style={styles.text} numberOfLines={1}>
                   {item.foodDto.name}
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     marginRight: DEVICE_WIDTH / 60,
   },
   titleText: {
-    fontSize: DEVICE_WIDTH / 35
+    fontSize: DEVICE_WIDTH / 35,
   },
   item: {
     backgroundColor: "white",
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: DEVICE_WIDTH / 120,
     marginBottom: DEVICE_HEIGHT / 200,
-    borderRadius: DEVICE_WIDTH / 50
+    borderRadius: DEVICE_WIDTH / 50,
   },
   text: {
     fontSize: DEVICE_WIDTH / 40,

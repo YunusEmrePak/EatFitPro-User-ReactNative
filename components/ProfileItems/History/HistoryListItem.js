@@ -22,14 +22,14 @@ const commonStyle = {
   fontSize: DEVICE_WIDTH / 18,
 };
 
-export default function HistoryListItem() {
-  //   const [year, month, day] = data.date.split("-");
-  //   const dateObj = new Date(year, month - 1, day);
-  //   const formattedDate = dateObj.toLocaleDateString("en-GB", {
-  //     day: "numeric",
-  //     month: "long",
-  //     year: "numeric",
-  //   });
+export default function HistoryListItem({ data }) {
+  const [year, month, day] = data.date.split("-");
+  const dateObj = new Date(year, month - 1, day);
+  const formattedDate = dateObj.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
 
   return (
     <View style={styles.container}>
@@ -37,33 +37,38 @@ export default function HistoryListItem() {
         <View style={styles.date}>
           <Image source={CalendarIcon} style={styles.icon} />
           <View>
-            <Text style={styles.dateTitle}>17 Nisan 2024</Text>
+            <Text style={styles.dateTitle}>{formattedDate}</Text>
           </View>
         </View>
         <View style={styles.calories}>
           <View style={styles.calorieContainer}>
             <Image source={ConsumedImage} style={styles.icon} />
-            <Text style={styles.calorieText}>156 cal</Text>
+            <Text style={styles.calorieText}>
+              {data.totalConsumedCalories} cal
+            </Text>
           </View>
           <View style={styles.calorieContainer}>
             <Image source={BurnedImage} style={styles.icon} />
-            <Text style={styles.calorieText}>125 cal</Text>
+            <Text style={styles.calorieText}>
+              {data.totalBurnedCalories} cal
+            </Text>
           </View>
           <View style={styles.calorieContainer}>
             <Image source={BalanceImage} style={styles.icon} />
-            <Text style={styles.calorieText}>26 cal</Text>
+            <Text style={styles.calorieText}>{data.balance} cal</Text>
           </View>
         </View>
       </View>
       <View style={styles.middle}>
-        <HistoryFoodTable />
+        <HistoryFoodTable list={data.foodDtoList} />
       </View>
       <View style={styles.right}>
-        <HistoryActivityTable />
+        <HistoryActivityTable list={data.activityDtoList} />
       </View>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
@@ -73,7 +78,7 @@ const styles = StyleSheet.create({
     width: DEVICE_WIDTH / 1.05,
     height: DEVICE_HEIGHT / 4,
     borderRadius: DEVICE_WIDTH / 40,
-    marginTop: DEVICE_HEIGHT / 60
+    marginBottom: DEVICE_HEIGHT / 60,
   },
   left: {
     height: DEVICE_HEIGHT / 4.2,

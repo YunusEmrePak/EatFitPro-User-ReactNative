@@ -17,7 +17,7 @@ const commonStyle = {
   fontSize: DEVICE_WIDTH / 20,
 };
 
-export default function HistoryActivityTable() {
+export default function HistoryActivityTable({ list }) {
   const dispatch = useDispatch();
 
   const nullFilteredData = useSelector(
@@ -36,14 +36,14 @@ export default function HistoryActivityTable() {
           <Text style={styles.titleText}>Activities</Text>
         </View>
         <View style={styles.activityCount}>
-          <Text>{activityList ? activityList.length : 0}</Text>
+          <Text>{list ? activityList.length : 0}</Text>
         </View>
       </View>
-      <View style={styles.items}>
+      <ScrollView nestedScrollEnabled={true}>
         {token &&
-          activityList &&
-          activityList.map((item) => (
-            <View style={styles.item}>
+          list &&
+          list.map((item) => (
+            <View style={styles.item} key={Math.random()}>
               <View style={styles.name}>
                 <Text style={styles.text} numberOfLines={1}>
                   {item.activityDto.name}
@@ -59,10 +59,11 @@ export default function HistoryActivityTable() {
               </View>
             </View>
           ))}
-      </View>
+      </ScrollView>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
@@ -109,10 +110,10 @@ const styles = StyleSheet.create({
     fontSize: DEVICE_WIDTH / 40,
   },
   name: {
-    // width: DEVICE_WIDTH / 3.2,
+    width: DEVICE_WIDTH / 6.3,
   },
   mass: {
-    // width: DEVICE_WIDTH / 5,
+    width: DEVICE_WIDTH / 11,
     alignItems: "center",
   },
   calorie: {
