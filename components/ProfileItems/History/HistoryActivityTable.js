@@ -36,7 +36,7 @@ export default function HistoryActivityTable({ list }) {
           <Text style={styles.titleText}>Activities</Text>
         </View>
         <View style={styles.activityCount}>
-          <Text>{list ? activityList.length : 0}</Text>
+          <Text>{list ? list.length : 0}</Text>
         </View>
       </View>
       <ScrollView nestedScrollEnabled={true}>

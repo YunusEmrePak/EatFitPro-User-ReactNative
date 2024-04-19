@@ -56,6 +56,12 @@ export const userCalorieHistorySlice = createSlice({
     setClicked: (state, action) => {
       state.isClicked = !state.isClicked;
     },
+    setResetHistoryFilter: (state, action) => {
+      state.filteredData.foodName = null;
+      state.filteredData.activityName = null;
+      state.filteredData.date = null;
+    },
+    
   },
   extraReducers: (builder) => {
     builder

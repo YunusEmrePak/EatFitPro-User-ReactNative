@@ -6,6 +6,7 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 import HistoryListItem from "./HistoryListItem";
@@ -17,11 +18,13 @@ import {
   getHistory,
   userCalorieHistoryActions,
 } from "../../../redux/User/userCalorieHistorySlice";
-import { useEffect, useState } from "react";
-import { TextInput } from "react-native-paper";
+import { useEffect, useRef, useState } from "react";
+import { Modal, TextInput } from "react-native-paper";
 
-import DatePicker from 'react-native-date-picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DatePicker from "react-native-date-picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { toolsActions } from "../../../redux/Tools/toolsSlice";
+import { Button } from "react-native";
 
 export default function HistoryFilter() {
   const dispatch = useDispatch();
@@ -30,94 +33,130 @@ export default function HistoryFilter() {
     (state) => state.userCalorieHistory.filteredData
   );
 
-  const page = useSelector((state) => state.userCalorieHistory.pageNumber);
-//   const date = useSelector(
-//     (state) => state.userCalorieHistory.filteredData.date
-//   );
+  const foodName = useSelector(
+    (state) => state.userCalorieHistory.filteredData.foodName
+  );
+  const activityName = useSelector(
+    (state) => state.userCalorieHistory.filteredData.activityName
+  );
+
+  const isModalVisible = useSelector((state) => state.tools.filterModal);
 
   const filterHandler = () => {
-    dispatch(getHistory({ filteredData: filteredData, page: page }));
+    dispatch(getHistory({ filteredData: filteredData, page: 1 }));
     dispatch(userCalorieHistoryActions.setPageNumber(1));
     dispatch(userCalorieHistoryActions.setClicked());
+    dispatch(toolsActions.setFilterModalVisible(false));
   };
 
-  const [date, setDate] = useState(new Date());
-  const [showPicker, setShowPicker] = useState(false);
+  const onCloseModal = () => {
+    dispatch(toolsActions.setFilterModalVisible(false));
+  };
 
-  const onDateChange = (event, selectedDate) => {
-    setShowPicker(false); 
-    setDate(selectedDate || date); // Update state with new date
-    console.log(selectedDate)
-};
+  const resetFilter = () => {
+    dispatch(userCalorieHistoryActions.setResetHistoryFilter());
+  };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.inputs}>
-        <TextInput
-          label="Food Name"
-          onChangeText={(text) =>
-            dispatch(userCalorieHistoryActions.setFoodName(text))
-          }
-          mode="outlined"
-          style={styles.textInputFilter}
-        />
-        <TextInput
-          label="Activity Name"
-          onChangeText={(text) =>
-            dispatch(userCalorieHistoryActions.setActivityName(text))
-          }
-          mode="outlined"
-          style={styles.textInputFilter}
-        />
-        {/* <TextInput
-          label="Date"
-          // onChangeText={(text) =>
-          //   dispatch(userCalorieHistoryActions.setActivityName(text))
-          // }
-          mode="outlined"
-          style={styles.textInputFilter}
-        /> */}
-        <View>
-          <TouchableOpacity onPress={() => setShowPicker(true)}>
-            <Text>Select Date</Text>
-          </TouchableOpacity>
-          {showPicker && (
-        <DateTimePicker
-          value={date}
-          mode="date"  // Can be 'date', 'time', or 'datetime'
-          onChange={onDateChange}
-        />
-      )} 
+    <Modal
+      visible={isModalVisible}
+      onRequestClose={() => onCloseModal()}
+      animationType="slide"
+      transparent={true}
+    >
+      <TouchableWithoutFeedback onPress={onCloseModal}>
+        <View style={styles.modalContainer}>
+          <Pressable
+            style={styles.container}
+            onPress={(event) => event.stopPropagation()}
+          >
+            <View>
+              <View style={styles.top}>
+                <Text style={styles.title}>Filter History</Text>
+                <View style={styles.resetButtonContainer}>
+                  <Pressable onPress={resetFilter}>
+                    <View style={styles.resetButton}>
+                      <Text style={styles.resetButtonText}>Reset Filter</Text>
+                    </View>
+                  </Pressable>
+                </View>
+              </View>
+              <View style={styles.inputs}>
+                <TextInput
+                  label="Food Name"
+                  onChangeText={(text) =>
+                    dispatch(userCalorieHistoryActions.setFoodName(text))
+                  }
+                  mode="outlined"
+                  value={foodName}
+                  style={styles.textInputFilter}
+                />
+                <TextInput
+                  label="Activity Name"
+                  onChangeText={(text) =>
+                    dispatch(userCalorieHistoryActions.setActivityName(text))
+                  }
+                  mode="outlined"
+                  value={activityName}
+                  style={styles.textInputFilter}
+                />
+                <TextInput
+                  label="Date"
+                  mode="outlined"
+                  style={styles.textInputFilter}
+                />
+              </View>
+              <View style={styles.buttonContainer}>
+                <Pressable onPress={filterHandler}>
+                  <View style={styles.button}>
+                    <Text style={styles.buttonText}>Apply Filter</Text>
+                  </View>
+                </Pressable>
+              </View>
+            </View>
+          </Pressable>
         </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <Pressable onPress={filterHandler}>
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>FIND</Text>
-            <Octicons name="search" size={DEVICE_WIDTH / 25} color="white" />
-          </View>
-        </Pressable>
-      </View>
-    </View>
+      </TouchableWithoutFeedback>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: DEVICE_HEIGHT / 30,
-    marginTop: DEVICE_HEIGHT / 30,
-    // width: DEVICE_WIDTH / 2,
+  modalContainer: {
     alignItems: "center",
+    width: DEVICE_WIDTH,
+    height: DEVICE_HEIGHT,
+    marginTop: DEVICE_HEIGHT / 2,
+  },
+  container: {
+    width: DEVICE_WIDTH / 1.25,
+    height: DEVICE_HEIGHT / 3,
+    alignItems: "flex-start",
+    backgroundColor: "white",
+    // marginLeft: DEVICE_WIDTH / 10,
+    paddingHorizontal: DEVICE_WIDTH / 20,
+    paddingVertical: DEVICE_HEIGHT / 80,
+    borderRadius: DEVICE_WIDTH / 40,
+  },
+  top: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: DEVICE_WIDTH / 1.45,
+    marginBottom: DEVICE_HEIGHT / 80,
+  },
+  title: {
+    fontSize: DEVICE_WIDTH / 20,
   },
   textInputFilter: {
-    width: DEVICE_WIDTH / 4,
+    width: DEVICE_WIDTH / 1.43,
     height: DEVICE_HEIGHT / 20,
-    fontSize: DEVICE_WIDTH / 40,
+    fontSize: DEVICE_WIDTH / 30,
   },
   button: {
     backgroundColor: "#680770",
-    width: DEVICE_WIDTH / 6,
-    height: DEVICE_HEIGHT / 20,
+    width: DEVICE_WIDTH / 4,
+    height: DEVICE_HEIGHT / 24,
     justifyContent: "space-evenly",
     flexDirection: "row",
     alignItems: "center",
@@ -128,10 +167,22 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
   },
+  buttonContainer: {
+    alignItems: "center",
+    width: DEVICE_WIDTH / 1.25,
+    paddingRight: DEVICE_WIDTH / 10,
+  },
+  resetButton: {
+    // width: DEVICE_WIDTH / 4,
+  },
+  resetButtonText: {
+    fontSize: DEVICE_WIDTH / 25,
+    color: "#680770",
+  },
+  resetButtonContainer: {},
+
   inputs: {
-    flexDirection: "row",
     justifyContent: "space-evenly",
     marginBottom: DEVICE_HEIGHT / 50,
-    width: DEVICE_WIDTH / 1.1,
   },
 });

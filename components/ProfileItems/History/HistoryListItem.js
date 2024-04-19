@@ -79,6 +79,8 @@ const styles = StyleSheet.create({
     height: DEVICE_HEIGHT / 4,
     borderRadius: DEVICE_WIDTH / 40,
     marginBottom: DEVICE_HEIGHT / 60,
+    elevation: 10,
+    shadowColor: "#FFB1F2",
   },
   left: {
     height: DEVICE_HEIGHT / 4.2,

@@ -45,7 +45,6 @@ export default function HistoryList() {
 
   return (
     <View style={styles.container}>
-      {/* <HistoryListItem /> */}
       <FlatList
         data={info}
         renderItem={(item) => <HistoryListItem data={item.item} />}
@@ -57,6 +56,7 @@ export default function HistoryList() {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: DEVICE_HEIGHT / 2.1,
+    marginBottom: DEVICE_HEIGHT / 2.35,
+    // marginTop: DEVICE_HEIGHT / 50
   },
 });
