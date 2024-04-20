@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     height: DEVICE_HEIGHT / 3.8,
     borderRadius: DEVICE_WIDTH / 40,
     marginBottom: DEVICE_HEIGHT / 60,
+    elevation: 5
   },
   left: {
     height: DEVICE_HEIGHT / 4.2,
