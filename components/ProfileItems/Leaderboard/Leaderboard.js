@@ -30,10 +30,6 @@ export default function Leaderboard() {
     (state) => state.userAddGoal.getLeaderboardStatus
   );
 
-  useEffect(() => {
-    console.log(leaderboardStatus);
-  }, []);
-
   return (
     <View style={styles.container}>
       <Header />

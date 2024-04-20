@@ -10,6 +10,7 @@ export const toolsSlice = createSlice({
     activityModal: false,
     filterModal: false,
     foodFilterModal: false,
+    activityFilterModal: false,
   },
   reducers: {
     setTableName: (state, action) => {
@@ -26,6 +27,9 @@ export const toolsSlice = createSlice({
     },
     setFoodFilterModalVisible: (state) => {
       state.foodFilterModal = !state.foodFilterModal;
+    },
+    setActivityFilterModalVisible: (state) => {
+      state.activityFilterModal = !state.activityFilterModal;
     },
   },
 });

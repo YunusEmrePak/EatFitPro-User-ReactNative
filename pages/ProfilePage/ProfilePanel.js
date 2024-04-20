@@ -55,7 +55,7 @@ export default function ProfilePanel() {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    paddingBottom: DEVICE_HEIGHT / 4.5,
+    paddingBottom: DEVICE_HEIGHT / 5,
   },
   scrollView: {
     alignItems: "center",

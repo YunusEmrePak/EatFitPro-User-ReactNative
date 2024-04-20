@@ -29,8 +29,8 @@ export const userAddingActivitySlice = createSlice({
     activityRecord: {
       activityId: null,
       duration: null,
-      heartRate: null,
-      bodyTemp: null,
+      heartRate: "",
+      bodyTemp: "",
     },
     refresh: true,
   },

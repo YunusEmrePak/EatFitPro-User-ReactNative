@@ -34,33 +34,25 @@ import {
   getUserCalorieInfo,
   getUserInfo,
 } from "../../../../../redux/User/userInformationSlice";
+import { Ionicons } from "@expo/vector-icons";
+import Blur from "../../../../Common/Blur";
+import ActivityFilter from "./ActivityFilter";
+import Header from "../../../../Common/Header";
 // kamil.aslan548@hotmail.com
 
 export default function ActivityModal() {
   const dispatch = useDispatch();
 
   const isModalVisible = useSelector((state) => state.tools.activityModal);
-  const filteredData = useSelector(
-    (state) => state.userGettingActivity.filteredData
-  );
-  const pageNumber = useSelector(
-    (state) => state.userGettingActivity.pageNumber
-  );
-  const totalPage = useSelector((state) => state.userGettingActivity.totalPage);
-  const activityCategories = useSelector(
-    (state) => state.userGettingActivity.activityCategories
+  const isFilterModalVisible = useSelector(
+    (state) => state.tools.activityFilterModal
   );
   const activities = useSelector(
     (state) => state.userGettingActivity.activities
   );
-  const category = useSelector(
-    (state) => state.userGettingActivity.category
-  );
   const activityRecord = useSelector(
     (state) => state.userAddingActivity.activityRecord
   );
-  const addingStatus = useSelector((state) => state.userAddingActivity.status);
-
   const id = useSelector(
     (state) => state.userAddingActivity.activityRecord.activityId
   );
@@ -75,13 +67,6 @@ export default function ActivityModal() {
   );
 
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
-
-  const dropdownList = activityCategories.map((item) => ({
-    label: item.name,
-    value: item.name,
-  }));
-
-  const [showDropDown, setShowDropDown] = useState(false);
 
   const handleRowPress = (rowData, rowIndex) => {
     setSelectedRowIndex(rowIndex);
@@ -102,11 +87,6 @@ export default function ActivityModal() {
     setSelectedRowIndex(-1);
   };
 
-  const filterHandler = () => {
-    dispatch(getActivities({ filteredData: filteredData, page: 1 }));
-    dispatch(userGettingActivityActions.setPageNumber(1));
-  };
-
   const addingHandler = () => {
     if (duration && id && duration > 0 && heartRate > 0 && bodyTemp > 0) {
       dispatch(addingActivityRecord(activityRecord));
@@ -122,6 +102,12 @@ export default function ActivityModal() {
     }
   };
 
+  const openModal = () => {
+    dispatch(toolsActions.setActivityFilterModalVisible(true));
+  };
+
+  console.log(typeof heartRate)
+
   return (
     <Modal
       visible={isModalVisible}
@@ -129,78 +115,45 @@ export default function ActivityModal() {
       animationType="slide"
       transparent={true}
     >
-      <Provider>
-        <View style={styles.container}>
-          <View style={styles.filterPart}>
-            <DropDown
-              label={"All Categories"}
-              mode={"outlined"}
-              visible={showDropDown}
-              showDropDown={() => setShowDropDown(true)}
-              onDismiss={() => setShowDropDown(false)}
-              value={category}
-              setValue={(val) => {
-                if (val) {
-                  dispatch(userGettingActivityActions.setCategory(val));
-                  dispatch(
-                    userGettingActivityActions.setActivityCategoryName(val)
-                  );
-                } else {
-                  dispatch(userGettingActivityActions.setCategory(null));
-                  dispatch(
-                    userGettingActivityActions.setActivityCategoryName("")
-                  );
-                }
-              }}
-              list={dropdownList}
-              key={val => val.value}
-            />
-            <TextInput
-              label="Name"
-              onChangeText={(text) =>
-                dispatch(userGettingActivityActions.setName(text))
-              }
-              mode="outlined"
-              style={styles.textInputFilter}
-            />
-            <Pressable onPress={filterHandler}>
-              <View style={styles.button}>
-                <Text style={styles.buttonText}>FIND</Text>
-                <Octicons name="search" size={DEVICE_WIDTH / 25} color="white" />
-              </View>
-            </Pressable>
-          </View>
-          <DataTable style={styles.dataTable}>
-            <DataTable.Header>
-              <DataTable.Title style={styles.name}>Name</DataTable.Title>
-              <DataTable.Title style={styles.category}>
-                Category
-              </DataTable.Title>
-            </DataTable.Header>
-            <ScrollView style={{ height: DEVICE_HEIGHT / 4 }}>
-              {activities.map((item, index) => (
-                <TouchableOpacity
-                  key={item.key}
-                  onPress={() => handleRowPress(item, index)}
+      {isFilterModalVisible && <Blur />}
+      <Header />
+      <View style={styles.container}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.text}>Add Activity</Text>
+          <Pressable onPress={openModal}>
+            <Ionicons name="filter-outline" size={32} color="black" />
+          </Pressable>
+        </View>
+        <DataTable style={styles.dataTable}>
+          <DataTable.Header>
+            <DataTable.Title style={styles.name}>Name</DataTable.Title>
+            <DataTable.Title style={styles.category}>Category</DataTable.Title>
+          </DataTable.Header>
+          <ScrollView style={{ height: DEVICE_HEIGHT / 4.5 }}>
+            {activities.map((item, index) => (
+              <TouchableOpacity
+                key={Math.random()}
+                onPress={() => handleRowPress(item, index)}
+              >
+                <DataTable.Row
+                  style={{
+                    backgroundColor:
+                      selectedRowIndex === index ? "lightblue" : "white",
+                  }}
                 >
-                  <DataTable.Row
-                    style={{
-                      backgroundColor:
-                        selectedRowIndex === index ? "lightblue" : "white",
-                    }}
-                  >
-                    <DataTable.Cell style={styles.name}>
-                      {item.name}
-                    </DataTable.Cell>
-                    <DataTable.Cell style={styles.category}>
-                      {item.activityCategoryDto.name}
-                    </DataTable.Cell>
-                  </DataTable.Row>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </DataTable>
-          <View style={styles.addingPart}>
+                  <DataTable.Cell style={styles.name}>
+                    {item.name}
+                  </DataTable.Cell>
+                  <DataTable.Cell style={styles.category}>
+                    {item.activityCategoryDto.name}
+                  </DataTable.Cell>
+                </DataTable.Row>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </DataTable>
+        <View style={styles.addingPart}>
+          <View style={styles.inputs}>
             <TextInput
               label="Duration (min)"
               onChangeText={(text) =>
@@ -213,7 +166,7 @@ export default function ActivityModal() {
             />
             <TextInput
               label="Heart Rate"
-              value={activityRecord.heartRate ? activityRecord.heartRate : 0}
+              value={heartRate ? heartRate.toString() : "0"}
               onChangeText={(text) =>
                 dispatch(
                   userAddingActivityActions.setAddingActivityHeartRate(text)
@@ -224,7 +177,7 @@ export default function ActivityModal() {
             />
             <TextInput
               label="Body Temperature"
-              value={activityRecord.bodyTemp ? activityRecord.bodyTemp : 0}
+              value={bodyTemp ? bodyTemp.toString() : "0"}
               onChangeText={(text) =>
                 dispatch(
                   userAddingActivityActions.setAddingActivityBodyTemp(text)
@@ -233,59 +186,84 @@ export default function ActivityModal() {
               mode="outlined"
               style={styles.textInputCalculate}
             />
-            <Pressable onPress={addingHandler}>
-              <View style={styles.button}>
-                <Text style={styles.buttonText}>ADD</Text>
-              </View>
-            </Pressable>
           </View>
-          <Button title="Close" onPress={() => onCloseModal()} />
+          <Pressable onPress={addingHandler} style={styles.addContainer}>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>ADD</Text>
+            </View>
+          </Pressable>
         </View>
-      </Provider>
+      </View>
+      <ActivityFilter />
     </Modal>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     paddingHorizontal: 30,
+    paddingTop: DEVICE_HEIGHT / 30,
   },
-  filterPart: {
+  blurContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    backgroundColor: `rgba(0, 0, 0, 0.5)`,
+    width: DEVICE_WIDTH,
+    height: DEVICE_HEIGHT,
+    // backgroundColor: "black",
+    zIndex: 2,
+  },
+  titleContainer: {
+    height: DEVICE_HEIGHT / 20,
+    width: DEVICE_WIDTH,
     flexDirection: "row",
-    width: DEVICE_WIDTH / 1.2,
     justifyContent: "space-between",
     alignItems: "center",
+    paddingLeft: DEVICE_WIDTH / 12,
+    paddingRight: DEVICE_WIDTH / 12,
+    marginBottom: DEVICE_HEIGHT / 80,
+    marginTop: DEVICE_HEIGHT / 80,
+  },
+  text: {
+    color: "black",
+    fontSize: DEVICE_WIDTH / 16,
   },
   addingPart: {
-    flexDirection: "row",
-    width: DEVICE_WIDTH / 1.1,
+    // width: DEVICE_WIDTH / 2.2,
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: DEVICE_HEIGHT / 20
+    marginBottom: DEVICE_HEIGHT / 20,
+    marginTop: DEVICE_HEIGHT / 50,
   },
-  dataTable: {},
+  inputs: {
+    flexDirection: "row",
+    width: DEVICE_WIDTH / 1.1,
+    justifyContent: "space-evenly"
+  },
+  addContainer: {
+    marginTop: DEVICE_HEIGHT / 60
+  },
   name: {
     flex: 2,
   },
+  calorie: {
+    flex: 2,
+  },
   category: {
-    flex: 3,
+    flex: 1,
   },
   mass: {
     width: DEVICE_WIDTH / 3,
   },
-  textInputFilter: {
-    width: DEVICE_WIDTH / 4.5,
-    height: DEVICE_HEIGHT / 20,
-    fontSize: DEVICE_WIDTH / 40,
-  },
   textInputCalculate: {
-    width: DEVICE_WIDTH / 4.5,
+    width: DEVICE_WIDTH / 3.6,
     height: DEVICE_HEIGHT / 20,
-    fontSize: DEVICE_WIDTH / 40,
-    paddingRight: DEVICE_WIDTH / 4.3
+    fontSize: DEVICE_WIDTH / 30,
   },
   button: {
     backgroundColor: "#680770",
@@ -294,11 +272,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: DEVICE_WIDTH / 30
+    borderRadius: DEVICE_WIDTH / 30,
   },
   buttonText: {
     fontSize: DEVICE_WIDTH / 25,
     textAlign: "center",
-    color: "white"
+    color: "white",
   },
 });

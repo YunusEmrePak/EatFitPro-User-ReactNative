@@ -40,23 +40,19 @@ import Header from "../../../../Common/Header";
 
 import { Ionicons } from "@expo/vector-icons";
 import FoodFilter from "./FoodFilter";
+import { BlurView } from "@react-native-community/blur";
+import Blur from "../../../../Common/Blur";
 
 export default function FoodModal() {
   const dispatch = useDispatch();
 
   const isModalVisible = useSelector((state) => state.tools.foodModal);
-  const filteredData = useSelector(
-    (state) => state.userGettingFood.filteredData
-  );
-  const pageNumber = useSelector((state) => state.userGettingFood.pageNumber);
-  const totalPage = useSelector((state) => state.userGettingFood.totalPage);
-  const foodCategories = useSelector(
-    (state) => state.userGettingFood.foodCategories
+  const isFilterModalVisible = useSelector(
+    (state) => state.tools.foodFilterModal
   );
   const foods = useSelector((state) => state.userGettingFood.foods);
-  const category = useSelector((state) => state.userGettingFood.category);
+
   const foodRecord = useSelector((state) => state.userAddingFood.foodRecord);
-  const addingStatus = useSelector((state) => state.userAddingFood.status);
 
   const mass = useSelector((state) => state.userAddingFood.foodRecord.mass);
   const id = useSelector((state) => state.userAddingFood.foodRecord.food.id);
@@ -102,73 +98,70 @@ export default function FoodModal() {
       animationType="slide"
       transparent={true}
     >
+      {isFilterModalVisible && <Blur />}
       <Header />
-      <Provider>
-        <View style={styles.container}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.text}>Add Food</Text>
-            <Pressable onPress={openModal}>
-              <Ionicons name="filter-outline" size={32} color="black" />
-            </Pressable>
-          </View>
-          <DataTable style={styles.dataTable}>
-            <DataTable.Header>
-              <DataTable.Title style={styles.name}>Name</DataTable.Title>
-              <DataTable.Title style={styles.calorie}>
-                Calories (per 100gr)
-              </DataTable.Title>
-              <DataTable.Title style={styles.category}>
-                Category
-              </DataTable.Title>
-            </DataTable.Header>
-            <ScrollView style={{ height: DEVICE_HEIGHT / 4 }}>
-              {foods.map((item, index) => (
-                <TouchableOpacity
-                  key={item.key}
-                  onPress={() => handleRowPress(item, index)}
-                >
-                  <DataTable.Row
-                    style={{
-                      backgroundColor:
-                        selectedRowIndex === index ? "lightblue" : "white",
-                    }}
-                  >
-                    <DataTable.Cell style={styles.name}>
-                      {item.name}
-                    </DataTable.Cell>
-                    <DataTable.Cell style={styles.calorie}>
-                      {item.calories}
-                    </DataTable.Cell>
-                    <DataTable.Cell style={styles.category}>
-                      {item.foodCategoryDto.name}
-                    </DataTable.Cell>
-                  </DataTable.Row>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </DataTable>
-          <View style={styles.addingPart}>
-            <TextInput
-              label="Mass"
-              onChangeText={(text) =>
-                dispatch(userAddingFoodActions.setAddingFoodMass(text))
-              }
-              mode="outlined"
-              style={styles.textInputCalculate}
-            />
-            <Pressable onPress={addingHandler}>
-              <View style={styles.button}>
-                <Text style={styles.buttonText}>ADD</Text>
-              </View>
-            </Pressable>
-          </View>
-          <Button title="Close" onPress={() => onCloseModal()} />
+      <View style={styles.container}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.text}>Add Food</Text>
+          <Pressable onPress={openModal}>
+            <Ionicons name="filter-outline" size={32} color="black" />
+          </Pressable>
         </View>
-      </Provider>
+        <DataTable style={styles.dataTable}>
+          <DataTable.Header>
+            <DataTable.Title style={styles.name}>Name</DataTable.Title>
+            <DataTable.Title style={styles.calorie}>
+              Calories (per 100gr)
+            </DataTable.Title>
+            <DataTable.Title style={styles.category}>Category</DataTable.Title>
+          </DataTable.Header>
+          <ScrollView style={{ height: DEVICE_HEIGHT / 4.5 }}>
+            {foods.map((item, index) => (
+              <TouchableOpacity
+                key={Math.random()}
+                onPress={() => handleRowPress(item, index)}
+              >
+                <DataTable.Row
+                  style={{
+                    backgroundColor:
+                      selectedRowIndex === index ? "lightblue" : "white",
+                  }}
+                >
+                  <DataTable.Cell style={styles.name}>
+                    {item.name}
+                  </DataTable.Cell>
+                  <DataTable.Cell style={styles.calorie}>
+                    {item.calories}
+                  </DataTable.Cell>
+                  <DataTable.Cell style={styles.category}>
+                    {item.foodCategoryDto.name}
+                  </DataTable.Cell>
+                </DataTable.Row>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </DataTable>
+        <View style={styles.addingPart}>
+          <TextInput
+            label="Mass"
+            onChangeText={(text) =>
+              dispatch(userAddingFoodActions.setAddingFoodMass(text))
+            }
+            mode="outlined"
+            style={styles.textInputCalculate}
+          />
+          <Pressable onPress={addingHandler}>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>ADD</Text>
+            </View>
+          </Pressable>
+        </View>
+      </View>
       <FoodFilter />
     </Modal>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -177,6 +170,16 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingHorizontal: 30,
     paddingTop: DEVICE_HEIGHT / 30,
+  },
+  blurContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    backgroundColor: `rgba(0, 0, 0, 0.5)`,
+    width: DEVICE_WIDTH,
+    height: DEVICE_HEIGHT,
+    // backgroundColor: "black",
+    zIndex: 2,
   },
   titleContainer: {
     height: DEVICE_HEIGHT / 20,
@@ -199,7 +202,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: DEVICE_HEIGHT / 20,
-    marginTop: DEVICE_HEIGHT / 30
+    marginTop: DEVICE_HEIGHT / 50,
   },
   name: {
     flex: 2,

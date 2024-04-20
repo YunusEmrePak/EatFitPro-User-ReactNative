@@ -40,27 +40,35 @@ import Header from "../../../../Common/Header";
 
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native";
+import {
+  getActivities,
+  userGettingActivityActions,
+} from "../../../../../redux/User/userGettingActivitySlice";
 
-export default function FoodFilter() {
+export default function ActivityFilter() {
   const dispatch = useDispatch();
 
-  const isModalVisible = useSelector((state) => state.tools.foodFilterModal);
+  const isModalVisible = useSelector((state) => state.tools.activityFilterModal);
   const filteredData = useSelector(
-    (state) => state.userGettingFood.filteredData
+    (state) => state.userGettingActivity.filteredData
   );
-  const pageNumber = useSelector((state) => state.userGettingFood.pageNumber);
-  const totalPage = useSelector((state) => state.userGettingFood.totalPage);
-  const foodCategories = useSelector(
-    (state) => state.userGettingFood.foodCategories
+  const activityCategories = useSelector(
+    (state) => state.userGettingActivity.activityCategories
   );
-  const foods = useSelector((state) => state.userGettingFood.foods);
-  const category = useSelector((state) => state.userGettingFood.category);
-  const name = useSelector((state) => state.userGettingFood.filteredData.name);
-  const foodCategoryName = useSelector(
-    (state) => state.userGettingFood.filteredData.foodCategoryName
+  const activities = useSelector(
+    (state) => state.userGettingActivity.activities
+  );
+  const category = useSelector((state) => state.userGettingActivity.category);
+
+  const name = useSelector(
+    (state) => state.userGettingActivity.filteredData.name
   );
 
-  const dropdownList = foodCategories.map((item) => ({
+  const activityCategoryName = useSelector(
+    (state) => state.userGettingActivity.filteredData.activityCategoryName
+  );
+
+  const dropdownList = activityCategories.map((item) => ({
     label: item.name,
     value: item.name,
   }));
@@ -68,17 +76,16 @@ export default function FoodFilter() {
   const [showDropDown, setShowDropDown] = useState(false);
 
   const onCloseModal = () => {
-    dispatch(toolsActions.setFoodFilterModalVisible());
+    dispatch(toolsActions.setActivityFilterModalVisible());
   };
 
   const filterHandler = () => {
-    dispatch(getFoods({ filteredData: filteredData, page: 1 }));
-    dispatch(userGettingFoodActions.setPageNumber(1));
-    dispatch(toolsActions.setFoodFilterModalVisible());
+    dispatch(getActivities({ filteredData: filteredData, page: 1 }));
+    dispatch(userGettingActivityActions.setPageNumber(1));
   };
 
   const resetFilter = () => {
-    dispatch(userGettingFoodActions.setFilteredDataNull());
+    dispatch(userGettingActivityActions.setFilteredDataNull());
   };
 
   return (
@@ -95,7 +102,7 @@ export default function FoodFilter() {
               onPress={(event) => event.stopPropagation()}
             >
               <View style={styles.top}>
-                <Text style={styles.title}>Filter Foods</Text>
+                <Text style={styles.title}>Filter Activities</Text>
                 <View style={styles.resetButtonContainer}>
                   <Pressable onPress={resetFilter}>
                     <View style={styles.resetButton}>
@@ -114,24 +121,27 @@ export default function FoodFilter() {
                   value={category}
                   setValue={(val) => {
                     if (val) {
-                      dispatch(userGettingFoodActions.setCategory(val));
-                      dispatch(userGettingFoodActions.setFoodCategoryName(val));
+                      dispatch(userGettingActivityActions.setCategory(val));
+                      dispatch(
+                        userGettingActivityActions.setActivityCategoryName(val)
+                      );
                     } else {
-                      dispatch(userGettingFoodActions.setCategory(null));
-                      dispatch(userGettingFoodActions.setFoodCategoryName(""));
+                      dispatch(userGettingActivityActions.setCategory(null));
+                      dispatch(
+                        userGettingActivityActions.setActivityCategoryName("")
+                      );
                     }
                   }}
                   list={dropdownList}
                   key={(val) => val.value}
-                  dropDownItemTextStyle={{ fontSize: 14 }}
                 />
                 <TextInput
                   label="Name"
-                  value={name}
                   onChangeText={(text) =>
-                    dispatch(userGettingFoodActions.setName(text))
+                    dispatch(userGettingActivityActions.setName(text))
                   }
                   mode="outlined"
+                  value={name}
                   style={styles.textInputFilter}
                 />
                 <Pressable onPress={filterHandler} style={styles.applyFilter}>
@@ -147,6 +157,7 @@ export default function FoodFilter() {
     </Modal>
   );
 }
+
 const styles = StyleSheet.create({
   modalContainer: {
     alignItems: "center",
@@ -162,7 +173,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingTop: DEVICE_HEIGHT / 30,
     backgroundColor: "#fff",
-    borderRadius: DEVICE_WIDTH / 40
+    borderRadius: DEVICE_WIDTH / 40,
   },
   top: {
     flexDirection: "row",

@@ -6,7 +6,6 @@ import boyAvatar from "../../../assets/images/ProfileImages/boyAvatar.png";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function FirstThree({ leaderboard }) {
-  console.log(leaderboard)
   return (
     <View style={styles.half}>
       <View>
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: DEVICE_WIDTH / 20,
   },
   title: {
-    fontSize: DEVICE_WIDTH / 20,
+    fontSize: DEVICE_WIDTH / 16,
     marginBottom: DEVICE_HEIGHT / 15,
     marginTop: DEVICE_HEIGHT / 30,
     color: "#fff",
@@ -159,6 +158,7 @@ const styles = StyleSheet.create({
   name: {
     color: "#C4DBE9",
     bottom: DEVICE_HEIGHT / 100,
+    textAlign: "center"
   },
   score: {
     color: "#fff",
