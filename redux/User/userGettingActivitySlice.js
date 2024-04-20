@@ -95,7 +95,7 @@ export const userGettingActivitySlice = createSlice({
       })
       .addCase(getActivityCategories.rejected, (state, action) => {
         state.status = "failed";
-      });
+      })
   },
 });
 

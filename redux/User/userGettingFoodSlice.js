@@ -98,7 +98,8 @@ export const userGettingFoodSlice = createSlice({
       })
       .addCase(getFoodCategories.rejected, (state, action) => {
         state.status = "failed";
-      });
+      })
+
   },
 });
 

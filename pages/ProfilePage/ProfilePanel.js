@@ -11,8 +11,16 @@ import { useDispatch, useSelector } from "react-redux";
 import FoodTable from "../../components/ProfileItems/Panel/Tables/Food/FoodTable";
 import ActivityTable from "../../components/ProfileItems/Panel/Tables/Activity/ActivityTable";
 import TableButtons from "../../components/ProfileItems/Panel/Tables/Buttons/TableButtons";
-import { getUserCalorieInfo, getUserInfo } from "../../redux/User/userInformationSlice";
+import {
+  getUserCalorieInfo,
+  getUserInfo,
+} from "../../redux/User/userInformationSlice";
 import { useEffect } from "react";
+import {
+  getFoodCategoriesCalculator,
+  getFoodsCalculator,
+} from "../../redux/User/userFoodCalorieCalculatorSlice";
+import { getActivitiesCalculator, getActivityCategoriesCalculator } from "../../redux/User/userActivityCalorieCalculatorSlice";
 
 // kamil.aslan548@hotmail.com
 
@@ -28,10 +36,27 @@ export default function ProfilePanel() {
     (state) => state.userAddingActivity.refresh
   );
 
+  const filteredFoodData = useSelector(
+    (state) => state.userFoodCalculator.filteredData
+  );
+
+  const filteredActivityData = useSelector(
+    (state) => state.userActivityCalculator.filteredData
+  );
+
   useEffect(() => {
     if (token && (refreshFood || refreshActivity)) {
       dispatch(getUserInfo());
       dispatch(getUserCalorieInfo());
+      dispatch(getFoodsCalculator({ filteredData: filteredFoodData, page: 1 }));
+      dispatch(getFoodCategoriesCalculator());
+      dispatch(
+        getActivitiesCalculator({
+          filteredData: filteredActivityData,
+          page: 1,
+        })
+      );
+      dispatch(getActivityCategoriesCalculator());
     }
   }, [token, refreshFood, refreshActivity]);
 

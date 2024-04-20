@@ -10,6 +10,8 @@ import userAddingActivitySlice from "../redux/User/userAddingActivitySlice";
 import userGettingActivitySlice from "../redux/User/userGettingActivitySlice";
 import userCalorieHistorySlice from "../redux/User/userCalorieHistorySlice";
 import userAddGoalSlice from "../redux/User/userAddGoalSlice";
+import userFoodCalorieCalculatorSlice from "../redux/User/userFoodCalorieCalculatorSlice";
+import userActivityCalorieCalculatorSlice from "../redux/User/userActivityCalorieCalculatorSlice";
 
 export const store = configureStore({
   reducer: {
@@ -24,5 +26,7 @@ export const store = configureStore({
     userGettingActivity: userGettingActivitySlice,
     userCalorieHistory: userCalorieHistorySlice,
     userAddGoal: userAddGoalSlice,
+    userFoodCalculator: userFoodCalorieCalculatorSlice,
+    userActivityCalculator: userActivityCalorieCalculatorSlice,
   },
 });
