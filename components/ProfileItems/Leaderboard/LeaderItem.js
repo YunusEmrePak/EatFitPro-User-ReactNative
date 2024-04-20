@@ -2,19 +2,25 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 
 import boyAvatar from "../../../assets/images/ProfileImages/boyAvatar.png";
+import girlAvatar from "../../../assets/images/ProfileImages/girlAvatar.png";
 
-export default function LeaderItem({ leaderboard }) {
+export default function LeaderItem({ queue, leaderboard }) {
   return (
     <View style={styles.item}>
       <View style={styles.queueContainer}>
-        <Text style={styles.queue}>4</Text>
+        <Text style={styles.queue}>{queue}</Text>
       </View>
       <View style={styles.iconName}>
-        <Image source={boyAvatar} style={styles.icon} />
-        <Text style={styles.name}>Yunus Emre Pak</Text>
+        <Image
+          source={leaderboard.gender ? girlAvatar : boyAvatar}
+          style={styles.icon}
+        />
+        <Text style={styles.name}>
+          {leaderboard.name + " " + leaderboard.surname}
+        </Text>
       </View>
       <View style={styles.scoreContainer}>
-        <Text style={styles.score}>150</Text>
+        <Text style={styles.score}>{leaderboard.score}</Text>
       </View>
     </View>
   );

@@ -57,6 +57,8 @@ export default function HistoryFilter() {
     dispatch(userCalorieHistoryActions.setResetHistoryFilter());
   };
 
+  // kamil.aslan548@hotmail.com
+
   return (
     <Modal
       visible={isModalVisible}
@@ -126,7 +128,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: DEVICE_WIDTH,
     height: DEVICE_HEIGHT,
-    marginTop: DEVICE_HEIGHT / 2,
+    paddingTop: DEVICE_HEIGHT / 5,
   },
   container: {
     width: DEVICE_WIDTH / 1.25,

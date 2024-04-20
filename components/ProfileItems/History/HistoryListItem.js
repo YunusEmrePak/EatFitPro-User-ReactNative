@@ -76,11 +76,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     backgroundColor: "#FFB1F2",
     width: DEVICE_WIDTH / 1.05,
-    height: DEVICE_HEIGHT / 4,
+    height: DEVICE_HEIGHT / 3.8,
     borderRadius: DEVICE_WIDTH / 40,
     marginBottom: DEVICE_HEIGHT / 60,
-    elevation: 10,
-    shadowColor: "#FFB1F2",
   },
   left: {
     height: DEVICE_HEIGHT / 4.2,

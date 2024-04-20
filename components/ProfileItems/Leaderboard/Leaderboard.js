@@ -5,6 +5,7 @@ import {
   Text,
   View,
   FlatList,
+  ScrollView,
 } from "react-native";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +17,7 @@ import girlAvatar from "../../../assets/images/ProfileImages/girlAvatar.png";
 import Header from "../../Common/Header";
 import FirstThree from "./FirstThree";
 import LeaderItem from "./LeaderItem";
+import { getLeaderboard } from "../../../redux/User/userAddGoalSlice";
 
 export default function Leaderboard() {
   const dispatch = useDispatch();
@@ -24,17 +26,34 @@ export default function Leaderboard() {
   //   const totalPage = useSelector((state) => state.userAddGoal.totalPage);
 
   const leaderboard = useSelector((state) => state.userAddGoal.leaderboard);
+  const leaderboardStatus = useSelector(
+    (state) => state.userAddGoal.getLeaderboardStatus
+  );
+
+  useEffect(() => {
+    console.log(leaderboardStatus);
+  }, []);
 
   return (
     <View style={styles.container}>
       <Header />
-      <FirstThree leaderboard={leaderboard} />
-      <View style={styles.leaderboard}>
+      {leaderboardStatus === "succeeded" && (
+        <FirstThree leaderboard={leaderboard} />
+      )}
+      <ScrollView style={styles.leaderboard}>
         {/* <FlatList  /> */}
-        <LeaderItem leaderboard={leaderboard} />
-        <LeaderItem leaderboard={leaderboard} />
-        <LeaderItem leaderboard={leaderboard} />
-      </View>
+        {leaderboardStatus === "succeeded" &&
+          leaderboard.map(
+            (item, index) =>
+              index > 2 && (
+                <LeaderItem
+                  queue={index + 1}
+                  leaderboard={item}
+                  key={Math.random()}
+                />
+              )
+          )}
+      </ScrollView>
     </View>
   );
 }
@@ -47,5 +66,6 @@ const styles = StyleSheet.create({
   },
   leaderboard: {
     marginTop: DEVICE_HEIGHT / 50,
+    marginBottom: DEVICE_HEIGHT / 13,
   },
 });
