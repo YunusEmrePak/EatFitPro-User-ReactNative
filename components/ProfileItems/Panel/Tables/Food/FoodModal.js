@@ -35,7 +35,11 @@ import {
   getUserCalorieInfo,
   getUserInfo,
 } from "../../../../../redux/User/userInformationSlice";
+import Header from "../../../../Common/Header";
 // kamil.aslan548@hotmail.com
+
+import { Ionicons } from "@expo/vector-icons";
+import FoodFilter from "./FoodFilter";
 
 export default function FoodModal() {
   const dispatch = useDispatch();
@@ -59,13 +63,6 @@ export default function FoodModal() {
 
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
-  const dropdownList = foodCategories.map((item) => ({
-    label: item.name,
-    value: item.name,
-  }));
-
-  const [showDropDown, setShowDropDown] = useState(false);
-
   const handleRowPress = (rowData, rowIndex) => {
     setSelectedRowIndex(rowIndex);
     dispatch(userAddingFoodActions.setAddingFoodId(rowData.id));
@@ -77,11 +74,6 @@ export default function FoodModal() {
     dispatch(userGettingFoodActions.setFilteredDataNull());
     dispatch(getUserCalorieInfo());
     setSelectedRowIndex(-1);
-  };
-
-  const filterHandler = () => {
-    dispatch(getFoods({ filteredData: filteredData, page: 1 }));
-    dispatch(userGettingFoodActions.setPageNumber(1));
   };
 
   const addingHandler = () => {
@@ -99,6 +91,10 @@ export default function FoodModal() {
     }
   };
 
+  const openModal = () => {
+    dispatch(toolsActions.setFoodFilterModalVisible(true));
+  };
+
   return (
     <Modal
       visible={isModalVisible}
@@ -106,46 +102,13 @@ export default function FoodModal() {
       animationType="slide"
       transparent={true}
     >
+      <Header />
       <Provider>
         <View style={styles.container}>
-          <View style={styles.filterPart}>
-            <DropDown
-              label={"All Categories"}
-              mode={"outlined"}
-              visible={showDropDown}
-              showDropDown={() => setShowDropDown(true)}
-              onDismiss={() => setShowDropDown(false)}
-              value={category}
-              setValue={(val) => {
-                if (val) {
-                  dispatch(userGettingFoodActions.setCategory(val));
-                  dispatch(userGettingFoodActions.setFoodCategoryName(val));
-                } else {
-                  dispatch(userGettingFoodActions.setCategory(null));
-                  dispatch(userGettingFoodActions.setFoodCategoryName(""));
-                }
-              }}
-              list={dropdownList}
-              key={(val) => val.value}
-              dropDownItemTextStyle={{ fontSize: 14 }}
-            />
-            <TextInput
-              label="Name"
-              onChangeText={(text) =>
-                dispatch(userGettingFoodActions.setName(text))
-              }
-              mode="outlined"
-              style={styles.textInputFilter}
-            />
-            <Pressable onPress={filterHandler}>
-              <View style={styles.button}>
-                <Text style={styles.buttonText}>FIND</Text>
-                <Octicons
-                  name="search"
-                  size={DEVICE_WIDTH / 25}
-                  color="white"
-                />
-              </View>
+          <View style={styles.titleContainer}>
+            <Text style={styles.text}>Add Food</Text>
+            <Pressable onPress={openModal}>
+              <Ionicons name="filter-outline" size={32} color="black" />
             </Pressable>
           </View>
           <DataTable style={styles.dataTable}>
@@ -184,12 +147,6 @@ export default function FoodModal() {
               ))}
             </ScrollView>
           </DataTable>
-          {/* <Pagination
-            totalItemsCount={foods.length}
-            itemsCountPerPage={5}
-            activePage={2}
-            onSelectPage={(page) => setCurrentPage(page)}
-          /> */}
           <View style={styles.addingPart}>
             <TextInput
               label="Mass"
@@ -208,22 +165,33 @@ export default function FoodModal() {
           <Button title="Close" onPress={() => onCloseModal()} />
         </View>
       </Provider>
+      <FoodFilter />
     </Modal>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     paddingHorizontal: 30,
+    paddingTop: DEVICE_HEIGHT / 30,
   },
-  filterPart: {
+  titleContainer: {
+    height: DEVICE_HEIGHT / 20,
+    width: DEVICE_WIDTH,
     flexDirection: "row",
-    width: DEVICE_WIDTH / 1.2,
     justifyContent: "space-between",
     alignItems: "center",
+    paddingLeft: DEVICE_WIDTH / 12,
+    paddingRight: DEVICE_WIDTH / 12,
+    marginBottom: DEVICE_HEIGHT / 80,
+    marginTop: DEVICE_HEIGHT / 80,
+  },
+  text: {
+    color: "black",
+    fontSize: DEVICE_WIDTH / 16,
   },
   addingPart: {
     flexDirection: "row",
@@ -231,8 +199,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: DEVICE_HEIGHT / 20,
+    marginTop: DEVICE_HEIGHT / 30
   },
-  dataTable: {},
   name: {
     flex: 2,
   },
@@ -245,13 +213,8 @@ const styles = StyleSheet.create({
   mass: {
     width: DEVICE_WIDTH / 3,
   },
-  textInputFilter: {
-    width: DEVICE_WIDTH / 4.5,
-    height: DEVICE_HEIGHT / 20,
-    fontSize: DEVICE_WIDTH / 30,
-  },
   textInputCalculate: {
-    width: DEVICE_WIDTH / 4.5,
+    width: DEVICE_WIDTH / 4,
     height: DEVICE_HEIGHT / 20,
     fontSize: DEVICE_WIDTH / 30,
   },

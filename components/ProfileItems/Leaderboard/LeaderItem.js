@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
     marginBottom: DEVICE_HEIGHT / 80,
+    borderRadius: DEVICE_WIDTH / 50
   },
   queue: {
     color: "#fff",
