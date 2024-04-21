@@ -25,8 +25,6 @@ export default function ProfileHistory() {
       <View style={styles.titleContainer}>
         <Text style={styles.text}>History</Text>
         <Pressable onPress={openModal}>
-          {/* <FontAwesome6 name="filter" size={24} color="black" />
-           */}
           <Ionicons name="filter-outline" size={32} color="black" />
         </Pressable>
       </View>

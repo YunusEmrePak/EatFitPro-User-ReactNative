@@ -38,7 +38,7 @@ export default function HistoryList() {
     dispatch(
       getHistory({
         filteredData: filteredData,
-        page: pageNumber,
+        page: 1,
       })
     );
   }, [isClicked]);
@@ -48,7 +48,7 @@ export default function HistoryList() {
       <FlatList
         data={info}
         renderItem={(item) => <HistoryListItem data={item.item} />}
-        key={(item) => item.index}
+        key={Math.random()}
       />
     </View>
   );

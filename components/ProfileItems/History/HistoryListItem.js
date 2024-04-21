@@ -77,9 +77,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFB1F2",
     width: DEVICE_WIDTH / 1.05,
     height: DEVICE_HEIGHT / 3.8,
-    borderRadius: DEVICE_WIDTH / 40,
+    borderRadius: DEVICE_WIDTH / 25,
     marginBottom: DEVICE_HEIGHT / 60,
-    elevation: 5
+    elevation: 8
   },
   left: {
     height: DEVICE_HEIGHT / 4.2,
