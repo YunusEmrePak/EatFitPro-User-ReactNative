@@ -21,6 +21,8 @@ import {
   getFoodsCalculator,
 } from "../../redux/User/userFoodCalorieCalculatorSlice";
 import { getActivitiesCalculator, getActivityCategoriesCalculator } from "../../redux/User/userActivityCalorieCalculatorSlice";
+import { getUserGoal } from "../../redux/User/userAddGoalSlice";
+import DailyGoal from "../../components/ProfileItems/Panel/DailyGoal/DailyGoal";
 
 // kamil.aslan548@hotmail.com
 
@@ -57,6 +59,7 @@ export default function ProfilePanel() {
         })
       );
       dispatch(getActivityCategoriesCalculator());
+      dispatch(getUserGoal());
     }
   }, [token, refreshFood, refreshActivity]);
 
@@ -66,6 +69,8 @@ export default function ProfilePanel() {
       <ScrollView contentContainerStyle={styles.scrollView}>
         <Title title="Today" />
         <CalorieCards />
+        <Title title="Daily Goal" />
+        <DailyGoal />
         <Title title="Today's Record" />
         <TableButtons />
         <View style={styles.pagerView}>
