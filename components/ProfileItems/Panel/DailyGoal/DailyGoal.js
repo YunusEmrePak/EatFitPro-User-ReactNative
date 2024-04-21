@@ -1,17 +1,64 @@
-import React, { useState, useRef } from 'react';
-import { View, StyleSheet, Animated, TouchableOpacity } from 'react-native';
-import { DEVICE_HEIGHT, DEVICE_WIDTH } from '../../../../constants/constants';
-import ShowDailyGoal from './ShowDailyGoal';
-import SetDailyGoal from './SetDailyGoal';
-import ShowGoalProcess from './ShowGoalProcess';
-import { Feather } from '@expo/vector-icons';
+import React, { useState, useRef, useEffect } from "react";
+import {
+  View,
+  StyleSheet,
+  Animated,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  pointerEvents,
+  Text,
+} from "react-native";
+
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../../constants/constants";
+import ShowDailyGoal from "./ShowDailyGoal";
+import SetDailyGoal from "./SetDailyGoal";
+import ShowGoalProcess from "./ShowGoalProcess";
+import { Feather } from "@expo/vector-icons";
+import {
+  getGoalUserCalorieInfo,
+  getGoalUserInfo,
+  getUserGoal,
+  userAddGoalActions,
+} from "../../../../redux/User/userAddGoalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getUserCalorieInfo,
+  getUserInfo,
+} from "../../../../redux/User/userInformationSlice";
+import { Octicons } from "@expo/vector-icons";
 
 export default function DailyGoal() {
+  const dispatch = useDispatch();
   const [isFlipped, setIsFlipped] = useState(false);
   const flipAnimation = useRef(new Animated.Value(0)).current;
+  const setGoal = useSelector((state) => state.userAddGoal.setGoal);
+  const userInformation = useSelector(
+    (state) => state.userAddGoal.userInformation
+  );
+  const dailyGoal = useSelector((state) => state.userAddGoal.dailyGoal);
+  const calorieBalance = useSelector(
+    (state) => state.userAddGoal.calorieBalance
+  );
+
+  const token = useSelector((state) => state.signIn.token);
+
+  const refresh = useSelector((state) => state.userAddGoal.refresh);
+
+  useEffect(() => {
+    if (token && refresh) {
+      dispatch(userAddGoalActions.setRefresh());
+      dispatch(getUserGoal());
+      dispatch(getGoalUserInfo());
+      dispatch(getGoalUserCalorieInfo());
+    } else {
+      dispatch(getGoalUserInfo());
+      dispatch(getGoalUserCalorieInfo());
+    }
+  }, [dispatch, dailyGoal, calorieBalance, refresh, token]);
 
   const flipCard = () => {
     setIsFlipped(!isFlipped);
+    dispatch(userAddGoalActions.setGoal(""));
     Animated.timing(flipAnimation, {
       toValue: isFlipped ? 0 : 1,
       duration: 500,
@@ -21,11 +68,11 @@ export default function DailyGoal() {
 
   const frontInterpolate = flipAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0deg', '180deg'],
+    outputRange: ["0deg", "180deg"],
   });
   const backInterpolate = flipAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: ['180deg', '360deg'],
+    outputRange: ["180deg", "360deg"],
   });
 
   const frontAnimatedStyle = {
@@ -37,59 +84,82 @@ export default function DailyGoal() {
 
   return (
     <View style={styles.container}>
-      <View>
-        <Animated.View style={[styles.card, frontAnimatedStyle]}>
-          <TouchableOpacity onPress={flipCard} activeOpacity={1}>
-            <ShowDailyGoal />
-          </TouchableOpacity>
-        </Animated.View>
-        <Animated.View style={[styles.card, styles.backCard, backAnimatedStyle]}>
-          <SetDailyGoal />
-        </Animated.View>
+      <View style={styles.cards}>
+        <View style={styles.cards}>
+          <TouchableWithoutFeedback onPress={flipCard}>
+            <Animated.View
+              style={[
+                styles.card,
+                frontAnimatedStyle,
+                isFlipped ? styles.backfaceDisabled : {},
+              ]}
+            >
+              <ShowDailyGoal />
+            </Animated.View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={flipCard}>
+            <Animated.View
+              style={[
+                styles.card,
+                styles.backCard,
+                backAnimatedStyle,
+                !isFlipped ? styles.backfaceDisabled : {},
+              ]}
+            >
+              <SetDailyGoal onPress={flipCard} />
+            </Animated.View>
+          </TouchableWithoutFeedback>
+        </View>
+        <ShowGoalProcess />
       </View>
-      <ShowGoalProcess />
+      <View style={styles.info}>
+        <Octicons name="info" size={24} color="purple" />
+        <Text style={styles.infoText}>
+          {dailyGoal >= 0
+            ? calorieBalance >= dailyGoal
+              ? "Congratulations! You have reached your daily calorie goal."
+              : "You need to consume a few more calories to reach your goal."
+            : calorieBalance <= dailyGoal
+            ? "Congratulations! You have reached your daily calorie goal."
+            : "You need to burn a few more calories to reach your goal."}
+        </Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
+  cards: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
   },
   card: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backfaceVisibility: 'hidden',
+    justifyContent: "center",
+    alignItems: "center",
+    backfaceVisibility: "hidden",
   },
   backCard: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
   },
-  cardContainer: {
-    paddingVertical: DEVICE_WIDTH / 40,
-    borderRadius: DEVICE_WIDTH / 40,
-    margin: DEVICE_WIDTH / 80,
-    width: DEVICE_WIDTH / 2.3,
-    height: DEVICE_WIDTH / 2.3,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
+  backfaceDisabled: {
+    pointerEvents: "none",
   },
-  dailyText: {
-    color: 'white',
-    fontSize: DEVICE_WIDTH / 25,
+  info: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    width: DEVICE_WIDTH / 1.08,
+    marginTop: DEVICE_HEIGHT / 80,
+    paddingHorizontal: DEVICE_WIDTH / 80
   },
-  goalText: {
-    color: 'white',
-    fontSize: DEVICE_WIDTH / 25,
-  },
-  goalNumber: {
-    color: 'white',
-    fontSize: DEVICE_WIDTH / 13,
-  },
-  change: {
-    width: DEVICE_HEIGHT / 10,
-    backgroundColor: 'red',
+  infoText: {
+    marginLeft: DEVICE_WIDTH / 80,
+    fontSize: DEVICE_WIDTH / 28
   },
 });

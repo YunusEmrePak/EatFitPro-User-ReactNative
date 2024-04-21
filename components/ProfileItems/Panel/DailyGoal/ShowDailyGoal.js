@@ -1,18 +1,17 @@
-import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Feather } from '@expo/vector-icons';
-import { DEVICE_HEIGHT, DEVICE_WIDTH } from '../../../../constants/constants';
+import React from "react";
+import { View, Text, StyleSheet, Pressable } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { Feather } from "@expo/vector-icons";
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../../constants/constants";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
-export default function ShowDailyGoal({ onPress }) {
-  const helo = () => {
-    console.log('hel');
-    onPress(); // Trigger flip animation when the button is pressed
-  };
+export default function ShowDailyGoal() {
+  const dailyGoal = useSelector((state) => state.userAddGoal.dailyGoal);
 
   return (
     <LinearGradient
-      colors={['#56ab2f', '#a8e063']}
+      colors={["#56ab2f", "#a8e063"]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={styles.cardContainer}
@@ -25,12 +24,15 @@ export default function ShowDailyGoal({ onPress }) {
       </View>
       <View style={styles.goal}>
         <Text style={styles.goalText}>
-          <Text style={styles.goalNumber}>200</Text> cal
+          <Text style={styles.goalNumber}>{dailyGoal}</Text> cal
         </Text>
       </View>
-      <Pressable onPress={helo} style={styles.change}>
-        <Text>Hello</Text>
-      </Pressable>
+      <MaterialIcons
+        name="change-circle"
+        size={28}
+        color="white"
+        style={styles.change}
+      />
     </LinearGradient>
   );
 }
@@ -42,23 +44,24 @@ const styles = StyleSheet.create({
     margin: DEVICE_WIDTH / 80,
     width: DEVICE_WIDTH / 2.3,
     height: DEVICE_WIDTH / 2.3,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
+    alignItems: "center",
+    justifyContent: "space-evenly",
   },
   dailyText: {
-    color: 'white',
+    color: "white",
     fontSize: DEVICE_WIDTH / 25,
   },
   goalText: {
-    color: 'white',
+    color: "white",
     fontSize: DEVICE_WIDTH / 25,
   },
   goalNumber: {
-    color: 'white',
+    color: "white",
     fontSize: DEVICE_WIDTH / 13,
   },
   change: {
-    width: DEVICE_HEIGHT / 10,
-    backgroundColor: 'red',
+    position: "absolute",
+    top: DEVICE_WIDTH / 80,
+    right: DEVICE_WIDTH / 80,
   },
 });
