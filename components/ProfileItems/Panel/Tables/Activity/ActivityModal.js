@@ -161,6 +161,7 @@ export default function ActivityModal() {
               }
               mode="outlined"
               style={styles.textInputCalculate}
+              keyboardType="numeric"
             />
             <TextInput
               label="Heart Rate"
@@ -172,6 +173,7 @@ export default function ActivityModal() {
               }
               mode="outlined"
               style={styles.textInputCalculate}
+              keyboardType="numeric"
             />
             <TextInput
               label="Body Temperature"
@@ -183,6 +185,7 @@ export default function ActivityModal() {
               }
               mode="outlined"
               style={styles.textInputCalculate}
+              keyboardType="numeric"
             />
           </View>
           <Pressable onPress={addingHandler} style={styles.addContainer}>

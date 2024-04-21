@@ -155,8 +155,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     width: DEVICE_WIDTH / 1.08,
+    height: DEVICE_HEIGHT / 20,
     marginTop: DEVICE_HEIGHT / 80,
-    paddingHorizontal: DEVICE_WIDTH / 80
+    paddingHorizontal: DEVICE_WIDTH / 80,
   },
   infoText: {
     marginLeft: DEVICE_WIDTH / 80,

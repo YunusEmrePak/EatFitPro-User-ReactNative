@@ -150,6 +150,7 @@ export default function ActivityCalculator() {
           <View style={styles.inputs}>
             <TextInput
               label="Duration (min)"
+              keyboardType="numeric"
               onChangeText={(text) =>
                 dispatch(
                   userActivityCalorieCalculatorActions.setActivityCalculatorDuration(
@@ -162,6 +163,7 @@ export default function ActivityCalculator() {
             />
             <TextInput
               label="Heart Rate"
+              keyboardType="numeric"
               value={heartRate ? heartRate.toString() : "0"}
               onChangeText={(text) =>
                 dispatch(
@@ -175,6 +177,7 @@ export default function ActivityCalculator() {
             />
             <TextInput
               label="Body Temperature"
+              keyboardType="numeric"
               value={bodyTemp ? bodyTemp.toString() : "0"}
               onChangeText={(text) =>
                 dispatch(

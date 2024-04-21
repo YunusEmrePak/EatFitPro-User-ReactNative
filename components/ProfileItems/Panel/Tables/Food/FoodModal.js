@@ -144,6 +144,7 @@ export default function FoodModal() {
         <View style={styles.addingPart}>
           <TextInput
             label="Mass"
+            keyboardType="numeric"
             onChangeText={(text) =>
               dispatch(userAddingFoodActions.setAddingFoodMass(text))
             }

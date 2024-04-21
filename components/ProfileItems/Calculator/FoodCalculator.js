@@ -112,6 +112,7 @@ export default function FoodCalculator() {
         <View style={styles.addingPart}>
           <TextInput
             label="Mass"
+            keyboardType="numeric"
             onChangeText={(text) =>
               dispatch(userFoodCalorieCalculatorActions.setFoodCalculatorMass(text))
             }
