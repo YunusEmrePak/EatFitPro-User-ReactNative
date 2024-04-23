@@ -69,7 +69,7 @@ export default function FirstThree({ leaderboard }) {
           </View>
         </View>
       </View>
-    </ImageBackground>
+    </ImageBackground> 
   );
 }
 
