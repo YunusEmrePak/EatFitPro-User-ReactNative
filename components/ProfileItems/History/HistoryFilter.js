@@ -1,30 +1,25 @@
 import {
-  Image,
   Pressable,
   StyleSheet,
   Text,
-  View,
-  FlatList,
-  TouchableOpacity,
   TouchableWithoutFeedback,
+  View,
+  Button,
+  Platform,
 } from "react-native";
-import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
-import HistoryListItem from "./HistoryListItem";
 import { useDispatch, useSelector } from "react-redux";
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 
-import { Octicons } from "@expo/vector-icons";
-
+import { useRef, useState } from "react";
+import { Modal, TextInput } from "react-native-paper";
 import {
   getHistory,
   userCalorieHistoryActions,
 } from "../../../redux/User/userCalorieHistorySlice";
-import { useEffect, useRef, useState } from "react";
-import { Modal, TextInput } from "react-native-paper";
-
-import DatePicker from "react-native-date-picker";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { toolsActions } from "../../../redux/Tools/toolsSlice";
-import { Button } from "react-native";
+import { format } from "date-fns";
+import { MaterialIcons } from "@expo/vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function HistoryFilter() {
   const dispatch = useDispatch();
@@ -32,15 +27,16 @@ export default function HistoryFilter() {
   const filteredData = useSelector(
     (state) => state.userCalorieHistory.filteredData
   );
-
   const foodName = useSelector(
     (state) => state.userCalorieHistory.filteredData.foodName
   );
   const activityName = useSelector(
     (state) => state.userCalorieHistory.filteredData.activityName
   );
-
   const isModalVisible = useSelector((state) => state.tools.filterModal);
+  const date = useSelector(
+    (state) => state.userCalorieHistory.filteredData.date
+  );
 
   const filterHandler = () => {
     dispatch(getHistory({ filteredData: filteredData, page: 1 }));
@@ -57,7 +53,29 @@ export default function HistoryFilter() {
     dispatch(userCalorieHistoryActions.setResetHistoryFilter());
   };
 
-  // kamil.aslan548@hotmail.com
+  const [isPickerShow, setIsPickerShow] = useState(false);
+  // const [date, setDate] = useState(new Date());
+  const dateRef = useRef(null);
+
+  const showPicker = () => {
+    setIsPickerShow((prev) => !prev);
+  };
+
+  const onChange = (event, value) => {
+    setIsPickerShow(false);
+    if (value) {
+      const dateString = value;
+      const dateObj = new Date(dateString);
+      const formattedDate = format(dateObj, "yyyy-MM-dd");
+      dispatch(userCalorieHistoryActions.setDate(formattedDate));
+    } else {
+      dispatch(userCalorieHistoryActions.setDate(null));
+    }
+
+    if (dateRef.current) {
+      dateRef.current.blur();
+    }
+  };
 
   return (
     <Modal
@@ -75,13 +93,11 @@ export default function HistoryFilter() {
             <View>
               <View style={styles.top}>
                 <Text style={styles.title}>Filter History</Text>
-                <View style={styles.resetButtonContainer}>
-                  <Pressable onPress={resetFilter}>
-                    <View style={styles.resetButton}>
-                      <Text style={styles.resetButtonText}>Reset Filter</Text>
-                    </View>
-                  </Pressable>
-                </View>
+                <Pressable onPress={resetFilter}>
+                  <View style={styles.resetButton}>
+                    <Text style={styles.resetButtonText}>Reset Filter</Text>
+                  </View>
+                </Pressable>
               </View>
               <View style={styles.inputs}>
                 <TextInput
@@ -102,11 +118,41 @@ export default function HistoryFilter() {
                   value={activityName}
                   style={styles.textInputFilter}
                 />
-                <TextInput
-                  label="Date"
-                  mode="outlined"
-                  style={styles.textInputFilter}
-                />
+                <View style={styles.dateContainer}>
+                  <TextInput
+                    label="Date"
+                    mode="outlined"
+                    value={date}
+                    style={styles.textInputFilter}
+                    onPressIn={showPicker}
+                    showSoftInputOnFocus={false}
+                    ref={dateRef}
+                    blurOnSubmit={true}
+                    right={
+                      date && (
+                        <TextInput.Icon
+                          icon={"close"}
+                          onPress={() => {
+                            dispatch(userCalorieHistoryActions.setDate(null));
+                            dateRef.current.blur()
+                          }}
+                          style={{
+                            marginTop: DEVICE_HEIGHT / 60,
+                          }}
+                        />
+                      )
+                    }
+                  />
+                  {isPickerShow && (
+                    <DateTimePicker
+                      value={date ? new Date(date) : new Date()}
+                      mode={"date"}
+                      is24Hour={true}
+                      onChange={onChange}
+                      style={styles.datePicker}
+                    />
+                  )}
+                </View>
               </View>
               <View style={styles.buttonContainer}>
                 <Pressable onPress={filterHandler}>
@@ -154,6 +200,7 @@ const styles = StyleSheet.create({
     width: DEVICE_WIDTH / 1.43,
     height: DEVICE_HEIGHT / 20,
     fontSize: DEVICE_WIDTH / 30,
+    marginBottom: DEVICE_HEIGHT / 200,
   },
   button: {
     backgroundColor: "#680770",
@@ -181,10 +228,23 @@ const styles = StyleSheet.create({
     fontSize: DEVICE_WIDTH / 25,
     color: "#680770",
   },
-  resetButtonContainer: {},
-
   inputs: {
     justifyContent: "space-evenly",
     marginBottom: DEVICE_HEIGHT / 50,
+  },
+  dateContainer: {
+    // display: "flex",
+    // flexDirection: "column",
+    // alignItems: "center",
+    // justifyContent: "center",
+  },
+  pickedDateContainer: {
+    padding: 20,
+    backgroundColor: "#eee",
+    borderRadius: 10,
+  },
+  pickedDate: {
+    fontSize: 18,
+    color: "black",
   },
 });
