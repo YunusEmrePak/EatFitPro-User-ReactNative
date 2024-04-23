@@ -110,6 +110,7 @@ export const userActivityCalorieCalculatorSlice = createSlice({
         calories: null,
         activityCategoryName: "",
       };
+      state.category = null;
     },
     setRefresh: (state) => {
       state.refresh = !state.refresh;

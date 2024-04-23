@@ -82,7 +82,7 @@ export const userFoodCalorieCalculatorSlice = createSlice({
     foods: [],
     totalPage: 0,
     pageNumber: 1,
-    category: null,
+    category: "",
     refresh: true,
     calculationResult: 0,
   },
@@ -111,6 +111,7 @@ export const userFoodCalorieCalculatorSlice = createSlice({
         caloriesUpperBound: null,
         foodCategoryName: null,
       };
+      state.category = null;
     },
     setPageNumber: (state, action) => {
       state.pageNumber = action.payload;

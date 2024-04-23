@@ -39,10 +39,6 @@ export default function ActivityCalculatorFilter() {
     (state) => state.userActivityCalculator.filteredData.name
   );
 
-  const activityCategoryName = useSelector(
-    (state) => state.userActivityCalculator.filteredData.activityCategoryName
-  );
-
   const dropdownList = activityCategories.map((item) => ({
     label: item.name,
     value: item.name,

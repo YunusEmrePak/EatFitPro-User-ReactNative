@@ -48,7 +48,9 @@ import {
 export default function ActivityFilter() {
   const dispatch = useDispatch();
 
-  const isModalVisible = useSelector((state) => state.tools.activityFilterModal);
+  const isModalVisible = useSelector(
+    (state) => state.tools.activityFilterModal
+  );
   const filteredData = useSelector(
     (state) => state.userGettingActivity.filteredData
   );
@@ -82,6 +84,7 @@ export default function ActivityFilter() {
   const filterHandler = () => {
     dispatch(getActivities({ filteredData: filteredData, page: 1 }));
     dispatch(userGettingActivityActions.setPageNumber(1));
+    dispatch(toolsActions.setActivityFilterModalVisible());
   };
 
   const resetFilter = () => {
@@ -112,29 +115,37 @@ export default function ActivityFilter() {
                 </View>
               </View>
               <View style={styles.filterPart}>
-                <DropDown
-                  label={"All Categories"}
-                  mode={"outlined"}
-                  visible={showDropDown}
-                  showDropDown={() => setShowDropDown(true)}
-                  onDismiss={() => setShowDropDown(false)}
-                  value={category}
-                  setValue={(val) => {
-                    if (val) {
-                      dispatch(userGettingActivityActions.setCategory(val));
-                      dispatch(
-                        userGettingActivityActions.setActivityCategoryName(val)
-                      );
-                    } else {
-                      dispatch(userGettingActivityActions.setCategory(null));
-                      dispatch(
-                        userGettingActivityActions.setActivityCategoryName("")
-                      );
-                    }
+                <View
+                  style={{
+                    width: DEVICE_WIDTH / 1.42,
                   }}
-                  list={dropdownList}
-                  key={(val) => val.value}
-                />
+                >
+                  <DropDown
+                    label={"All Categories"}
+                    mode={"outlined"}
+                    visible={showDropDown}
+                    showDropDown={() => setShowDropDown(true)}
+                    onDismiss={() => setShowDropDown(false)}
+                    value={category}
+                    setValue={(val) => {
+                      if (val) {
+                        dispatch(userGettingActivityActions.setCategory(val));
+                        dispatch(
+                          userGettingActivityActions.setActivityCategoryName(
+                            val
+                          )
+                        );
+                      } else {
+                        dispatch(userGettingActivityActions.setCategory(null));
+                        dispatch(
+                          userGettingActivityActions.setActivityCategoryName("")
+                        );
+                      }
+                    }}
+                    list={dropdownList}
+                    key={(val) => val.value}
+                  />
+                </View>
                 <TextInput
                   label="Name"
                   onChangeText={(text) =>

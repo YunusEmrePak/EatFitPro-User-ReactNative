@@ -1,11 +1,4 @@
-import {
-  Button,
-  Modal,
-  Pressable,
-  ScrollView,
-  ToastAndroid,
-  TouchableOpacity,
-} from "react-native";
+import { Modal, Pressable } from "react-native";
 
 import { StyleSheet, Text, View } from "react-native";
 import {
@@ -13,32 +6,19 @@ import {
   DEVICE_WIDTH,
 } from "../../../../../constants/constants";
 
+import { TextInput } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
-import { DataTable, TextInput } from "react-native-paper";
-import Pagination from "react-native-pagination";
 
-import { Octicons } from "@expo/vector-icons";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toolsActions } from "../../../../../redux/Tools/toolsSlice";
-import { useState } from "react";
 import {
   getFoods,
   userGettingFoodActions,
 } from "../../../../../redux/User/userGettingFoodSlice";
-import {
-  addingFoodRecord,
-  userAddingFoodActions,
-} from "../../../../../redux/User/userAddingFoodSlice";
 
 import { Provider } from "react-native-paper";
-import {
-  getUserCalorieInfo,
-  getUserInfo,
-} from "../../../../../redux/User/userInformationSlice";
-import Header from "../../../../Common/Header";
-// kamil.aslan548@hotmail.com
 
-import { Ionicons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native";
 
 export default function FoodFilter() {
@@ -48,17 +28,12 @@ export default function FoodFilter() {
   const filteredData = useSelector(
     (state) => state.userGettingFood.filteredData
   );
-  const pageNumber = useSelector((state) => state.userGettingFood.pageNumber);
-  const totalPage = useSelector((state) => state.userGettingFood.totalPage);
   const foodCategories = useSelector(
     (state) => state.userGettingFood.foodCategories
   );
-  const foods = useSelector((state) => state.userGettingFood.foods);
   const category = useSelector((state) => state.userGettingFood.category);
   const name = useSelector((state) => state.userGettingFood.filteredData.name);
-  const foodCategoryName = useSelector(
-    (state) => state.userGettingFood.filteredData.foodCategoryName
-  );
+  const isReset = useSelector((state) => state.userGettingFood.isReset);
 
   const dropdownList = foodCategories.map((item) => ({
     label: item.name,
@@ -73,12 +48,12 @@ export default function FoodFilter() {
 
   const filterHandler = () => {
     dispatch(getFoods({ filteredData: filteredData, page: 1 }));
-    dispatch(userGettingFoodActions.setPageNumber(1));
     dispatch(toolsActions.setFoodFilterModalVisible());
   };
 
   const resetFilter = () => {
     dispatch(userGettingFoodActions.setFilteredDataNull());
+    dispatch(userGettingFoodActions.setIsReset());
   };
 
   return (
@@ -105,26 +80,27 @@ export default function FoodFilter() {
                 </View>
               </View>
               <View style={styles.filterPart}>
-                <DropDown
-                  label={"All Categories"}
-                  mode={"outlined"}
-                  visible={showDropDown}
-                  showDropDown={() => setShowDropDown(true)}
-                  onDismiss={() => setShowDropDown(false)}
-                  value={category}
-                  setValue={(val) => {
-                    if (val) {
+                <View
+                  style={{
+                    width: DEVICE_WIDTH / 1.42,
+                  }}
+                >
+                  <DropDown
+                    label={"All Categories"}
+                    mode={"outlined"}
+                    visible={showDropDown}
+                    showDropDown={() => setShowDropDown(true)}
+                    onDismiss={() => setShowDropDown(false)}
+                    value={category}
+                    setValue={(val) => {
                       dispatch(userGettingFoodActions.setCategory(val));
                       dispatch(userGettingFoodActions.setFoodCategoryName(val));
-                    } else {
-                      dispatch(userGettingFoodActions.setCategory(null));
-                      dispatch(userGettingFoodActions.setFoodCategoryName(""));
-                    }
-                  }}
-                  list={dropdownList}
-                  key={(val) => val.value}
-                  dropDownItemTextStyle={{ fontSize: 14 }}
-                />
+                    }}
+                    list={dropdownList}
+                    key={(val) => val.value}
+                    dropDownItemTextStyle={{ fontSize: 14 }}
+                  />
+                </View>
                 <TextInput
                   label="Name"
                   value={name}
@@ -162,7 +138,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingTop: DEVICE_HEIGHT / 30,
     backgroundColor: "#fff",
-    borderRadius: DEVICE_WIDTH / 40
+    borderRadius: DEVICE_WIDTH / 40,
   },
   top: {
     flexDirection: "row",

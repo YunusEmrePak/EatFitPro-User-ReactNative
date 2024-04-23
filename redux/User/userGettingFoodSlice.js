@@ -58,6 +58,7 @@ export const userGettingFoodSlice = createSlice({
     totalPage: 0,
     pageNumber: 1,
     category: null,
+    isReset: false,
   },
   reducers: {
     setPageNumber: (state, action) => {
@@ -79,6 +80,10 @@ export const userGettingFoodSlice = createSlice({
         caloriesUpperBound: null,
         foodCategoryName: null,
       };
+      state.category = ""
+    },
+    setIsReset: (state) => {
+      state.isReset = !state.isReset;
     },
   },
   extraReducers: (builder) => {

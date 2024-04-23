@@ -1,13 +1,7 @@
-import {
-    Modal,
-    Pressable
-} from "react-native";
+import { Modal, Pressable } from "react-native";
 
 import { StyleSheet, Text, View } from "react-native";
-import {
-    DEVICE_HEIGHT,
-    DEVICE_WIDTH,
-} from "../../../constants/constants";
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 
 import { TextInput } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
@@ -18,8 +12,8 @@ import { Provider } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { toolsActions } from "../../../redux/Tools/toolsSlice";
 import {
-    getFoodsCalculator,
-    userFoodCalorieCalculatorActions,
+  getFoodsCalculator,
+  userFoodCalorieCalculatorActions,
 } from "../../../redux/User/userFoodCalorieCalculatorSlice";
 
 export default function FoodCalculatorFilter() {
@@ -35,18 +29,10 @@ export default function FoodCalculatorFilter() {
     (state) => state.userFoodCalculator.foodCategories
   );
   const category = useSelector(
-    (state) => state.userFoodCalculator.filteredData.category
-  );
-  const foods = useSelector(
-    (state) => state.userFoodCalculator.foods
+    (state) => state.userFoodCalculator.category
   );
   const name = useSelector(
     (state) => state.userFoodCalculator.filteredData.name
-  );
-
-  const foodCategoryName = useSelector(
-    (state) =>
-      state.userFoodCalculator.filteredData.foodCategoryName
   );
 
   const dropdownList = foodCategories.map((item) => ({
@@ -93,26 +79,45 @@ export default function FoodCalculatorFilter() {
                 </View>
               </View>
               <View style={styles.filterPart}>
-                <DropDown
-                  label={"All Categories"}
-                  mode={"outlined"}
-                  visible={showDropDown}
-                  showDropDown={() => setShowDropDown(true)}
-                  onDismiss={() => setShowDropDown(false)}
-                  value={category}
-                  setValue={(val) => {
-                    if (val) {
-                      dispatch(userFoodCalorieCalculatorActions.setCategory(val));
-                      dispatch(userFoodCalorieCalculatorActions.setFoodCategoryName(val));
-                    } else {
-                      dispatch(userFoodCalorieCalculatorActions.setCategory(null));
-                      dispatch(userFoodCalorieCalculatorActions.setFoodCategoryName(""));
-                    }
+                <View
+                  style={{
+                    width: DEVICE_WIDTH / 1.42,
                   }}
-                  list={dropdownList}
-                  key={(val) => val.value}
-                  dropDownItemTextStyle={{ fontSize: 14 }}
-                />
+                >
+                  <DropDown
+                    label={"All Categories"}
+                    mode={"outlined"}
+                    visible={showDropDown}
+                    showDropDown={() => setShowDropDown(true)}
+                    onDismiss={() => setShowDropDown(false)}
+                    value={category}
+                    setValue={(val) => {
+                      console.log(val);
+                      if (val) {
+                        dispatch(
+                          userFoodCalorieCalculatorActions.setCategory(val)
+                        );
+                        dispatch(
+                          userFoodCalorieCalculatorActions.setFoodCategoryName(
+                            val
+                          )
+                        );
+                      } else {
+                        dispatch(
+                          userFoodCalorieCalculatorActions.setCategory(null)
+                        );
+                        dispatch(
+                          userFoodCalorieCalculatorActions.setFoodCategoryName(
+                            ""
+                          )
+                        );
+                      }
+                    }}
+                    list={dropdownList}
+                    key={(val) => val.value}
+                    dropDownItemTextStyle={{ fontSize: 14 }}
+                  />
+                </View>
                 <TextInput
                   label="Name"
                   value={name}
