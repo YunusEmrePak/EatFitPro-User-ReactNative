@@ -54,7 +54,7 @@ export default function HistoryFilter() {
   };
 
   const [isPickerShow, setIsPickerShow] = useState(false);
-  // const [date, setDate] = useState(new Date());
+  const [dateString, setDateString] = useState("");
   const dateRef = useRef(null);
 
   const showPicker = () => {
@@ -68,6 +68,14 @@ export default function HistoryFilter() {
       const dateObj = new Date(dateString);
       const formattedDate = format(dateObj, "yyyy-MM-dd");
       dispatch(userCalorieHistoryActions.setDate(formattedDate));
+      const [year, month, day] = formattedDate.split("-");
+      const objDate = new Date(year, month - 1, day);
+      const dateFormatted = objDate.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+      setDateString(dateFormatted)
     } else {
       dispatch(userCalorieHistoryActions.setDate(null));
     }
@@ -122,7 +130,7 @@ export default function HistoryFilter() {
                   <TextInput
                     label="Date"
                     mode="outlined"
-                    value={date}
+                    value={dateString}
                     style={styles.textInputFilter}
                     onPressIn={showPicker}
                     showSoftInputOnFocus={false}
@@ -134,7 +142,8 @@ export default function HistoryFilter() {
                           icon={"close"}
                           onPress={() => {
                             dispatch(userCalorieHistoryActions.setDate(null));
-                            dateRef.current.blur()
+                            setDateString("")
+                            dateRef.current.blur();
                           }}
                           style={{
                             marginTop: DEVICE_HEIGHT / 60,
