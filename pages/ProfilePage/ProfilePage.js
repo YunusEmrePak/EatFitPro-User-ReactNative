@@ -1,4 +1,4 @@
-import { StyleSheet, BackHandler, ToastAndroid } from "react-native";
+import { StyleSheet, BackHandler, ToastAndroid, View } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -27,13 +27,18 @@ const screenOptions = {
     left: 0,
     elevation: 0,
     height: DEVICE_HEIGHT / 15,
+    // backgroundColor: "#1A1038",
+    backgroundColor: "#1A1038",
+    paddingBottom: DEVICE_HEIGHT / 200,
+    paddingTop: DEVICE_HEIGHT / 250,
   },
 };
 
 const commonStyle = {
   tabBarSize: DEVICE_WIDTH / 30,
-  focusedColor: "#000",
-  unFocusedColor: "#5C5D5D",
+  focusedColor: "#690770",
+  // focusedColor: "#3F3C99",
+  unFocusedColor: "#fff",
   iconSize: DEVICE_WIDTH / 16,
 };
 
@@ -72,19 +77,22 @@ export default function ProfilePage({ navigation }) {
         options={{
           tabBarIcon: ({ focused }) => {
             return (
-              <MaterialIcons
-                name="leaderboard"
-                size={commonStyle.iconSize}
-                color={
-                  focused
-                    ? commonStyle.focusedColor
-                    : commonStyle.unFocusedColor
-                }
-              />
+              <View style={focused && styles.focusIcon}>
+                <MaterialIcons
+                  name="leaderboard"
+                  size={commonStyle.iconSize}
+                  color={
+                    focused
+                      ? commonStyle.focusedColor
+                      : commonStyle.unFocusedColor
+                  }
+                />
+              </View>
             );
           },
           tabBarLabelStyle: {
             fontSize: commonStyle.tabBarSize,
+            color: "#fff",
           },
         }}
       />
@@ -94,19 +102,22 @@ export default function ProfilePage({ navigation }) {
         options={{
           tabBarIcon: ({ focused }) => {
             return (
-              <Ionicons
-                name={"calculator"}
-                size={commonStyle.iconSize}
-                color={
-                  focused
-                    ? commonStyle.focusedColor
-                    : commonStyle.unFocusedColor
-                }
-              />
+              <View style={focused && styles.focusIcon}>
+                <Ionicons
+                  name={"calculator"}
+                  size={commonStyle.iconSize}
+                  color={
+                    focused
+                      ? commonStyle.focusedColor
+                      : commonStyle.unFocusedColor
+                  }
+                />
+              </View>
             );
           },
           tabBarLabelStyle: {
             fontSize: commonStyle.tabBarSize,
+            color: "#fff",
           },
         }}
       />
@@ -117,19 +128,22 @@ export default function ProfilePage({ navigation }) {
         options={{
           tabBarIcon: ({ focused }) => {
             return (
-              <Ionicons
-                name={"home"}
-                size={commonStyle.iconSize}
-                color={
-                  focused
-                    ? commonStyle.focusedColor
-                    : commonStyle.unFocusedColor
-                }
-              />
+              <View style={focused && styles.focusIcon}>
+                <Ionicons
+                  name={"home"}
+                  size={commonStyle.iconSize}
+                  color={
+                    focused
+                      ? commonStyle.focusedColor
+                      : commonStyle.unFocusedColor
+                  }
+                />
+              </View>
             );
           },
           tabBarLabelStyle: {
             fontSize: commonStyle.tabBarSize,
+            color: "#fff",
           },
         }}
       />
@@ -139,19 +153,22 @@ export default function ProfilePage({ navigation }) {
         options={{
           tabBarIcon: ({ focused }) => {
             return (
-              <MaterialCommunityIcons
-                name="clipboard-text"
-                size={commonStyle.iconSize}
-                color={
-                  focused
-                    ? commonStyle.focusedColor
-                    : commonStyle.unFocusedColor
-                }
-              />
+              <View style={focused && styles.focusIcon}>
+                <MaterialCommunityIcons
+                  name="clipboard-text"
+                  size={commonStyle.iconSize}
+                  color={
+                    focused
+                      ? commonStyle.focusedColor
+                      : commonStyle.unFocusedColor
+                  }
+                />
+              </View>
             );
           },
           tabBarLabelStyle: {
             fontSize: commonStyle.tabBarSize,
+            color: "#fff",
           },
         }}
       />
@@ -161,19 +178,22 @@ export default function ProfilePage({ navigation }) {
         options={{
           tabBarIcon: ({ focused }) => {
             return (
-              <MaterialIcons
-                name="person"
-                size={commonStyle.iconSize}
-                color={
-                  focused
-                    ? commonStyle.focusedColor
-                    : commonStyle.unFocusedColor
-                }
-              />
+              <View style={focused && styles.focusIcon}>
+                <MaterialIcons
+                  name="person"
+                  size={commonStyle.iconSize}
+                  color={
+                    focused
+                      ? commonStyle.focusedColor
+                      : commonStyle.unFocusedColor
+                  }
+                />
+              </View>
             );
           },
           tabBarLabelStyle: {
             fontSize: commonStyle.tabBarSize,
+            color: "#fff",
           },
         }}
       />
@@ -184,8 +204,17 @@ export default function ProfilePage({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#1A1038",
     alignItems: "center",
     justifyContent: "center",
+  },
+  focusIcon: {
+    backgroundColor: "#fff1fc",
+    // backgroundColor: "#0c131b",
+    width: DEVICE_WIDTH / 7,
+    height: DEVICE_HEIGHT / 28,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: DEVICE_WIDTH / 20
   },
 });
