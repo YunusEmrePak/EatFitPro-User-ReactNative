@@ -1,19 +1,18 @@
-import { StyleSheet, BackHandler, ToastAndroid, View } from "react-native";
+import { BackHandler, StyleSheet, ToastAndroid, View } from "react-native";
 
-import { MaterialIcons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 
+import { useEffect, useRef } from "react";
 import ProfileCalculator from "./ProfileCalculator";
 import ProfileHistory from "./ProfileHistory";
 import ProfileLeaderboard from "./ProfileLeaderboard";
 import ProfilePanel from "./ProfilePanel";
 import ProfileUser from "./ProfileUser";
-import { useEffect, useRef } from "react";
 
 const Tab = createBottomTabNavigator();
 
@@ -26,7 +25,7 @@ const screenOptions = {
     right: 0,
     left: 0,
     elevation: 0,
-    height: DEVICE_HEIGHT / 15,
+    height: DEVICE_HEIGHT / 13,
     // backgroundColor: "#1A1038",
     backgroundColor: "#1A1038",
     paddingBottom: DEVICE_HEIGHT / 200,
@@ -121,7 +120,6 @@ export default function ProfilePage({ navigation }) {
           },
         }}
       />
-
       <Tab.Screen
         name="Panel"
         component={ProfilePanel}
@@ -202,12 +200,6 @@ export default function ProfilePage({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#1A1038",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   focusIcon: {
     backgroundColor: "#fff1fc",
     // backgroundColor: "#0c131b",
@@ -215,6 +207,6 @@ const styles = StyleSheet.create({
     height: DEVICE_HEIGHT / 28,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: DEVICE_WIDTH / 20
+    borderRadius: DEVICE_WIDTH / 20,
   },
 });

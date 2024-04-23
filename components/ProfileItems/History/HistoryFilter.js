@@ -37,6 +37,9 @@ export default function HistoryFilter() {
   const date = useSelector(
     (state) => state.userCalorieHistory.filteredData.date
   );
+  const dateString = useSelector(
+    (state) => state.userCalorieHistory.dateString
+  );
 
   const filterHandler = () => {
     dispatch(getHistory({ filteredData: filteredData, page: 1 }));
@@ -54,7 +57,6 @@ export default function HistoryFilter() {
   };
 
   const [isPickerShow, setIsPickerShow] = useState(false);
-  const [dateString, setDateString] = useState("");
   const dateRef = useRef(null);
 
   const showPicker = () => {
@@ -75,7 +77,7 @@ export default function HistoryFilter() {
         month: "long",
         year: "numeric",
       });
-      setDateString(dateFormatted)
+      dispatch(userCalorieHistoryActions.setDateString(dateFormatted));
     } else {
       dispatch(userCalorieHistoryActions.setDate(null));
     }
@@ -142,7 +144,7 @@ export default function HistoryFilter() {
                           icon={"close"}
                           onPress={() => {
                             dispatch(userCalorieHistoryActions.setDate(null));
-                            setDateString("")
+                            dispatch(userCalorieHistoryActions.setDateString(""));
                             dateRef.current.blur();
                           }}
                           style={{

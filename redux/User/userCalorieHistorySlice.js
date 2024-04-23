@@ -43,6 +43,7 @@ export const userCalorieHistorySlice = createSlice({
     pageNumber: 1,
     totalPage: 0,
     isClicked: false,
+    dateString: "",
   },
   reducers: {
     setPageNumber: (state, action) => {
@@ -64,6 +65,10 @@ export const userCalorieHistorySlice = createSlice({
       state.filteredData.foodName = null;
       state.filteredData.activityName = null;
       state.filteredData.date = null;
+      state.dateString = "";
+    },
+    setDateString: (state, action) => {
+      state.dateString = action.payload;
     },
     
   },
