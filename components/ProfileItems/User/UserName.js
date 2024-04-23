@@ -39,13 +39,14 @@ const styles = StyleSheet.create({
     width: DEVICE_WIDTH,
     height: DEVICE_HEIGHT / 5,
     marginBottom: DEVICE_HEIGHT / 15,
+    marginLeft: DEVICE_WIDTH / 10
   },
   outBox: {
     width: DEVICE_WIDTH / 1.5,
     height: DEVICE_HEIGHT / 4.5,
-    borderBottomRightRadius: DEVICE_WIDTH / 25,
-    borderTopRightRadius: DEVICE_WIDTH / 25,
+    borderRadius: DEVICE_WIDTH / 20,
     padding: DEVICE_WIDTH / 80,
+    // 
   },
   top: {
     flexDirection: "row",

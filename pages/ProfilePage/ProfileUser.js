@@ -71,10 +71,15 @@ export default function ProfileUser({ navigation }) {
 const styles = StyleSheet.create({
   safeArea: {
     justifyContent: "space-between",
-    height: DEVICE_HEIGHT / 1.3,
+    height: DEVICE_HEIGHT / 1.25,
     alignItems: "center",
+    paddingHorizontal: DEVICE_WIDTH / 20,
   },
-  container: {},
+  container: {
+    marginTop: DEVICE_HEIGHT / 20,
+    paddingHorizontal: DEVICE_WIDTH / 10,
+    height: DEVICE_HEIGHT / 1.5,
+  },
   signContainer: {
     flexDirection: "row",
     width: DEVICE_WIDTH / 4,

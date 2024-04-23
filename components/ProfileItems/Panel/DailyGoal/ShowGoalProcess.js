@@ -17,8 +17,6 @@ export default function ShowGoalProcess() {
   );
   const token = useSelector((state) => state.signIn.token);
 
-  console.log(calorieBalance, dailyGoal)
-
   return (
     <LinearGradient
       colors={["#3e0155", "#a98cb4"]}

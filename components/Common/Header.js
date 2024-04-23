@@ -32,7 +32,7 @@ export default function Header() {
 const styles = StyleSheet.create({
   container: {
     width: DEVICE_WIDTH,
-    height: DEVICE_HEIGHT / 10,
+    height: DEVICE_HEIGHT / 12,
     alignItems: "center",
     backgroundColor: "#fff",
     flexDirection: "row",
@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   logo: {
-    width: DEVICE_WIDTH / 6,
-    height: DEVICE_HEIGHT / 12,
+    width: DEVICE_WIDTH / 7,
+    height: DEVICE_WIDTH / 7,
     marginLeft: DEVICE_WIDTH / 20,
   },
   title: {
