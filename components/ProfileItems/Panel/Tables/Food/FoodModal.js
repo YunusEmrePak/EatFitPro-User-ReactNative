@@ -42,6 +42,7 @@ import { Ionicons } from "@expo/vector-icons";
 import FoodFilter from "./FoodFilter";
 import { BlurView } from "@react-native-community/blur";
 import Blur from "../../../../Common/Blur";
+import FilterButton from "../../../../Common/FilterButton";
 
 export default function FoodModal() {
   const dispatch = useDispatch();
@@ -103,9 +104,7 @@ export default function FoodModal() {
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.text}>Add Food</Text>
-          <Pressable onPress={openModal}>
-            <Ionicons name="filter-outline" size={32} color="black" />
-          </Pressable>
+          <FilterButton onPress={openModal} />
         </View>
         <DataTable style={styles.dataTable}>
           <DataTable.Header>

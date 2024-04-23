@@ -1,13 +1,13 @@
+import { Ionicons } from "@expo/vector-icons";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import HistoryList from "../../components/ProfileItems/History/HistoryList";
-import HistoryFilter from "../../components/ProfileItems/History/HistoryFilter";
-import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
-import Header from "../../components/Common/Header";
-import { toolsActions } from "../../redux/Tools/toolsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesome6 } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
+import Header from "../../components/Common/Header";
+import HistoryFilter from "../../components/ProfileItems/History/HistoryFilter";
+import HistoryList from "../../components/ProfileItems/History/HistoryList";
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
+import { toolsActions } from "../../redux/Tools/toolsSlice";
+import FilterButton from "../../components/Common/FilterButton";
 
 export default function ProfileHistory() {
   const dispatch = useDispatch();
@@ -24,9 +24,7 @@ export default function ProfileHistory() {
       <Header />
       <View style={styles.titleContainer}>
         <Text style={styles.text}>History</Text>
-        <Pressable onPress={openModal}>
-          <Ionicons name="filter-outline" size={32} color="black" />
-        </Pressable>
+        <FilterButton onPress={openModal} />
       </View>
       <HistoryList />
       <HistoryFilter />

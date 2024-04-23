@@ -8,7 +8,7 @@ export const getFoods = createAsyncThunk(
   async ({ filteredData, page }, { rejectWithValue }) => {
     try {
       const response = await foodAndActivityApi.post(
-        `/food?page=${page - 1}&size=25`,
+        `/food?page=${page - 1}&size=20`,
         JSON.stringify(filteredData)
       );
       return response.data;

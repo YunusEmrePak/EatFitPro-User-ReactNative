@@ -38,6 +38,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Blur from "../../../../Common/Blur";
 import ActivityFilter from "./ActivityFilter";
 import Header from "../../../../Common/Header";
+import FilterButton from "../../../../Common/FilterButton";
 // kamil.aslan548@hotmail.com
 
 export default function ActivityModal() {
@@ -118,9 +119,7 @@ export default function ActivityModal() {
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.text}>Add Activity</Text>
-          <Pressable onPress={openModal}>
-            <Ionicons name="filter-outline" size={32} color="black" />
-          </Pressable>
+          <FilterButton onPress={openModal} />
         </View>
         <DataTable style={styles.dataTable}>
           <DataTable.Header>

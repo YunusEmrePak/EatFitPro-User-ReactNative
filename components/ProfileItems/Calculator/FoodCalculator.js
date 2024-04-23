@@ -22,6 +22,7 @@ import {
 } from "../../../redux/User/userFoodCalorieCalculatorSlice";
 import Blur from "../../Common/Blur";
 import FoodCalculatorFilter from "./FoodCalculatorFilter";
+import FilterButton from "../../Common/FilterButton";
 
 export default function FoodCalculator() {
   const dispatch = useDispatch();
@@ -68,12 +69,9 @@ export default function FoodCalculator() {
   return (
     <View>
       <View style={styles.container}>
-      {/* {(isFoodFilterModalVisible || isActivityFilterModalVisible) && <Blur />} */}
         <View style={styles.titleContainer}>
           <Text style={styles.text}>Food Calculator</Text>
-          <Pressable onPress={openModal}>
-            <Ionicons name="filter-outline" size={32} color="black" />
-          </Pressable>
+          <FilterButton onPress={openModal} />
         </View>
         <DataTable style={styles.dataTable}>
           <DataTable.Header>
