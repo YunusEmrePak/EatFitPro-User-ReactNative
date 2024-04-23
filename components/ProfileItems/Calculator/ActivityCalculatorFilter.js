@@ -1,13 +1,7 @@
-import {
-    Modal,
-    Pressable
-} from "react-native";
+import { Modal, Pressable } from "react-native";
 
 import { StyleSheet, Text, View } from "react-native";
-import {
-    DEVICE_HEIGHT,
-    DEVICE_WIDTH,
-} from "../../../constants/constants";
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 
 import { TextInput } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
@@ -18,19 +12,26 @@ import { Provider } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { toolsActions } from "../../../redux/Tools/toolsSlice";
 import {
-    getFoodsCalculator,
-    userFoodCalorieCalculatorActions,
+  getFoodsCalculator,
+  userFoodCalorieCalculatorActions,
 } from "../../../redux/User/userFoodCalorieCalculatorSlice";
-import { getActivitiesCalculator, userActivityCalorieCalculatorActions } from "../../../redux/User/userActivityCalorieCalculatorSlice";
+import {
+  getActivitiesCalculator,
+  userActivityCalorieCalculatorActions,
+} from "../../../redux/User/userActivityCalorieCalculatorSlice";
 
 export default function ActivityCalculatorFilter() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  const isModalVisible = useSelector((state) => state.tools.activityCalculationFilterModal);
+  const isModalVisible = useSelector(
+    (state) => state.tools.activityCalculationFilterModal
+  );
   const filteredData = useSelector(
     (state) => state.userActivityCalculator.filteredData
   );
-  const category = useSelector((state) => state.userActivityCalculator.category);
+  const category = useSelector(
+    (state) => state.userActivityCalculator.category
+  );
 
   const activityCategories = useSelector(
     (state) => state.userGettingActivity.activityCategories
@@ -83,29 +84,43 @@ export default function ActivityCalculatorFilter() {
                 </View>
               </View>
               <View style={styles.filterPart}>
-                <DropDown
-                  label={"All Categories"}
-                  mode={"outlined"}
-                  visible={showDropDown}
-                  showDropDown={() => setShowDropDown(true)}
-                  onDismiss={() => setShowDropDown(false)}
-                  value={category}
-                  setValue={(val) => {
-                    if (val) {
-                      dispatch(userActivityCalorieCalculatorActions.setCategory(val));
-                      dispatch(
-                        userActivityCalorieCalculatorActions.setActivityCategoryName(val)
-                      );
-                    } else {
-                      dispatch(userActivityCalorieCalculatorActions.setCategory(null));
-                      dispatch(
-                        userActivityCalorieCalculatorActions.setActivityCategoryName("")
-                      );
-                    }
+                <View
+                  style={{
+                    width: DEVICE_WIDTH / 1.42,
                   }}
-                  list={dropdownList}
-                  key={(val) => val.value}
-                />
+                >
+                  <DropDown
+                    label={"All Categories"}
+                    mode={"outlined"}
+                    visible={showDropDown}
+                    showDropDown={() => setShowDropDown(true)}
+                    onDismiss={() => setShowDropDown(false)}
+                    value={category}
+                    setValue={(val) => {
+                      if (val) {
+                        dispatch(
+                          userActivityCalorieCalculatorActions.setCategory(val)
+                        );
+                        dispatch(
+                          userActivityCalorieCalculatorActions.setActivityCategoryName(
+                            val
+                          )
+                        );
+                      } else {
+                        dispatch(
+                          userActivityCalorieCalculatorActions.setCategory(null)
+                        );
+                        dispatch(
+                          userActivityCalorieCalculatorActions.setActivityCategoryName(
+                            ""
+                          )
+                        );
+                      }
+                    }}
+                    list={dropdownList}
+                    key={(val) => val.value}
+                  />
+                </View>
                 <TextInput
                   label="Name"
                   onChangeText={(text) =>

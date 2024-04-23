@@ -129,8 +129,7 @@ export default function FoodCalculator() {
               onPress={addingHandler}
               style={({ pressed }) => pressed && styles.pressedItem} 
               android_ripple={{
-                color: "#000",
-                borderRadius: DEVICE_WIDTH / 30,
+                color: "#fff1fc",
               }}
             >
               <Text style={styles.buttonText}>Calculate</Text>
@@ -223,7 +222,10 @@ const styles = StyleSheet.create({
     fontSize: DEVICE_WIDTH / 25,
     textAlign: "center",
     color: "white",
-    padding: DEVICE_WIDTH / 30,
+    // padding: DEVICE_WIDTH / 50,
+    width: DEVICE_WIDTH / 5,
+    height: DEVICE_HEIGHT / 20,
+    marginTop: DEVICE_HEIGHT / 40,
   },
   calculationText: {
     fontSize: DEVICE_WIDTH / 15,

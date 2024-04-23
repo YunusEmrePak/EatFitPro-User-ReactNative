@@ -1,5 +1,4 @@
 import {
-  Button,
   Modal,
   Pressable,
   ScrollView,
@@ -8,37 +7,26 @@ import {
 } from "react-native";
 
 import { StyleSheet, Text, View } from "react-native";
+import { DataTable, TextInput } from "react-native-paper";
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
 } from "../../../../../constants/constants";
-import { Octicons } from "@expo/vector-icons";
-import DropDown from "react-native-paper-dropdown";
-import { DataTable, TextInput } from "react-native-paper";
-import Pagination from "react-native-pagination";
 
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toolsActions } from "../../../../../redux/Tools/toolsSlice";
-import { useState } from "react";
-import {
-  getActivities,
-  userGettingActivityActions,
-} from "../../../../../redux/User/userGettingActivitySlice";
 import {
   addingActivityRecord,
   userAddingActivityActions,
 } from "../../../../../redux/User/userAddingActivitySlice";
+import { userGettingActivityActions } from "../../../../../redux/User/userGettingActivitySlice";
 
-import { Provider } from "react-native-paper";
-import {
-  getUserCalorieInfo,
-  getUserInfo,
-} from "../../../../../redux/User/userInformationSlice";
-import { Ionicons } from "@expo/vector-icons";
+import { getUserCalorieInfo } from "../../../../../redux/User/userInformationSlice";
 import Blur from "../../../../Common/Blur";
-import ActivityFilter from "./ActivityFilter";
-import Header from "../../../../Common/Header";
 import FilterButton from "../../../../Common/FilterButton";
+import Header from "../../../../Common/Header";
+import ActivityFilter from "./ActivityFilter";
 // kamil.aslan548@hotmail.com
 
 export default function ActivityModal() {
@@ -167,7 +155,9 @@ export default function ActivityModal() {
               value={heartRate ? heartRate.toString() : "0"}
               onChangeText={(text) =>
                 dispatch(
-                  userAddingActivityActions.setAddingActivityHeartRate(parseInt(text))
+                  userAddingActivityActions.setAddingActivityHeartRate(
+                    parseInt(text)
+                  )
                 )
               }
               mode="outlined"
@@ -179,7 +169,9 @@ export default function ActivityModal() {
               value={bodyTemp ? bodyTemp.toString() : "0"}
               onChangeText={(text) =>
                 dispatch(
-                  userAddingActivityActions.setAddingActivityBodyTemp(parseInt(text))
+                  userAddingActivityActions.setAddingActivityBodyTemp(
+                    parseInt(text)
+                  )
                 )
               }
               mode="outlined"
@@ -187,11 +179,17 @@ export default function ActivityModal() {
               keyboardType="numeric"
             />
           </View>
-          <Pressable onPress={addingHandler} style={styles.addContainer}>
-            <View style={styles.button}>
+          <View style={styles.button}>
+            <Pressable
+              onPress={addingHandler}
+              style={({ pressed }) => pressed && styles.pressedItem}
+              android_ripple={{
+                color: "#fff1fc",
+              }}
+            >
               <Text style={styles.buttonText}>ADD</Text>
-            </View>
-          </Pressable>
+            </Pressable>
+          </View>
         </View>
       </View>
       <ActivityFilter />
@@ -243,10 +241,7 @@ const styles = StyleSheet.create({
   inputs: {
     flexDirection: "row",
     width: DEVICE_WIDTH / 1.1,
-    justifyContent: "space-evenly"
-  },
-  addContainer: {
-    marginTop: DEVICE_HEIGHT / 60
+    justifyContent: "space-evenly",
   },
   name: {
     flex: 2,
@@ -273,10 +268,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderRadius: DEVICE_WIDTH / 30,
+    marginTop: DEVICE_HEIGHT / 60,
   },
   buttonText: {
     fontSize: DEVICE_WIDTH / 25,
     textAlign: "center",
     color: "white",
+    width: DEVICE_WIDTH / 6,
+    height: DEVICE_HEIGHT / 20,
+    marginTop: DEVICE_HEIGHT / 40,
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });

@@ -1,5 +1,4 @@
 import {
-  Button,
   Modal,
   Pressable,
   ScrollView,
@@ -13,36 +12,24 @@ import {
   DEVICE_WIDTH,
 } from "../../../../../constants/constants";
 
-import DropDown from "react-native-paper-dropdown";
 import { DataTable, TextInput } from "react-native-paper";
-import Pagination from "react-native-pagination";
 
-import { Octicons } from "@expo/vector-icons";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toolsActions } from "../../../../../redux/Tools/toolsSlice";
-import { useState } from "react";
-import {
-  getFoods,
-  userGettingFoodActions,
-} from "../../../../../redux/User/userGettingFoodSlice";
 import {
   addingFoodRecord,
   userAddingFoodActions,
 } from "../../../../../redux/User/userAddingFoodSlice";
+import { userGettingFoodActions } from "../../../../../redux/User/userGettingFoodSlice";
 
-import { Provider } from "react-native-paper";
-import {
-  getUserCalorieInfo,
-  getUserInfo,
-} from "../../../../../redux/User/userInformationSlice";
+import { getUserCalorieInfo } from "../../../../../redux/User/userInformationSlice";
 import Header from "../../../../Common/Header";
 // kamil.aslan548@hotmail.com
 
-import { Ionicons } from "@expo/vector-icons";
-import FoodFilter from "./FoodFilter";
-import { BlurView } from "@react-native-community/blur";
 import Blur from "../../../../Common/Blur";
 import FilterButton from "../../../../Common/FilterButton";
+import FoodFilter from "./FoodFilter";
 
 export default function FoodModal() {
   const dispatch = useDispatch();
@@ -150,11 +137,19 @@ export default function FoodModal() {
             mode="outlined"
             style={styles.textInputCalculate}
           />
-          <Pressable onPress={addingHandler}>
-            <View style={styles.button}>
-              <Text style={styles.buttonText}>ADD</Text>
-            </View>
-          </Pressable>
+          <View style={styles.button}>
+            <Pressable
+              onPress={addingHandler}
+              style={({ pressed }) => pressed && styles.pressedItem}
+              android_ripple={{
+                color: "#fff1fc",
+              }}
+            >
+              <View>
+                <Text style={styles.buttonText}>ADD</Text>
+              </View>
+            </Pressable>
+          </View>
         </View>
       </View>
       <FoodFilter />
@@ -234,5 +229,11 @@ const styles = StyleSheet.create({
     fontSize: DEVICE_WIDTH / 25,
     textAlign: "center",
     color: "white",
+    width: DEVICE_WIDTH / 6,
+    height: DEVICE_HEIGHT / 20,
+    marginTop: DEVICE_HEIGHT / 40,
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });

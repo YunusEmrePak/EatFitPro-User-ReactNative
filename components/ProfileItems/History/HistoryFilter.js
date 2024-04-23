@@ -4,22 +4,19 @@ import {
   Text,
   TouchableWithoutFeedback,
   View,
-  Button,
-  Platform,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { format } from "date-fns";
 import { useRef, useState } from "react";
 import { Modal, TextInput } from "react-native-paper";
+import { toolsActions } from "../../../redux/Tools/toolsSlice";
 import {
   getHistory,
   userCalorieHistoryActions,
 } from "../../../redux/User/userCalorieHistorySlice";
-import { toolsActions } from "../../../redux/Tools/toolsSlice";
-import { format } from "date-fns";
-import { MaterialIcons } from "@expo/vector-icons";
-import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function HistoryFilter() {
   const dispatch = useDispatch();
@@ -144,7 +141,9 @@ export default function HistoryFilter() {
                           icon={"close"}
                           onPress={() => {
                             dispatch(userCalorieHistoryActions.setDate(null));
-                            dispatch(userCalorieHistoryActions.setDateString(""));
+                            dispatch(
+                              userCalorieHistoryActions.setDateString("")
+                            );
                             dateRef.current.blur();
                           }}
                           style={{
@@ -166,11 +165,17 @@ export default function HistoryFilter() {
                 </View>
               </View>
               <View style={styles.buttonContainer}>
-                <Pressable onPress={filterHandler}>
-                  <View style={styles.button}>
+                <View style={styles.button}>
+                  <Pressable
+                    onPress={filterHandler}
+                    style={({ pressed }) => pressed && styles.pressedItem}
+                    android_ripple={{
+                      color: "#fff1fc",
+                    }}
+                  >
                     <Text style={styles.buttonText}>Apply Filter</Text>
-                  </View>
-                </Pressable>
+                  </Pressable>
+                </View>
               </View>
             </View>
           </Pressable>
@@ -226,6 +231,9 @@ const styles = StyleSheet.create({
     fontSize: DEVICE_WIDTH / 25,
     textAlign: "center",
     color: "white",
+    width: DEVICE_WIDTH / 4,
+    height: DEVICE_HEIGHT / 24,
+    marginTop: DEVICE_HEIGHT / 48,
   },
   buttonContainer: {
     alignItems: "center",
@@ -257,5 +265,8 @@ const styles = StyleSheet.create({
   pickedDate: {
     fontSize: 18,
     color: "black",
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });

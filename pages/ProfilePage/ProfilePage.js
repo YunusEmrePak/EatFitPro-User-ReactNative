@@ -35,7 +35,7 @@ const screenOptions = {
 
 const commonStyle = {
   tabBarSize: DEVICE_WIDTH / 30,
-  focusedColor: "#690770",
+  focusedColor: "#680770",
   // focusedColor: "#3F3C99",
   unFocusedColor: "#fff",
   iconSize: DEVICE_WIDTH / 16,

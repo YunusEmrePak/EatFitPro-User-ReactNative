@@ -24,24 +24,41 @@ export default function TableButtons() {
 
   return (
     <View style={styles.container}>
-      <Pressable
+      <View
         style={[
           styles.foodButton,
           tableName === "Food" && { backgroundColor: "#690770", elevation: 8 },
         ]}
-        onPress={changeToFoodTable}
       >
-        <Text style={styles.text}>Food</Text>
-      </Pressable>
-      <Pressable
+        <Pressable
+          onPress={changeToFoodTable}
+          style={({ pressed }) => pressed && styles.pressedItem}
+          android_ripple={{
+            color: "#fff1fc",
+          }}
+        >
+          <Text style={styles.text}>Food</Text>
+        </Pressable>
+      </View>
+      <View
         style={[
           styles.activityButton,
-          tableName === "Activity" && { backgroundColor: "#690770", elevation: 8 },
+          tableName === "Activity" && {
+            backgroundColor: "#690770",
+            elevation: 8,
+          },
         ]}
-        onPress={changeToActivityTable}
       >
-        <Text style={styles.text}>Activity</Text>
-      </Pressable>
+        <Pressable
+          style={({ pressed }) => pressed && styles.pressedItem}
+          android_ripple={{
+            color: "#fff1fc",
+          }}
+          onPress={changeToActivityTable}
+        >
+          <Text style={styles.text}>Activity</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -58,7 +75,7 @@ const styles = StyleSheet.create({
   foodButton: {
     width: DEVICE_WIDTH / 4,
     height: DEVICE_HEIGHT / 23,
-    backgroundColor: "#bb90bf", // bb90bf
+    backgroundColor: "#bb90bf",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: DEVICE_WIDTH / 30,
@@ -74,5 +91,12 @@ const styles = StyleSheet.create({
   text: {
     fontSize: DEVICE_WIDTH / 25,
     color: "white",
+    width: DEVICE_WIDTH / 4,
+    height: DEVICE_HEIGHT / 23,
+    marginTop: DEVICE_HEIGHT / 46,
+    textAlign: "center",
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });

@@ -188,11 +188,17 @@ export default function ActivityCalculator() {
               style={styles.textInputCalculate}
             />
           </View>
-          <Pressable onPress={addingHandler} style={styles.addContainer}>
-            <View style={styles.button}>
+          <View style={styles.button}>
+            <Pressable
+              onPress={addingHandler}
+              style={({ pressed }) => pressed && styles.pressedItem}
+              android_ripple={{
+                color: "#fff1fc",
+              }}
+            >
               <Text style={styles.buttonText}>Calculate</Text>
-            </View>
-          </Pressable>
+            </Pressable>
+          </View>
         </View>
         <View>
           <Text style={styles.calculationText}>
@@ -280,13 +286,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderRadius: DEVICE_WIDTH / 30,
+    overflow: "hidden"
   },
   buttonText: {
     fontSize: DEVICE_WIDTH / 25,
     textAlign: "center",
     color: "white",
+    // padding: DEVICE_WIDTH / 30,
+    width: DEVICE_WIDTH / 5,
+    height: DEVICE_HEIGHT / 20,
+    marginTop: DEVICE_HEIGHT / 40,
   },
   calculationText: {
     fontSize: DEVICE_WIDTH / 15,
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });

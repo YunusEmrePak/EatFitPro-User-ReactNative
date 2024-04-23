@@ -4,15 +4,30 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default function FilterButton({ onPress }) {
   return (
-    <Pressable onPress={onPress} style={styles.buttonContainer}>
-      <Ionicons name="filter-outline" size={22} color="grey" />
-      <Text style={styles.buttonText}>Filters</Text>
-    </Pressable>
+    <View style={styles.buttonContainer}>
+      <Pressable
+        onPress={onPress}
+        style={[
+          ({ pressed }) => pressed && styles.pressedItem,
+          styles.container,
+        ]}
+        android_ripple={{
+          color: "#d1f1f1",
+        }}
+      >
+        <Ionicons name="filter-outline" size={22} color="grey" />
+        <Text style={styles.buttonText}>Filters</Text>
+      </Pressable>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   buttonContainer: {
+    borderColor: "grey",
+    borderWidth: DEVICE_WIDTH / 700,
+  },
+  container: {
     justifyContent: "space-between",
     flexDirection: "row",
     alignItems: "center",
@@ -20,13 +35,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: DEVICE_WIDTH / 40,
     width: DEVICE_WIDTH / 4.7,
     height: DEVICE_HEIGHT / 23,
-    borderColor: "grey",
-    borderWidth: DEVICE_WIDTH / 700
   },
   buttonText: {
     fontSize: DEVICE_WIDTH / 25,
     textAlign: "center",
     color: "black",
-    fontWeight: "600"
+    fontWeight: "600",
+    // width: DEVICE_WIDTH / 4.7,
+    // height: DEVICE_HEIGHT / 23,
+    // marginTop: DEVICE_HEIGHT / 46,
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });

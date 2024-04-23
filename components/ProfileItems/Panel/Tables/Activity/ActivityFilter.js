@@ -155,11 +155,19 @@ export default function ActivityFilter() {
                   value={name}
                   style={styles.textInputFilter}
                 />
-                <Pressable onPress={filterHandler} style={styles.applyFilter}>
+                <View style={styles.applyFilter}>
                   <View style={styles.button}>
-                    <Text style={styles.buttonText}>Apply Filter</Text>
+                    <Pressable
+                      onPress={filterHandler}
+                      style={({ pressed }) => pressed && styles.pressedItem}
+                      android_ripple={{
+                        color: "#fff1fc",
+                      }}
+                    >
+                      <Text style={styles.buttonText}>Apply Filter</Text>
+                    </Pressable>
                   </View>
-                </Pressable>
+                </View>
               </View>
             </Pressable>
           </View>
@@ -252,5 +260,11 @@ const styles = StyleSheet.create({
     fontSize: DEVICE_WIDTH / 25,
     textAlign: "center",
     color: "white",
+    width: DEVICE_WIDTH / 4,
+    height: DEVICE_HEIGHT / 22,
+    marginTop: DEVICE_HEIGHT / 44,
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });
