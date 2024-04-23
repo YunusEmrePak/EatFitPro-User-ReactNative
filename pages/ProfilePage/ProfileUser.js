@@ -32,7 +32,8 @@ export default function ProfileUser({ navigation }) {
 
   return (
     <View>
-      <Header />
+      {/* <Header title="Profile" /> */}
+      <Header title="EatFitPro" />
       <View style={styles.safeArea}>
         <View style={styles.container}>
           <UserName

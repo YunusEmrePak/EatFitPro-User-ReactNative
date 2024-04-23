@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: DEVICE_HEIGHT / 20,
-    marginTop: DEVICE_HEIGHT / 30,
+    marginTop: DEVICE_HEIGHT / 32,
   },
   logo: {
     width: DEVICE_WIDTH / 7,

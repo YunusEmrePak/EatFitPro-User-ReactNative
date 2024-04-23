@@ -9,17 +9,18 @@ import {
 } from "react-native";
 import Logo from "../../assets/images/Logos/Logo.png";
 import HeaderBackground2 from "../../assets/images/ProfileImages/asideBg.jpg";
-import HeaderBackground from "../../assets/images/ProfileImages/leaderboardBg.png";
+import HeaderBackground3 from "../../assets/images/ProfileImages/leaderboardBg.png";
+import HeaderBackground from "../../assets/images/ProfileImages/darkTitleBg.png";
 
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 
-export default function Header() {
+export default function Header({ title }) {
   return (
     <ImageBackground source={HeaderBackground} style={styles.container}>
       <View style={styles.imageContainer}>
         <Image source={Logo} alt="Logo" style={styles.logo} />
       </View>
-      <Text style={styles.title}>EatFitPro</Text>
+      <Text style={styles.title}>{title}</Text>
     </ImageBackground>
   );
 }

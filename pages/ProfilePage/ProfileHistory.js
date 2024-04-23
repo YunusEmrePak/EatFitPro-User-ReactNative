@@ -21,7 +21,8 @@ export default function ProfileHistory() {
     <View
       style={{ alignItems: "center", justifyContent: "flex-start" }}
     >
-      <Header />
+      {/* <Header title="History" /> */}
+      <Header title="EatFitPro" />
       <View style={styles.titleContainer}>
         <Text style={styles.text}>History</Text>
         <FilterButton onPress={openModal} />

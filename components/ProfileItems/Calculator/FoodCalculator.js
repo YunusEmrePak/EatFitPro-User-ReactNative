@@ -118,7 +118,7 @@ export default function FoodCalculator() {
             mode="outlined"
             style={styles.textInputCalculate}
           />
-          <Pressable onPress={addingHandler} style={styles.calculateContainer}>
+          <Pressable onPress={addingHandler} style={styles.calculateContainer} android_ripple={{ color: "#000" }}>
             <View style={styles.button}>
               <Text style={styles.buttonText}>Calculate</Text>
             </View>

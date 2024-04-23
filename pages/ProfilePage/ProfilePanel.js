@@ -65,7 +65,8 @@ export default function ProfilePanel() {
 
   return (
     <View style={styles.container}>
-      <Header />
+      {/* <Header title="Panel" /> */}
+      <Header title="EatFitPro" />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <Title title="Today" />
         <CalorieCards />
