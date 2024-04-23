@@ -37,7 +37,6 @@ export default function Leaderboard() {
         <FirstThree leaderboard={leaderboard} />
       )}
       <ScrollView style={styles.leaderboard}>
-        {/* <FlatList  /> */}
         {leaderboardStatus === "succeeded" &&
           leaderboard.map(
             (item, index) =>

@@ -1,13 +1,15 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 
 import boyAvatar from "../../../assets/images/ProfileImages/boyAvatar.png";
+import girlAvatar from "../../../assets/images/ProfileImages/girlAvatar.png";
+import bg from "../../../assets/images/ProfileImages/leaderboardBg.png";
 
 import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function FirstThree({ leaderboard }) {
   return (
-    <View style={styles.half}>
+    <ImageBackground style={styles.half} source={bg}>
       <View>
         <Text style={styles.title}>Leaderboard</Text>
       </View>
@@ -67,13 +69,13 @@ export default function FirstThree({ leaderboard }) {
           </View>
         </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   half: {
-    backgroundColor: "#3F3C99",
+    // backgroundColor: "#3F3C99",
     alignItems: "center",
     borderBottomLeftRadius: DEVICE_WIDTH / 20,
     borderBottomRightRadius: DEVICE_WIDTH / 20,

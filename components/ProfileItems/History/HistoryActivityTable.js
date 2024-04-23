@@ -50,12 +50,13 @@ export default function HistoryActivityTable({ list }) {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    width: DEVICE_WIDTH / 2.7,
-    height: DEVICE_HEIGHT / 8,
-    backgroundColor: "#DBECF6",
+    alignItems: "flex-start",
+    width: DEVICE_WIDTH / 1.45,
+    height: DEVICE_HEIGHT / 4.5,
+    backgroundColor: "#bdfbdf",
     borderRadius: DEVICE_WIDTH / 30,
     paddingBottom: DEVICE_HEIGHT / 100,
+    paddingHorizontal: DEVICE_WIDTH / 30,
   },
   titleBar: {
     flexDirection: "row",
@@ -71,37 +72,37 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     width: DEVICE_WIDTH / 3.5,
     height: DEVICE_HEIGHT / 30,
-    backgroundColor: "#79B8E1",
+    backgroundColor: "#9cd393",
     borderRadius: DEVICE_WIDTH / 25,
     padding: DEVICE_WIDTH / 80,
     marginRight: DEVICE_WIDTH / 60,
   },
   titleText: {
-    fontSize: DEVICE_WIDTH / 35,
+    fontSize: DEVICE_WIDTH / 30,
   },
   item: {
     backgroundColor: "white",
     flexDirection: "row",
-    width: DEVICE_WIDTH / 2.9,
+    width: DEVICE_WIDTH / 1.6,
     height: DEVICE_HEIGHT / 30,
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: DEVICE_WIDTH / 120,
+    paddingHorizontal: DEVICE_WIDTH / 40,
     marginBottom: DEVICE_HEIGHT / 200,
     borderRadius: DEVICE_WIDTH / 50,
   },
   text: {
-    fontSize: DEVICE_WIDTH / 40,
+    fontSize: DEVICE_WIDTH / 30,
   },
   name: {
-    width: DEVICE_WIDTH / 6.3,
+    width: DEVICE_WIDTH / 4,
   },
   mass: {
-    width: DEVICE_WIDTH / 11,
+    width: DEVICE_WIDTH / 6.5,
     alignItems: "center",
   },
   calorie: {
-    // width: DEVICE_WIDTH / 5.3,
+    width: DEVICE_WIDTH / 6.5,
     alignItems: "flex-end",
   },
 });

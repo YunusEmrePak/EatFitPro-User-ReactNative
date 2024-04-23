@@ -47,12 +47,13 @@ export default function HistoryFoodTable({ list }) {
 }
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    width: DEVICE_WIDTH / 1.4,
-    height: DEVICE_HEIGHT / 8,
+    alignItems: "flex-start",
+    width: DEVICE_WIDTH / 1.45,
+    height: DEVICE_HEIGHT / 4.5,
     backgroundColor: "#bdfbdf",
     borderRadius: DEVICE_WIDTH / 30,
     paddingBottom: DEVICE_HEIGHT / 100,
+    paddingHorizontal: DEVICE_WIDTH / 30,
   },
   titleBar: {
     flexDirection: "row",
@@ -74,31 +75,31 @@ const styles = StyleSheet.create({
     marginRight: DEVICE_WIDTH / 60,
   },
   titleText: {
-    fontSize: DEVICE_WIDTH / 35,
+    fontSize: DEVICE_WIDTH / 30,
   },
   item: {
     backgroundColor: "white",
     flexDirection: "row",
-    width: DEVICE_WIDTH / 2.9,
+    width: DEVICE_WIDTH / 1.6,
     height: DEVICE_HEIGHT / 30,
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: DEVICE_WIDTH / 120,
+    paddingHorizontal: DEVICE_WIDTH / 40,
     marginBottom: DEVICE_HEIGHT / 200,
     borderRadius: DEVICE_WIDTH / 50,
   },
   text: {
-    fontSize: DEVICE_WIDTH / 40,
+    fontSize: DEVICE_WIDTH / 30,
   },
   name: {
-    width: DEVICE_WIDTH / 6.3,
+    width: DEVICE_WIDTH / 4,
   },
   mass: {
-    width: DEVICE_WIDTH / 11,
+    width: DEVICE_WIDTH / 6.5,
     alignItems: "center",
   },
   calorie: {
-    width: DEVICE_WIDTH / 12,
+    width: DEVICE_WIDTH / 6.5,
     alignItems: "flex-end",
   },
 });

@@ -68,28 +68,25 @@ export default function HistoryListItem({ data }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     backgroundColor: "#FFB1F2",
     width: DEVICE_WIDTH / 1.3,
-    height: DEVICE_HEIGHT / 2,
+    height: DEVICE_HEIGHT / 1.85,
     borderRadius: DEVICE_WIDTH / 25,
-    marginBottom: DEVICE_HEIGHT / 60,
-    elevation: 8,
+    marginBottom: DEVICE_HEIGHT / 30,
+    elevation: 10,
   },
   left: {
-    height: DEVICE_HEIGHT / 10,
     width: DEVICE_WIDTH / 1.35,
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center"
   },
   middle: {
-    height: DEVICE_HEIGHT / 4.2,
     alignItems: "center",
     justifyContent: "center",
   },
   right: {
-    height: DEVICE_HEIGHT / 4.2,
     alignItems: "center",
     justifyContent: "center",
   },
