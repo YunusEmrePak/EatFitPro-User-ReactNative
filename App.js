@@ -14,7 +14,8 @@ import SignUpFirstPage from "./pages/SignUpPage/SignUpFirstPage";
 import SignUpSecondPage from "./pages/SignUpPage/SignUpSecondPage";
 import SignUpVerifyPage from "./pages/SignUpPage/SignUpVerifyPage";
 import FoodModal from "./components/ProfileItems/Panel/Tables/Food/FoodModal";
-import { Keyboard } from "react-native";
+import { Keyboard, } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,7 @@ const App = () => {
 
   return (
     <Provider store={store}>
+      <StatusBar style="light"/>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen

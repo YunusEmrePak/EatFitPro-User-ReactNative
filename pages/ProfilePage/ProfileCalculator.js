@@ -16,7 +16,7 @@ export default function ProfileCalculator() {
     (state) => state.tools.activityCalculationFilterModal
   );
   return (
-    <SafeAreaView>
+    <View>
       {(isFoodFilterModalVisible || isActivityFilterModalVisible) && <Blur />}
       <Header />
       <ScrollView>
@@ -24,7 +24,7 @@ export default function ProfileCalculator() {
         <View style={styles.divider}></View>
         <ActivityCalculator />
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

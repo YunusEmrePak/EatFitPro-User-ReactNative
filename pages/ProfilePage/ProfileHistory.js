@@ -18,7 +18,7 @@ export default function ProfileHistory() {
     dispatch(toolsActions.setFilterModalVisible(true));
   };
   return (
-    <SafeAreaView
+    <View
       style={{ alignItems: "center", justifyContent: "flex-start" }}
     >
       <Header />
@@ -28,7 +28,7 @@ export default function ProfileHistory() {
       </View>
       <HistoryList />
       <HistoryFilter />
-    </SafeAreaView>
+    </View>
   );
 }
 

@@ -64,7 +64,7 @@ export default function ProfilePanel() {
   }, [token, refreshFood, refreshActivity]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <Title title="Today" />
@@ -78,7 +78,7 @@ export default function ProfilePanel() {
           {tableName === "Activity" && <ActivityTable />}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

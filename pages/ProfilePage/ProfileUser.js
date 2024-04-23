@@ -31,7 +31,7 @@ export default function ProfileUser({ navigation }) {
   };
 
   return (
-    <SafeAreaView>
+    <View>
       <Header />
       <View style={styles.safeArea}>
         <View style={styles.container}>
@@ -64,7 +64,7 @@ export default function ProfileUser({ navigation }) {
           </LinearGradient>
         </Pressable>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
