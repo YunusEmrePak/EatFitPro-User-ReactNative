@@ -49,11 +49,12 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "flex-start",
     width: DEVICE_WIDTH / 1.2,
-    height: DEVICE_HEIGHT / 4.25,
+    maxHeight: DEVICE_HEIGHT / 4.25,
     backgroundColor: "#bdfbdf",
     borderRadius: DEVICE_WIDTH / 30,
     paddingBottom: DEVICE_HEIGHT / 100,
     paddingHorizontal: DEVICE_WIDTH / 30,
+    marginTop: DEVICE_HEIGHT / 80,
   },
   titleBar: {
     flexDirection: "row",
@@ -66,16 +67,18 @@ const styles = StyleSheet.create({
   title: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-evenly",
-    width: DEVICE_WIDTH / 3.5,
+    // justifyContent: "space-evenly",
+    width: DEVICE_WIDTH / 3.3,
     height: DEVICE_HEIGHT / 30,
     backgroundColor: "#9cd393",
     borderRadius: DEVICE_WIDTH / 25,
     padding: DEVICE_WIDTH / 80,
     marginRight: DEVICE_WIDTH / 60,
+    paddingLeft: DEVICE_WIDTH / 60,
   },
   titleText: {
     fontSize: DEVICE_WIDTH / 30,
+    marginLeft: DEVICE_WIDTH / 80,
   },
   item: {
     backgroundColor: "white",

@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     backgroundColor: "#FFB1F2",
     width: DEVICE_WIDTH / 1.1,
-    height: DEVICE_HEIGHT / 1.7,
+    // minHeight: DEVICE_HEIGHT / 4,
+    // maxHeight: DEVICE_HEIGHT / 1.6,
     borderRadius: DEVICE_WIDTH / 25,
     marginBottom: DEVICE_HEIGHT / 30,
     elevation: 10,
@@ -80,7 +81,8 @@ const styles = StyleSheet.create({
     width: DEVICE_WIDTH / 1.35,
     flexDirection: "row",
     justifyContent: "space-evenly",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: DEVICE_HEIGHT / 80,
   },
   middle: {
     alignItems: "center",

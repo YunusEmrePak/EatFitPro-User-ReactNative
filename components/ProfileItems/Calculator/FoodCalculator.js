@@ -41,7 +41,9 @@ export default function FoodCalculator() {
   );
 
   const mass = useSelector((state) => state.userFoodCalculator.foodRecord.mass);
-  const id = useSelector((state) => state.userFoodCalculator.foodRecord.foodDto.id);
+  const id = useSelector(
+    (state) => state.userFoodCalculator.foodRecord.foodDto.id
+  );
 
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
@@ -51,7 +53,6 @@ export default function FoodCalculator() {
   };
 
   const addingHandler = () => {
-    console.log("Pressed")
     if (mass && id && mass > 0) {
       dispatch(foodCalculator(foodRecord));
       dispatch(userFoodCalorieCalculatorActions.setRefresh());
@@ -82,7 +83,10 @@ export default function FoodCalculator() {
             </DataTable.Title>
             <DataTable.Title style={styles.category}>Category</DataTable.Title>
           </DataTable.Header>
-          <ScrollView style={{ height: DEVICE_HEIGHT / 4.5 }} nestedScrollEnabled={true}>
+          <ScrollView
+            style={{ height: DEVICE_HEIGHT / 4.5 }}
+            nestedScrollEnabled={true}
+          >
             {foods.map((item, index) => (
               <TouchableOpacity
                 key={Math.random()}
@@ -113,19 +117,30 @@ export default function FoodCalculator() {
             label="Mass"
             keyboardType="numeric"
             onChangeText={(text) =>
-              dispatch(userFoodCalorieCalculatorActions.setFoodCalculatorMass(text))
+              dispatch(
+                userFoodCalorieCalculatorActions.setFoodCalculatorMass(text)
+              )
             }
             mode="outlined"
             style={styles.textInputCalculate}
           />
-          <Pressable onPress={addingHandler} style={styles.calculateContainer} android_ripple={{ color: "#000" }}>
-            <View style={styles.button}>
+          <View style={styles.button}>
+            <Pressable
+              onPress={addingHandler}
+              style={({ pressed }) => pressed && styles.pressedItem} 
+              android_ripple={{
+                color: "#000",
+                borderRadius: DEVICE_WIDTH / 30,
+              }}
+            >
               <Text style={styles.buttonText}>Calculate</Text>
-            </View>
-          </Pressable>
+            </Pressable>
+          </View>
         </View>
         <View>
-            <Text style={styles.calculationText}>{calculationResult} calories</Text>
+          <Text style={styles.calculationText}>
+            {calculationResult} calories
+          </Text>
         </View>
       </View>
       <FoodCalculatorFilter />
@@ -202,13 +217,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderRadius: DEVICE_WIDTH / 30,
+    overflow: "hidden"
   },
   buttonText: {
     fontSize: DEVICE_WIDTH / 25,
     textAlign: "center",
     color: "white",
+    padding: DEVICE_WIDTH / 30,
   },
   calculationText: {
-    fontSize: DEVICE_WIDTH / 15
+    fontSize: DEVICE_WIDTH / 15,
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });
