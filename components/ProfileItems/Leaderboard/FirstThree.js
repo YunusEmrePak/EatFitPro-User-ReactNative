@@ -10,83 +10,85 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function FirstThree({ leaderboard }) {
   return (
-    <ImageBackground style={styles.half} source={bg}>
-      <View style={styles.headerContainer}>
-        <Image source={Logo} alt="Logo" style={styles.logo} />
-        <Text style={styles.title}>Leaderboard</Text>
-      </View>
-      <View style={styles.firstThree}>
-        <View style={styles.second}>
-          <View style={styles.photo2}>
-            <FontAwesome5 name="crown" size={24} color="#C0C0C0" />
-            <Image
-              source={leaderboard[1].gender ? girlAvatar : boyAvatar}
-              style={styles.icon2}
-            />
-            <View style={[styles.queue, styles.queueSecond]}>
-              <Text style={styles.queueText}>2</Text>
+    <View style={styles.half}>
+      <ImageBackground source={bg}>
+        <View style={styles.headerContainer}>
+          <Image source={Logo} alt="Logo" style={styles.logo} />
+          <Text style={styles.title}>Leaderboard</Text>
+        </View>
+        <View style={styles.firstThree}>
+          <View style={styles.second}>
+            <View style={styles.photo2}>
+              <FontAwesome5 name="crown" size={24} color="#C0C0C0" />
+              <Image
+                source={leaderboard[1].gender ? girlAvatar : boyAvatar}
+                style={styles.icon2}
+              />
+              <View style={[styles.queue, styles.queueSecond]}>
+                <Text style={styles.queueText}>2</Text>
+              </View>
+            </View>
+            <View>
+              <Text style={styles.name}>
+                {leaderboard[1].name + " " + leaderboard[1].surname}
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.score}>{leaderboard[1].score}</Text>
             </View>
           </View>
-          <View>
-            <Text style={styles.name}>
-              {leaderboard[1].name + " " + leaderboard[1].surname}
-            </Text>
-          </View>
-          <View>
-            <Text style={styles.score}>{leaderboard[1].score}</Text>
-          </View>
-        </View>
-        <View style={styles.first}>
-          <View style={styles.photo2}>
-            <FontAwesome5 name="crown" size={24} color="#ffd700" />
-            <Image
-              source={leaderboard[0].gender ? girlAvatar : boyAvatar}
-              style={[styles.icon2, styles.icon1]}
-            />
-            <View style={[styles.queue, styles.queueFirst]}>
-              <Text style={styles.queueText}>1</Text>
+          <View style={styles.first}>
+            <View style={styles.photo2}>
+              <FontAwesome5 name="crown" size={24} color="#ffd700" />
+              <Image
+                source={leaderboard[0].gender ? girlAvatar : boyAvatar}
+                style={[styles.icon2, styles.icon1]}
+              />
+              <View style={[styles.queue, styles.queueFirst]}>
+                <Text style={styles.queueText}>1</Text>
+              </View>
+            </View>
+            <View>
+              <Text style={styles.name}>
+                {leaderboard[0].name + " " + leaderboard[0].surname}
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.score}>{leaderboard[0].score}</Text>
             </View>
           </View>
-          <View>
-            <Text style={styles.name}>
-              {leaderboard[0].name + " " + leaderboard[0].surname}
-            </Text>
-          </View>
-          <View>
-            <Text style={styles.score}>{leaderboard[0].score}</Text>
-          </View>
-        </View>
-        <View style={styles.third}>
-          <View style={styles.photo2}>
-            <FontAwesome5 name="crown" size={24} color="#CD7F32" />
-            <Image
-              source={leaderboard[2].gender ? girlAvatar : boyAvatar}
-              style={[styles.icon3, styles.icon2]}
-            />
-            <View style={[styles.queue, styles.queueThird]}>
-              <Text style={styles.queueText}>3</Text>
+          <View style={styles.third}>
+            <View style={styles.photo2}>
+              <FontAwesome5 name="crown" size={24} color="#CD7F32" />
+              <Image
+                source={leaderboard[2].gender ? girlAvatar : boyAvatar}
+                style={[styles.icon3, styles.icon2]}
+              />
+              <View style={[styles.queue, styles.queueThird]}>
+                <Text style={styles.queueText}>3</Text>
+              </View>
+            </View>
+            <View>
+              <Text style={styles.name}>
+                {leaderboard[2].name + " " + leaderboard[2].surname}
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.score}>{leaderboard[2].score}</Text>
             </View>
           </View>
-          <View>
-            <Text style={styles.name}>
-              {leaderboard[2].name + " " + leaderboard[2].surname}
-            </Text>
-          </View>
-          <View>
-            <Text style={styles.score}>{leaderboard[2].score}</Text>
-          </View>
         </View>
-      </View>
-    </ImageBackground>
+      </ImageBackground>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   half: {
-    // backgroundColor: "#3F3C99",
     alignItems: "center",
     borderBottomLeftRadius: DEVICE_WIDTH / 20,
     borderBottomRightRadius: DEVICE_WIDTH / 20,
+    overflow: "hidden",
   },
   headerContainer: {
     width: DEVICE_WIDTH,
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: DEVICE_HEIGHT / 20
+    marginBottom: DEVICE_HEIGHT / 20,
   },
   logo: {
     width: DEVICE_WIDTH / 7,
