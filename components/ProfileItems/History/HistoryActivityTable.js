@@ -51,8 +51,8 @@ export default function HistoryActivityTable({ list }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "flex-start",
-    width: DEVICE_WIDTH / 1.45,
-    height: DEVICE_HEIGHT / 4.5,
+    width: DEVICE_WIDTH / 1.2,
+    height: DEVICE_HEIGHT / 4.25,
     backgroundColor: "#bdfbdf",
     borderRadius: DEVICE_WIDTH / 30,
     paddingBottom: DEVICE_HEIGHT / 100,
@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: "white",
     flexDirection: "row",
-    width: DEVICE_WIDTH / 1.6,
-    height: DEVICE_HEIGHT / 30,
+    width: DEVICE_WIDTH / 1.3,
+    height: DEVICE_HEIGHT / 28,
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: DEVICE_WIDTH / 40,
@@ -92,17 +92,17 @@ const styles = StyleSheet.create({
     borderRadius: DEVICE_WIDTH / 50,
   },
   text: {
-    fontSize: DEVICE_WIDTH / 30,
+    fontSize: DEVICE_WIDTH / 26,
   },
   name: {
-    width: DEVICE_WIDTH / 4,
+    width: DEVICE_WIDTH / 3.3,
   },
   mass: {
-    width: DEVICE_WIDTH / 6.5,
+    width: DEVICE_WIDTH / 4.8,
     alignItems: "center",
   },
   calorie: {
-    width: DEVICE_WIDTH / 6.5,
+    width: DEVICE_WIDTH / 5.8,
     alignItems: "flex-end",
   },
 });

@@ -4,13 +4,15 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 import boyAvatar from "../../../assets/images/ProfileImages/boyAvatar.png";
 import girlAvatar from "../../../assets/images/ProfileImages/girlAvatar.png";
 import bg from "../../../assets/images/ProfileImages/leaderboardBg.png";
+import Logo from "../../../assets/images/Logos/Logo.png";
 
 import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function FirstThree({ leaderboard }) {
   return (
     <ImageBackground style={styles.half} source={bg}>
-      <View>
+      <View style={styles.headerContainer}>
+        <Image source={Logo} alt="Logo" style={styles.logo} />
         <Text style={styles.title}>Leaderboard</Text>
       </View>
       <View style={styles.firstThree}>
@@ -26,7 +28,9 @@ export default function FirstThree({ leaderboard }) {
             </View>
           </View>
           <View>
-            <Text style={styles.name}>{leaderboard[1].name + " " + leaderboard[1].surname}</Text>
+            <Text style={styles.name}>
+              {leaderboard[1].name + " " + leaderboard[1].surname}
+            </Text>
           </View>
           <View>
             <Text style={styles.score}>{leaderboard[1].score}</Text>
@@ -44,7 +48,9 @@ export default function FirstThree({ leaderboard }) {
             </View>
           </View>
           <View>
-            <Text style={styles.name}>{leaderboard[0].name + " " + leaderboard[0].surname}</Text>
+            <Text style={styles.name}>
+              {leaderboard[0].name + " " + leaderboard[0].surname}
+            </Text>
           </View>
           <View>
             <Text style={styles.score}>{leaderboard[0].score}</Text>
@@ -62,14 +68,16 @@ export default function FirstThree({ leaderboard }) {
             </View>
           </View>
           <View>
-            <Text style={styles.name}>{leaderboard[2].name + " " + leaderboard[2].surname}</Text>
+            <Text style={styles.name}>
+              {leaderboard[2].name + " " + leaderboard[2].surname}
+            </Text>
           </View>
           <View>
             <Text style={styles.score}>{leaderboard[2].score}</Text>
           </View>
         </View>
       </View>
-    </ImageBackground> 
+    </ImageBackground>
   );
 }
 
@@ -80,10 +88,22 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: DEVICE_WIDTH / 20,
     borderBottomRightRadius: DEVICE_WIDTH / 20,
   },
+  headerContainer: {
+    width: DEVICE_WIDTH,
+    height: DEVICE_HEIGHT / 12,
+    alignItems: "center",
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: DEVICE_HEIGHT / 20
+  },
+  logo: {
+    width: DEVICE_WIDTH / 7,
+    height: DEVICE_WIDTH / 7,
+    marginLeft: DEVICE_WIDTH / 20,
+  },
   title: {
     fontSize: DEVICE_WIDTH / 16,
-    marginBottom: DEVICE_HEIGHT / 15,
-    marginTop: DEVICE_HEIGHT / 30,
+    marginLeft: DEVICE_WIDTH / 30,
     color: "#fff",
   },
   firstThree: {
@@ -160,7 +180,7 @@ const styles = StyleSheet.create({
   name: {
     color: "#C4DBE9",
     bottom: DEVICE_HEIGHT / 100,
-    textAlign: "center"
+    textAlign: "center",
   },
   score: {
     color: "#fff",

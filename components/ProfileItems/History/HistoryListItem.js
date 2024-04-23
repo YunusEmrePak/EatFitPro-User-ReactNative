@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
     backgroundColor: "#FFB1F2",
-    width: DEVICE_WIDTH / 1.3,
-    height: DEVICE_HEIGHT / 1.85,
+    width: DEVICE_WIDTH / 1.1,
+    height: DEVICE_HEIGHT / 1.7,
     borderRadius: DEVICE_WIDTH / 25,
     marginBottom: DEVICE_HEIGHT / 30,
     elevation: 10,
@@ -96,6 +96,9 @@ const styles = StyleSheet.create({
   },
   date: {
     alignItems: "center",
+    justifyContent: "center",
+    height: DEVICE_HEIGHT / 16,
+    width: DEVICE_WIDTH / 6
   },
   dateTitle: {
     textAlign: "center",
@@ -106,9 +109,10 @@ const styles = StyleSheet.create({
   },
   calorieContainer: {
     alignItems: "center",
+    justifyContent: "space-evenly",
     backgroundColor: "#FDFFB3",
-    width: DEVICE_WIDTH / 6.5,
-    height: DEVICE_HEIGHT / 20,
+    width: DEVICE_WIDTH / 5.8,
+    height: DEVICE_HEIGHT / 18,
     marginTop: DEVICE_HEIGHT / 150,
     padding: DEVICE_WIDTH / 100,
     borderRadius: DEVICE_WIDTH / 50,

@@ -51,6 +51,7 @@ export default function FoodCalculator() {
   };
 
   const addingHandler = () => {
+    console.log("Pressed")
     if (mass && id && mass > 0) {
       dispatch(foodCalculator(foodRecord));
       dispatch(userFoodCalorieCalculatorActions.setRefresh());

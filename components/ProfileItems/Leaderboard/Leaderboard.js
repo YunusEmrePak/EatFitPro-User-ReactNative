@@ -32,7 +32,7 @@ export default function Leaderboard() {
 
   return (
     <View style={styles.container}>
-      <Header />
+      {/* <Header /> */}
       {leaderboardStatus === "succeeded" && (
         <FirstThree leaderboard={leaderboard} />
       )}
