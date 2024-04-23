@@ -40,23 +40,19 @@ export default function HistoryListItem({ data }) {
             <Text style={styles.dateTitle}>{formattedDate}</Text>
           </View>
         </View>
-        <View style={styles.calories}>
-          <View style={styles.calorieContainer}>
-            <Image source={ConsumedImage} style={styles.icon} />
-            <Text style={styles.calorieText}>
-              {data.totalConsumedCalories} cal
-            </Text>
-          </View>
-          <View style={styles.calorieContainer}>
-            <Image source={BurnedImage} style={styles.icon} />
-            <Text style={styles.calorieText}>
-              {data.totalBurnedCalories} cal
-            </Text>
-          </View>
-          <View style={styles.calorieContainer}>
-            <Image source={BalanceImage} style={styles.icon} />
-            <Text style={styles.calorieText}>{data.balance} cal</Text>
-          </View>
+        <View style={styles.calorieContainer}>
+          <Image source={ConsumedImage} style={styles.icon} />
+          <Text style={styles.calorieText}>
+            {data.totalConsumedCalories} cal
+          </Text>
+        </View>
+        <View style={styles.calorieContainer}>
+          <Image source={BurnedImage} style={styles.icon} />
+          <Text style={styles.calorieText}>{data.totalBurnedCalories} cal</Text>
+        </View>
+        <View style={styles.calorieContainer}>
+          <Image source={BalanceImage} style={styles.icon} />
+          <Text style={styles.calorieText}>{data.balance} cal</Text>
         </View>
       </View>
       <View style={styles.middle}>
@@ -71,19 +67,21 @@ export default function HistoryListItem({ data }) {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
     backgroundColor: "#FFB1F2",
-    width: DEVICE_WIDTH / 1.05,
-    height: DEVICE_HEIGHT / 3.8,
+    width: DEVICE_WIDTH / 1.3,
+    height: DEVICE_HEIGHT / 2,
     borderRadius: DEVICE_WIDTH / 25,
     marginBottom: DEVICE_HEIGHT / 60,
-    elevation: 8
+    elevation: 8,
   },
   left: {
-    height: DEVICE_HEIGHT / 4.2,
-    width: DEVICE_WIDTH / 6,
+    height: DEVICE_HEIGHT / 10,
+    width: DEVICE_WIDTH / 1.35,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center"
   },
   middle: {
     height: DEVICE_HEIGHT / 4.2,
@@ -101,13 +99,13 @@ const styles = StyleSheet.create({
   },
   date: {
     alignItems: "center",
-    marginTop: DEVICE_HEIGHT / 150,
   },
   dateTitle: {
     textAlign: "center",
   },
   calories: {
     alignItems: "center",
+    flexDirection: "row",
   },
   calorieContainer: {
     alignItems: "center",

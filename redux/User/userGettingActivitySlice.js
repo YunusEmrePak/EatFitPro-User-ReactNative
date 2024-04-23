@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import foodAndActivityApi from "../apis/foodAndActivityApi";
-import userApi from "../apis/userApi";
 
 export const getActivities = createAsyncThunk(
   "user/getActivity",

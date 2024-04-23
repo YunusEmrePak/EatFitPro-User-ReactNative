@@ -1,30 +1,16 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 
 import { Octicons } from "@expo/vector-icons";
-import { Fontisto } from "@expo/vector-icons";
 
-import { useDispatch, useSelector } from "react-redux";
-import { toolsActions } from "../../../redux/Tools/toolsSlice";
-import {
-  getFoodCategories,
-  getFoods,
-} from "../../../redux/User/userGettingFoodSlice";
-
-// kamil.aslan548@hotmail.com
+import { useSelector } from "react-redux";
 
 const commonStyle = {
   fontSize: DEVICE_WIDTH / 20,
 };
 
 export default function HistoryFoodTable({ list }) {
-  const dispatch = useDispatch();
-
-  const nullFilteredData = useSelector(
-    (state) => state.userGettingFood.nullFilteredData
-  );
   const token = useSelector((state) => state.signIn.token);
-  const foodList = useSelector((state) => state.userInformation.userFoodList);
 
   return (
     <View style={styles.container}>
@@ -62,8 +48,8 @@ export default function HistoryFoodTable({ list }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    width: DEVICE_WIDTH / 2.7,
-    height: DEVICE_HEIGHT / 4.5,
+    width: DEVICE_WIDTH / 1.4,
+    height: DEVICE_HEIGHT / 8,
     backgroundColor: "#bdfbdf",
     borderRadius: DEVICE_WIDTH / 30,
     paddingBottom: DEVICE_HEIGHT / 100,
