@@ -1,17 +1,14 @@
 import {
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
   FlatList,
+  StyleSheet,
+  View
 } from "react-native";
-import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
-import HistoryListItem from "./HistoryListItem";
 import { useDispatch, useSelector } from "react-redux";
+import { DEVICE_HEIGHT } from "../../../constants/constants";
+import HistoryListItem from "./HistoryListItem";
 
-import { getHistory } from "../../../redux/User/userCalorieHistorySlice";
 import { useEffect } from "react";
+import { getHistory } from "../../../redux/User/userCalorieHistorySlice";
 
 export default function HistoryList() {
   const dispatch = useDispatch();
@@ -20,19 +17,11 @@ export default function HistoryList() {
     (state) => state.userCalorieHistory.userHistory.content
   );
 
-  const statusHistory = useSelector((state) => state.userCalorieHistory.status);
-
   const isClicked = useSelector((state) => state.userCalorieHistory.isClicked);
 
-  const pageNumber = useSelector(
-    (state) => state.userCalorieHistory.pageNumber
-  );
-  const totalPage = useSelector((state) => state.userCalorieHistory.totalPage);
   const filteredData = useSelector(
     (state) => state.userCalorieHistory.filteredData
   );
-
-  const token = useSelector((state) => state.signIn.token);
 
   useEffect(() => {
     dispatch(
@@ -56,7 +45,6 @@ export default function HistoryList() {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: DEVICE_HEIGHT / 2.35,
-    // marginTop: DEVICE_HEIGHT / 50
+    marginBottom: DEVICE_HEIGHT / 4,
   },
 });

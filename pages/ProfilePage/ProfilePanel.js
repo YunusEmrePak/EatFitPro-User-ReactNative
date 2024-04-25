@@ -20,7 +20,10 @@ import {
   getFoodCategoriesCalculator,
   getFoodsCalculator,
 } from "../../redux/User/userFoodCalorieCalculatorSlice";
-import { getActivitiesCalculator, getActivityCategoriesCalculator } from "../../redux/User/userActivityCalorieCalculatorSlice";
+import {
+  getActivitiesCalculator,
+  getActivityCategoriesCalculator,
+} from "../../redux/User/userActivityCalorieCalculatorSlice";
 import { getUserGoal } from "../../redux/User/userAddGoalSlice";
 import DailyGoal from "../../components/ProfileItems/Panel/DailyGoal/DailyGoal";
 
@@ -67,7 +70,10 @@ export default function ProfilePanel() {
     <View style={styles.container}>
       {/* <Header title="Panel" /> */}
       <Header title="EatFitPro" />
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        keyboardShouldPersistTaps="handled"
+      >
         <Title title="Today" />
         <CalorieCards />
         <Title title="Daily Goal" />

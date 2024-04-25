@@ -20,7 +20,7 @@ export default function ProfileCalculator() {
       {(isFoodFilterModalVisible || isActivityFilterModalVisible) && <Blur />}
       {/* <Header title="Calculator" /> */}
       <Header title="EatFitPro" />
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps='handled'>
         <FoodCalculator />
         <View style={styles.divider}></View>
         <ActivityCalculator />

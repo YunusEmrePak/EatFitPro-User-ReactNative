@@ -25,7 +25,7 @@ export default function SignInPage({ navigation }) {
   }, [token]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} >
       <View style={styles.logo}>
         <Logo />
       </View>

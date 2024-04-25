@@ -13,51 +13,26 @@ import { DataTable, TextInput } from "react-native-paper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toolsActions } from "../../../redux/Tools/toolsSlice";
-import { userAddingFoodActions } from "../../../redux/User/userAddingFoodSlice";
 
-import { Ionicons } from "@expo/vector-icons";
-import {
-  foodCalculator,
-  userFoodCalorieCalculatorActions,
-} from "../../../redux/User/userFoodCalorieCalculatorSlice";
-import Blur from "../../Common/Blur";
-import FoodCalculatorFilter from "./FoodCalculatorFilter";
 import {
   activityCalculator,
   userActivityCalorieCalculatorActions,
 } from "../../../redux/User/userActivityCalorieCalculatorSlice";
-import ActivityCalculatorFilter from "./ActivityCalculatorFilter";
 import FilterButton from "../../Common/FilterButton";
+import ActivityCalculatorFilter from "./ActivityCalculatorFilter";
 
 export default function ActivityCalculator() {
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.signIn.token);
-  const filteredData = useSelector(
-    (state) => state.userActivityCalculator.filteredData
-  );
-  const isFoodFilterModalVisible = useSelector(
-    (state) => state.tools.foodCalculationFilterModal
-  );
-  const isActivityFilterModalVisible = useSelector(
-    (state) => state.tools.activityCalculationFilterModal
-  );
-  const activityCategories = useSelector(
-    (state) => state.userActivityCalculator.activityCategories
-  );
+
   const activities = useSelector(
     (state) => state.userActivityCalculator.activities
-  );
-  const category = useSelector(
-    (state) => state.userActivityCalculator.filteredData.category
   );
   const activityRecord = useSelector(
     (state) => state.userActivityCalculator.activityRecord
   );
-
   const calculationResult = useSelector(
     (state) => state.userActivityCalculator.calculationResult
   );
-
   const id = useSelector(
     (state) => state.userActivityCalculator.activityRecord.activityId
   );
@@ -121,6 +96,7 @@ export default function ActivityCalculator() {
           <ScrollView
             style={{ height: DEVICE_HEIGHT / 4.5 }}
             nestedScrollEnabled={true}
+            keyboardShouldPersistTaps="handled"
           >
             {activities.map((item, index) => (
               <TouchableOpacity
@@ -286,7 +262,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderRadius: DEVICE_WIDTH / 30,
-    overflow: "hidden"
+    overflow: "hidden",
   },
   buttonText: {
     fontSize: DEVICE_WIDTH / 25,

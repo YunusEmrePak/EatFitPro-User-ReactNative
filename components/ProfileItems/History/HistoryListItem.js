@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: DEVICE_HEIGHT / 16,
-    width: DEVICE_WIDTH / 6
+    width: DEVICE_WIDTH / 7,
   },
   dateTitle: {
     textAlign: "center",

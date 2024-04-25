@@ -19,7 +19,7 @@ export default function ProfileHistory() {
   };
   return (
     <View
-      style={{ alignItems: "center", justifyContent: "flex-start" }}
+      style={{ alignItems: "center", justifyContent: "flex-start", height: DEVICE_HEIGHT }}
     >
       {/* <Header title="History" /> */}
       <Header title="EatFitPro" />

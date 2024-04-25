@@ -13,25 +13,17 @@ import { DataTable, TextInput } from "react-native-paper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toolsActions } from "../../../redux/Tools/toolsSlice";
-import { userAddingFoodActions } from "../../../redux/User/userAddingFoodSlice";
 
-import { Ionicons } from "@expo/vector-icons";
 import {
   foodCalculator,
   userFoodCalorieCalculatorActions,
 } from "../../../redux/User/userFoodCalorieCalculatorSlice";
-import Blur from "../../Common/Blur";
-import FoodCalculatorFilter from "./FoodCalculatorFilter";
 import FilterButton from "../../Common/FilterButton";
+import FoodCalculatorFilter from "./FoodCalculatorFilter";
 
 export default function FoodCalculator() {
   const dispatch = useDispatch();
-  const isFoodFilterModalVisible = useSelector(
-    (state) => state.tools.foodCalculationFilterModal
-  );
-  const isActivityFilterModalVisible = useSelector(
-    (state) => state.tools.activityCalculationFilterModal
-  );
+
   const foods = useSelector((state) => state.userFoodCalculator.foods);
   const foodRecord = useSelector(
     (state) => state.userFoodCalculator.foodRecord
@@ -39,7 +31,6 @@ export default function FoodCalculator() {
   const calculationResult = useSelector(
     (state) => state.userFoodCalculator.calculationResult
   );
-
   const mass = useSelector((state) => state.userFoodCalculator.foodRecord.mass);
   const id = useSelector(
     (state) => state.userFoodCalculator.foodRecord.foodDto.id
@@ -86,6 +77,7 @@ export default function FoodCalculator() {
           <ScrollView
             style={{ height: DEVICE_HEIGHT / 4.5 }}
             nestedScrollEnabled={true}
+            keyboardShouldPersistTaps="handled"
           >
             {foods.map((item, index) => (
               <TouchableOpacity
@@ -127,7 +119,7 @@ export default function FoodCalculator() {
           <View style={styles.button}>
             <Pressable
               onPress={addingHandler}
-              style={({ pressed }) => pressed && styles.pressedItem} 
+              style={({ pressed }) => pressed && styles.pressedItem}
               android_ripple={{
                 color: "#fff1fc",
               }}
@@ -216,7 +208,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderRadius: DEVICE_WIDTH / 30,
-    overflow: "hidden"
+    overflow: "hidden",
   },
   buttonText: {
     fontSize: DEVICE_WIDTH / 25,

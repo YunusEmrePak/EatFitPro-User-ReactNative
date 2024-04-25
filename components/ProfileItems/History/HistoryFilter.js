@@ -125,44 +125,40 @@ export default function HistoryFilter() {
                   value={activityName}
                   style={styles.textInputFilter}
                 />
-                <View style={styles.dateContainer}>
-                  <TextInput
-                    label="Date"
-                    mode="outlined"
-                    value={dateString}
-                    style={styles.textInputFilter}
-                    onPressIn={showPicker}
-                    showSoftInputOnFocus={false}
-                    ref={dateRef}
-                    blurOnSubmit={true}
-                    right={
-                      date && (
-                        <TextInput.Icon
-                          icon={"close"}
-                          onPress={() => {
-                            dispatch(userCalorieHistoryActions.setDate(null));
-                            dispatch(
-                              userCalorieHistoryActions.setDateString("")
-                            );
-                            dateRef.current.blur();
-                          }}
-                          style={{
-                            marginTop: DEVICE_HEIGHT / 60,
-                          }}
-                        />
-                      )
-                    }
+                <TextInput
+                  label="Date"
+                  mode="outlined"
+                  value={dateString}
+                  style={styles.textInputFilter}
+                  onPressIn={showPicker}
+                  showSoftInputOnFocus={false}
+                  ref={dateRef}
+                  blurOnSubmit={true}
+                  right={
+                    date && (
+                      <TextInput.Icon
+                        icon={"close"}
+                        onPress={() => {
+                          dispatch(userCalorieHistoryActions.setDate(null));
+                          dispatch(userCalorieHistoryActions.setDateString(""));
+                          dateRef.current.blur();
+                        }}
+                        style={{
+                          marginTop: DEVICE_HEIGHT / 60,
+                        }}
+                      />
+                    )
+                  }
+                />
+                {isPickerShow && (
+                  <DateTimePicker
+                    value={date ? new Date(date) : new Date()}
+                    mode={"date"}
+                    is24Hour={true}
+                    onChange={onChange}
+                    style={styles.datePicker}
                   />
-                  {isPickerShow && (
-                    <DateTimePicker
-                      value={date ? new Date(date) : new Date()}
-                      mode={"date"}
-                      is24Hour={true}
-                      onChange={onChange}
-                      style={styles.datePicker}
-                    />
-                  )}
-                </View>
+                )}
               </View>
               <View style={styles.buttonContainer}>
                 <View style={styles.button}>
@@ -197,7 +193,6 @@ const styles = StyleSheet.create({
     height: DEVICE_HEIGHT / 3,
     alignItems: "flex-start",
     backgroundColor: "white",
-    // marginLeft: DEVICE_WIDTH / 10,
     paddingHorizontal: DEVICE_WIDTH / 20,
     paddingVertical: DEVICE_HEIGHT / 80,
     borderRadius: DEVICE_WIDTH / 40,
@@ -244,9 +239,6 @@ const styles = StyleSheet.create({
   pressedItem: {
     opacity: 0.8,
   },
-  resetButton: {
-    // width: DEVICE_WIDTH / 4,
-  },
   resetButtonText: {
     fontSize: DEVICE_WIDTH / 25,
     color: "#680770",
@@ -254,14 +246,5 @@ const styles = StyleSheet.create({
   inputs: {
     justifyContent: "space-evenly",
     marginBottom: DEVICE_HEIGHT / 50,
-  },
-  pickedDateContainer: {
-    padding: 20,
-    backgroundColor: "#eee",
-    borderRadius: 10,
-  },
-  pickedDate: {
-    fontSize: 18,
-    color: "black",
   },
 });
