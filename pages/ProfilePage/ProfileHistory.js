@@ -12,8 +12,6 @@ import FilterButton from "../../components/Common/FilterButton";
 export default function ProfileHistory() {
   const dispatch = useDispatch();
 
-  const isModalVisible = useSelector((state) => state.tools.filterModal);
-
   const openModal = () => {
     dispatch(toolsActions.setFilterModalVisible(true));
   };

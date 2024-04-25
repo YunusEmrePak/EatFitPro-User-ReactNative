@@ -90,7 +90,6 @@ export default function FoodCalculatorFilter() {
                     onDismiss={() => setShowDropDown(false)}
                     value={category}
                     setValue={(val) => {
-                      console.log(val);
                       if (val) {
                         dispatch(
                           userFoodCalorieCalculatorActions.setCategory(val)

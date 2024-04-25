@@ -4,7 +4,7 @@ import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Ionicons } from "@expo/vector-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 
 import { useEffect, useRef } from "react";
@@ -13,6 +13,17 @@ import ProfileHistory from "./ProfileHistory";
 import ProfileLeaderboard from "./ProfileLeaderboard";
 import ProfilePanel from "./ProfilePanel";
 import ProfileUser from "./ProfileUser";
+import {
+  getFoodCategoriesCalculator,
+  getFoodsCalculator,
+} from "../../redux/User/userFoodCalorieCalculatorSlice";
+import { getActivitiesCalculator, getActivityCategoriesCalculator } from "../../redux/User/userActivityCalorieCalculatorSlice";
+import {
+  getUserCalorieInfo,
+  getUserInfo,
+} from "../../redux/User/userInformationSlice";
+import { getHistory } from "../../redux/User/userCalorieHistorySlice";
+import { getLeaderboard } from "../../redux/User/userAddGoalSlice";
 
 const Tab = createBottomTabNavigator();
 
@@ -45,6 +56,47 @@ export default function ProfilePage({ navigation }) {
   const dispatch = useDispatch();
 
   const backPressCount = useRef(0);
+
+  const filteredFoodData = useSelector(
+    (state) => state.userFoodCalculator.filteredData
+  );
+  const filteredActivityData = useSelector(
+    (state) => state.userActivityCalculator.filteredData
+  );
+  const filteredHistoryData = useSelector(
+    (state) => state.userCalorieHistory.filteredData
+  );
+
+  const pressLeaderboardHandler = () => {};
+
+  const pressCalculatorHandler = () => {
+    dispatch(getFoodsCalculator({ filteredData: filteredFoodData, page: 1 }));
+    dispatch(getFoodCategoriesCalculator());
+    dispatch(
+      getActivitiesCalculator({
+        filteredData: filteredActivityData,
+        page: 1,
+      })
+    );
+    dispatch(getActivityCategoriesCalculator());
+  };
+
+  const pressPanelHandler = () => {
+    dispatch(getUserCalorieInfo());
+  };
+
+  const pressHistoryHandler = () => {
+    dispatch(
+      getHistory({
+        filteredData: filteredHistoryData,
+        page: 1,
+      })
+    );
+  };
+
+  const pressProfileHandler = () => {
+    dispatch(getUserInfo());
+  };
 
   useEffect(() => {
     const backAction = () => {
@@ -94,6 +146,11 @@ export default function ProfilePage({ navigation }) {
             color: "#fff",
           },
         }}
+        listeners={{
+          tabPress: () => {
+            pressLeaderboardHandler();
+          },
+        }}
       />
       <Tab.Screen
         name="Calculator"
@@ -117,6 +174,11 @@ export default function ProfilePage({ navigation }) {
           tabBarLabelStyle: {
             fontSize: commonStyle.tabBarSize,
             color: "#fff",
+          },
+        }}
+        listeners={{
+          tabPress: () => {
+            pressCalculatorHandler();
           },
         }}
       />
@@ -144,6 +206,11 @@ export default function ProfilePage({ navigation }) {
             color: "#fff",
           },
         }}
+        listeners={{
+          tabPress: () => {
+            pressPanelHandler();
+          },
+        }}
       />
       <Tab.Screen
         name="History"
@@ -169,6 +236,11 @@ export default function ProfilePage({ navigation }) {
             color: "#fff",
           },
         }}
+        listeners={{
+          tabPress: () => {
+            pressHistoryHandler();
+          },
+        }}
       />
       <Tab.Screen
         name="Profile"
@@ -192,6 +264,11 @@ export default function ProfilePage({ navigation }) {
           tabBarLabelStyle: {
             fontSize: commonStyle.tabBarSize,
             color: "#fff",
+          },
+        }}
+        listeners={{
+          tabPress: () => {
+            pressProfileHandler();
           },
         }}
       />

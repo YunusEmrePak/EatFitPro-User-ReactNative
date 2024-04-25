@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     borderColor: "grey",
     borderWidth: DEVICE_WIDTH / 700,
     overflow: "hidden",
+    borderRadius: DEVICE_WIDTH / 70
   },
   container: {
     justifyContent: "space-between",
