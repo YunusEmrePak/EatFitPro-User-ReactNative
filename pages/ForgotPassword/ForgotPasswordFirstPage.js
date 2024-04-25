@@ -1,13 +1,11 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import SignUpSecondForm from "../../components/Forms/SignUpForm/SignUpSecondForm";
-import Logo from "../../components/Logo/Logo";
-import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 import { Provider } from "react-native-paper";
-import { signUpActions } from "../../redux/SignIn/signUpSlice";
 import { useDispatch } from "react-redux";
 import ForgotPasswordFirstForm from "../../components/Forms/ForgotPasswordForm/ForgotPasswordFirstForm";
+import Logo from "../../components/Logo/Logo";
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 
 export default function ForgotPasswordFirstPage({ navigation }) {
   const dispatch = useDispatch();
@@ -30,7 +28,8 @@ export default function ForgotPasswordFirstPage({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: DEVICE_HEIGHT,
+    height: DEVICE_HEIGHT + DEVICE_HEIGHT / 20,
+    paddingBottom: DEVICE_HEIGHT / 5,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",

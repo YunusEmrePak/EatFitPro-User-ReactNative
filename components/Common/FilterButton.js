@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     borderColor: "grey",
     borderWidth: DEVICE_WIDTH / 700,
+    overflow: "hidden",
   },
   container: {
     justifyContent: "space-between",

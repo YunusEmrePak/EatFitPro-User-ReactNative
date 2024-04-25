@@ -47,23 +47,29 @@ export default function ProfileUser({ navigation }) {
             height={token && userInformation.length}
           />
         </View>
-        <Pressable onPress={signOut}>
-          <LinearGradient
-            colors={["#333", "#666"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.signContainer}
+        <View style={styles.signContainer}>
+          <Pressable
+            onPress={signOut}
+            style={({ pressed }) => pressed && styles.pressedItem}
+            android_ripple={{
+              color: "#fff",
+            }}
           >
-            <View style={styles.signContainer}>
+            <LinearGradient
+              colors={["#333", "#666"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.signContainer}
+            >
               <FontAwesome6
                 name="person-running"
                 size={commonStyle.iconSize}
                 color="white"
               />
               <Text style={styles.text}>Logout</Text>
-            </View>
-          </LinearGradient>
-        </Pressable>
+            </LinearGradient>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -88,8 +94,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     borderRadius: DEVICE_WIDTH / 35,
+    overflow: "hidden",
   },
   text: {
     color: "white",
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });

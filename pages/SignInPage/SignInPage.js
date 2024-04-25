@@ -1,15 +1,12 @@
-import { Pressable, StyleSheet, View, Text } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { TextInput } from "react-native-paper";
-import { Ionicons } from "@expo/vector-icons";
 
 import Logo from "../../components/Logo/Logo";
 
-import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
-import { useDispatch, useSelector } from "react-redux";
-import { signIn, signInActions } from "../../redux/SignIn/signInSlice";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import SignInForm from "../../components/Forms/SignInForm/SignInForm";
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 
 export default function SignInPage({ navigation }) {
   const dispatch = useDispatch();
@@ -45,11 +42,11 @@ export default function SignInPage({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: DEVICE_HEIGHT,
+    height: DEVICE_HEIGHT + DEVICE_HEIGHT / 20,
+    paddingBottom: DEVICE_HEIGHT / 5,
     backgroundColor: "white",
     alignItems: "center",
-    justifyContent: "flex-start",
-    paddingTop: DEVICE_HEIGHT / 5,
+    justifyContent: "center",
   },
   logo: {
     marginBottom: DEVICE_HEIGHT / 40,

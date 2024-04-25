@@ -1,13 +1,12 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import SignUpSecondForm from "../../components/Forms/SignUpForm/SignUpSecondForm";
-import Logo from "../../components/Logo/Logo";
-import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 import { Provider } from "react-native-paper";
-import { signUpActions } from "../../redux/SignIn/signUpSlice";
 import { useDispatch } from "react-redux";
 import SignUpVerifyForm from "../../components/Forms/SignUpForm/SignUpVerifyForm";
+import Logo from "../../components/Logo/Logo";
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
+import { signUpActions } from "../../redux/SignIn/signUpSlice";
 
 export default function SignUpVerifyPage({ navigation }) {
   const dispatch = useDispatch();
@@ -41,7 +40,8 @@ export default function SignUpVerifyPage({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: DEVICE_HEIGHT,
+    height: DEVICE_HEIGHT + DEVICE_HEIGHT / 20,
+    paddingBottom: DEVICE_HEIGHT / 5,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",

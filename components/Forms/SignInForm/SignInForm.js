@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import { TextInput } from "react-native-paper";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 import { signIn, signInActions } from "../../../redux/SignIn/signInSlice";
@@ -9,7 +9,6 @@ import {
   getUserCalorieInfo,
   getUserInfo,
 } from "../../../redux/User/userInformationSlice";
-import * as SecureStore from "expo-secure-store";
 
 export default function SignInForm({ navigation }) {
   const dispatch = useDispatch();
@@ -21,9 +20,11 @@ export default function SignInForm({ navigation }) {
   const password = useSelector(
     (state) => state.signIn.userInformation.password
   );
-  const status = useSelector((state) => state.signIn.status);
+
+  const passwordRef = useRef(null);
 
   const setPasswordEye = () => {
+    passwordRef.current.blur();
     dispatch(signInActions.setEyeIsClicked());
   };
 
@@ -70,6 +71,7 @@ export default function SignInForm({ navigation }) {
           style={styles.password}
           secureTextEntry={isEyeClicked ? false : true}
           autoCapitalize="none"
+          ref={passwordRef}
           right={
             <TextInput.Icon
               icon={isEyeClicked ? "eye-off" : "eye"}
@@ -86,11 +88,17 @@ export default function SignInForm({ navigation }) {
           <Text style={styles.forgotText}>Forgot Password</Text>
         </View>
       </Pressable>
-      <Pressable style={styles.signInButton} onPress={signInHandler}>
-        <View>
+      <View style={styles.signInButton}>
+        <Pressable
+          onPress={signInHandler}
+          style={({ pressed }) => pressed && styles.pressedItem}
+          android_ripple={{
+            color: "#fff1fc",
+          }}
+        >
           <Text style={styles.signInButtonText}>Sign In</Text>
-        </View>
-      </Pressable>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -128,5 +136,12 @@ const styles = StyleSheet.create({
   signInButtonText: {
     color: "white",
     fontSize: DEVICE_WIDTH / 20,
+    textAlign: "center",
+    width: DEVICE_WIDTH / 1.5,
+    height: DEVICE_HEIGHT / 20,
+    marginTop: DEVICE_HEIGHT / 40,
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });

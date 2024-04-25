@@ -28,9 +28,7 @@ export default function FoodCalculatorFilter() {
   const foodCategories = useSelector(
     (state) => state.userFoodCalculator.foodCategories
   );
-  const category = useSelector(
-    (state) => state.userFoodCalculator.category
-  );
+  const category = useSelector((state) => state.userFoodCalculator.category);
   const name = useSelector(
     (state) => state.userFoodCalculator.filteredData.name
   );
@@ -127,11 +125,19 @@ export default function FoodCalculatorFilter() {
                   mode="outlined"
                   style={styles.textInputFilter}
                 />
-                <Pressable onPress={filterHandler} style={styles.applyFilter}>
+                <View style={styles.buttonContainer}>
                   <View style={styles.button}>
-                    <Text style={styles.buttonText}>Apply Filter</Text>
+                    <Pressable
+                      onPress={filterHandler}
+                      style={({ pressed }) => pressed && styles.pressedItem}
+                      android_ripple={{
+                        color: "#fff1fc",
+                      }}
+                    >
+                      <Text style={styles.buttonText}>Apply Filter</Text>
+                    </Pressable>
                   </View>
-                </Pressable>
+                </View>
               </View>
             </Pressable>
           </View>
@@ -210,6 +216,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: DEVICE_HEIGHT / 60,
   },
+  buttonContainer: {
+    width: DEVICE_WIDTH / 1.42,
+    alignItems: "center",
+    overflow: "hidden",
+  },
   button: {
     backgroundColor: "#680770",
     width: DEVICE_WIDTH / 4,
@@ -223,5 +234,11 @@ const styles = StyleSheet.create({
     fontSize: DEVICE_WIDTH / 25,
     textAlign: "center",
     color: "white",
+    width: DEVICE_WIDTH / 4,
+    height: DEVICE_HEIGHT / 22,
+    marginTop: DEVICE_HEIGHT / 44,
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });

@@ -1,9 +1,9 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
-import Logo from "../../components/Logo/Logo";
 import SignUpFirstForm from "../../components/Forms/SignUpForm/SignUpFirstForm";
+import Logo from "../../components/Logo/Logo";
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 
 export default function SignUpFirstPage({ navigation }) {
   const navigateSignIn = () => {
@@ -27,7 +27,8 @@ export default function SignUpFirstPage({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    height: DEVICE_HEIGHT,
+    height: DEVICE_HEIGHT + DEVICE_HEIGHT / 20,
+    paddingBottom: DEVICE_HEIGHT / 5,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",

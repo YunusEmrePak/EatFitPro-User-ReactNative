@@ -1,12 +1,6 @@
 import { Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import {
-  TextInput,
-  Appbar,
-  DarkTheme,
-  DefaultTheme,
-  Provider,
-  Surface,
-  ThemeProvider,
+  TextInput
 } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
 
@@ -108,11 +102,17 @@ export default function SignUpSecondForm({ navigation }) {
           keyboardType="numeric"
         />
       </View>
-      <Pressable style={styles.signUpButton} onPress={signUpHandler}>
-        <View>
+      <View style={styles.signUpButton}>
+        <Pressable
+          onPress={signUpHandler}
+          style={({ pressed }) => pressed && styles.pressedItem}
+          android_ripple={{
+            color: "#fff1fc",
+          }}
+        >
           <Text style={styles.signUpButtonText}>SIGN UP</Text>
-        </View>
-      </Pressable>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -154,5 +154,12 @@ const styles = StyleSheet.create({
   signUpButtonText: {
     color: "white",
     fontSize: DEVICE_WIDTH / 20,
+    textAlign: "center",
+    width: DEVICE_WIDTH / 1.5,
+    height: DEVICE_HEIGHT / 20,
+    marginTop: DEVICE_HEIGHT / 40,
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });

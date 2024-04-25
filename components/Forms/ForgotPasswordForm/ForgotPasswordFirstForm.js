@@ -1,23 +1,11 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import {
-  TextInput,
-  Appbar,
-  DarkTheme,
-  DefaultTheme,
-  Provider,
-  Surface,
-  ThemeProvider,
+  TextInput
 } from "react-native-paper";
-import DropDown from "react-native-paper-dropdown";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
-import {
-  signUp,
-  signUpActions,
-  signUpActivate,
-} from "../../../redux/SignIn/signUpSlice";
 import {
   sendEmail,
   userForgotPasswordActions,
@@ -78,11 +66,17 @@ export default function ForgotPasswordFirstForm({ navigation }) {
           autoCapitalize="none"
         />
       </View>
-      <Pressable style={styles.signUpButton} onPress={sendCode}>
-        <View>
+      <View style={styles.signUpButton}>
+        <Pressable
+          onPress={sendCode}
+          style={({ pressed }) => pressed && styles.pressedItem}
+          android_ripple={{
+            color: "#fff1fc",
+          }}
+        >
           <Text style={styles.signUpButtonText}>SEND CODE</Text>
-        </View>
-      </Pressable>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -108,6 +102,10 @@ const styles = StyleSheet.create({
   signUpButtonText: {
     color: "white",
     fontSize: DEVICE_WIDTH / 20,
+    textAlign: "center",
+    width: DEVICE_WIDTH / 1.5,
+    height: DEVICE_HEIGHT / 20,
+    marginTop: DEVICE_HEIGHT / 40,
   },
   info: {
     width: DEVICE_WIDTH / 1.5,
@@ -116,5 +114,8 @@ const styles = StyleSheet.create({
   infoText: {
     textAlign: "center",
     fontSize: DEVICE_WIDTH / 25,
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });

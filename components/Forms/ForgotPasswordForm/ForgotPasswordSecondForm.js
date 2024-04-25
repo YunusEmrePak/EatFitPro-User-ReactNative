@@ -1,21 +1,14 @@
 import { Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import {
-  TextInput,
-  Appbar,
-  DarkTheme,
-  DefaultTheme,
-  Provider,
-  Surface,
-  ThemeProvider,
+  TextInput
 } from "react-native-paper";
-import DropDown from "react-native-paper-dropdown";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 import {
-  userForgotPasswordActions,
   changePassword,
+  userForgotPasswordActions,
 } from "../../../redux/User/userForgotPasswordSlice";
 
 export default function ForgotPasswordSecondForm({ navigation }) {
@@ -45,7 +38,12 @@ export default function ForgotPasswordSecondForm({ navigation }) {
     (state) => state.userForgotPassword.eyeIsClicked
   );
 
+  const passwordRef1 = useRef(null);
+  const passwordRef2 = useRef(null);
+
   const setPasswordEye = () => {
+    passwordRef1.current.blur();
+    passwordRef2.current.blur();
     dispatch(userForgotPasswordActions.setEyeIsClicked());
   };
 
@@ -54,8 +52,7 @@ export default function ForgotPasswordSecondForm({ navigation }) {
     if (newPassword === confirmPassword) {
       dispatch(changePassword(passwordInformation));
       dispatch(userForgotPasswordActions.setIsClickedToSecondPage());
-    } 
-    else {
+    } else {
       ToastAndroid.show("Password does not match.", ToastAndroid.SHORT);
     }
   };
@@ -86,6 +83,7 @@ export default function ForgotPasswordSecondForm({ navigation }) {
           mode="outlined"
           style={styles.newPassword}
           autoCapitalize="none"
+          ref={passwordRef1}
           secureTextEntry={isEyeClicked ? false : true}
           right={
             <TextInput.Icon
@@ -101,6 +99,7 @@ export default function ForgotPasswordSecondForm({ navigation }) {
           }
           mode="outlined"
           style={styles.newPasswordConfirm}
+          ref={passwordRef2}
           secureTextEntry={isEyeClicked ? false : true}
           autoCapitalize="none"
           right={
@@ -120,11 +119,17 @@ export default function ForgotPasswordSecondForm({ navigation }) {
           keyboardType="numeric"
         />
       </View>
-      <Pressable style={styles.signUpButton} onPress={changePasswordHandler}>
-        <View>
-          <Text style={styles.signUpButtonText}>SEND CODE</Text>
-        </View>
-      </Pressable>
+      <View style={styles.signUpButton}>
+        <Pressable
+          onPress={changePasswordHandler}
+          style={({ pressed }) => pressed && styles.pressedItem}
+          android_ripple={{
+            color: "#fff1fc",
+          }}
+        >
+          <Text style={styles.signUpButtonText}>CHANGE PASSWORD</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -158,6 +163,10 @@ const styles = StyleSheet.create({
   signUpButtonText: {
     color: "white",
     fontSize: DEVICE_WIDTH / 20,
+    textAlign: "center",
+    width: DEVICE_WIDTH / 1.5,
+    height: DEVICE_HEIGHT / 20,
+    marginTop: DEVICE_HEIGHT / 40,
   },
   info: {
     width: DEVICE_WIDTH / 1.5,
@@ -166,5 +175,8 @@ const styles = StyleSheet.create({
   infoText: {
     textAlign: "center",
     fontSize: DEVICE_WIDTH / 25,
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });

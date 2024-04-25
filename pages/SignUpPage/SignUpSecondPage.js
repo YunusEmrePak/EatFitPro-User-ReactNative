@@ -1,10 +1,10 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { Provider } from "react-native-paper";
 import SignUpSecondForm from "../../components/Forms/SignUpForm/SignUpSecondForm";
 import Logo from "../../components/Logo/Logo";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
-import { Provider } from "react-native-paper";
 
 export default function SignUpSecondPage({ navigation }) {
   const navigateSignIn = () => {
@@ -30,11 +30,11 @@ export default function SignUpSecondPage({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    height: DEVICE_HEIGHT,
+    height: DEVICE_HEIGHT + DEVICE_HEIGHT / 20,
+    paddingBottom: DEVICE_HEIGHT / 5,
   },
   logo: {
     marginBottom: DEVICE_HEIGHT / 40,

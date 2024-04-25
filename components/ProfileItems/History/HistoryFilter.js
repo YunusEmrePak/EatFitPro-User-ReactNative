@@ -239,6 +239,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: DEVICE_WIDTH / 1.25,
     paddingRight: DEVICE_WIDTH / 10,
+    overflow: "hidden",
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
   resetButton: {
     // width: DEVICE_WIDTH / 4,
@@ -251,12 +255,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     marginBottom: DEVICE_HEIGHT / 50,
   },
-  dateContainer: {
-    // display: "flex",
-    // flexDirection: "column",
-    // alignItems: "center",
-    // justifyContent: "center",
-  },
   pickedDateContainer: {
     padding: 20,
     backgroundColor: "#eee",
@@ -265,8 +263,5 @@ const styles = StyleSheet.create({
   pickedDate: {
     fontSize: 18,
     color: "black",
-  },
-  pressedItem: {
-    opacity: 0.8,
   },
 });

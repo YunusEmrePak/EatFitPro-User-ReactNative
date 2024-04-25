@@ -1,18 +1,11 @@
 import { Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import {
-  TextInput,
-  Appbar,
-  DarkTheme,
-  DefaultTheme,
-  Provider,
-  Surface,
-  ThemeProvider,
+  TextInput
 } from "react-native-paper";
 
-import { useEffect } from "react";
+import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
-import { signIn, signInActions } from "../../../redux/SignIn/signInSlice";
 import { signUpActions } from "../../../redux/SignIn/signUpSlice";
 
 export default function SignUpFirstForm({ navigation }) {
@@ -26,9 +19,10 @@ export default function SignUpFirstForm({ navigation }) {
   );
 
   const isEyeClicked = useSelector((state) => state.signUp.eyeIsClicked);
-  const token = useSelector((state) => state.signIn.token);
+  const passwordRef = useRef(null);
 
   const setPasswordEye = () => {
+    passwordRef.current.blur();
     dispatch(signUpActions.setEyeIsClicked());
   };
 
@@ -81,6 +75,7 @@ export default function SignUpFirstForm({ navigation }) {
           style={styles.password}
           secureTextEntry={isEyeClicked ? false : true}
           autoCapitalize="none"
+          ref={passwordRef}
           right={
             <TextInput.Icon
               icon={isEyeClicked ? "eye-off" : "eye"}
@@ -89,11 +84,17 @@ export default function SignUpFirstForm({ navigation }) {
           }
         />
       </View>
-      <Pressable style={styles.signUpButton} onPress={signUpHandler}>
-        <View>
+      <View style={styles.signUpButton}>
+        <Pressable
+          onPress={signUpHandler}
+          style={({ pressed }) => pressed && styles.pressedItem}
+          android_ripple={{
+            color: "#fff1fc",
+          }}
+        >
           <Text style={styles.signUpButtonText}>CONTINUE</Text>
-        </View>
-      </Pressable>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -135,5 +136,12 @@ const styles = StyleSheet.create({
   signUpButtonText: {
     color: "white",
     fontSize: DEVICE_WIDTH / 20,
+    textAlign: "center",
+    width: DEVICE_WIDTH / 1.5,
+    height: DEVICE_HEIGHT / 20,
+    marginTop: DEVICE_HEIGHT / 40,
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });
