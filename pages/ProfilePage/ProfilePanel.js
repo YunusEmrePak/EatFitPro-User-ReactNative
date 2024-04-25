@@ -53,15 +53,15 @@ export default function ProfilePanel() {
     if (token && (refreshFood || refreshActivity)) {
       dispatch(getUserInfo());
       dispatch(getUserCalorieInfo());
-      // dispatch(getFoodsCalculator({ filteredData: filteredFoodData, page: 1 }));
-      // dispatch(getFoodCategoriesCalculator());
-      // dispatch(
-      //   getActivitiesCalculator({
-      //     filteredData: filteredActivityData,
-      //     page: 1,
-      //   })
-      // );
-      // dispatch(getActivityCategoriesCalculator());
+      dispatch(getFoodsCalculator({ filteredData: filteredFoodData, page: 1 }));
+      dispatch(getFoodCategoriesCalculator());
+      dispatch(
+        getActivitiesCalculator({
+          filteredData: filteredActivityData,
+          page: 1,
+        })
+      );
+      dispatch(getActivityCategoriesCalculator());
       dispatch(getUserGoal());
     }
   }, [token, refreshFood, refreshActivity]);
