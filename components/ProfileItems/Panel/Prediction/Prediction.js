@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     height: DEVICE_HEIGHT / 7,
     flexDirection: "row",
     borderRadius: DEVICE_WIDTH / 30,
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     alignItems: "center",
     marginBottom: DEVICE_HEIGHT / 40,
   },
