@@ -20,6 +20,24 @@ export const getActivities = createAsyncThunk(
   }
 );
 
+export const getFilteredActivities = createAsyncThunk(
+  "user/getFilteredActivity",
+  async ({ filteredData, page }, { rejectWithValue }) => {
+    try {
+      const response = await foodAndActivityApi.post(
+        `/activity?page=${page - 1}&size=20`,
+        JSON.stringify(filteredData)
+      );
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const getActivityCategories = createAsyncThunk(
   "user/categories/activity",
   async (_, { rejectWithValue }) => {
@@ -38,7 +56,9 @@ export const getActivityCategories = createAsyncThunk(
 export const userGettingActivitySlice = createSlice({
   name: "userGettingActivitySlice",
   initialState: {
-    status: "idle",
+    activityStatus: "idle",
+    filteredActivityStatus: "idle",
+    categoryStatus: "idle",
     error: null,
     nullFilteredData: {
       name: "",
@@ -69,6 +89,11 @@ export const userGettingActivitySlice = createSlice({
     setCategory: (state, action) => {
       state.category = action.payload;
     },
+    setStatusNull: (state) => {
+      state.activityStatus = "idle";
+      state.filteredActivityStatus = "idle";
+      state.categoryStatus = "idle";
+    },
     setFilteredDataNull: (state) => {
       state.filteredData = {
         name: "",
@@ -82,18 +107,36 @@ export const userGettingActivitySlice = createSlice({
       .addCase(getActivities.fulfilled, (state, action) => {
         state.activities = action.payload.content;
         state.totalPage = action.payload.totalPages;
-        state.status = "succeeded";
+        state.activityStatus = "succeeded";
+      })
+      .addCase(getActivities.pending, (state, action) => {
+        state.activityStatus = "pending";
       })
       .addCase(getActivities.rejected, (state, action) => {
-        state.status = "failed";
+        state.activityStatus = "failed";
+      })
+
+      .addCase(getFilteredActivities.fulfilled, (state, action) => {
+        state.activities = action.payload.content;
+        state.totalPage = action.payload.totalPages;
+        state.filteredActivityStatus = "succeeded";
+      })
+      .addCase(getFilteredActivities.pending, (state, action) => {
+        state.filteredActivityStatus = "pending";
+      })
+      .addCase(getFilteredActivities.rejected, (state, action) => {
+        state.filteredActivityStatus = "failed";
       })
 
       .addCase(getActivityCategories.fulfilled, (state, action) => {
         state.activityCategories = action.payload;
-        state.status = "succeeded";
+        state.categoryStatus = "succeeded";
+      })
+      .addCase(getActivityCategories.pending, (state, action) => {
+        state.categoryStatus = "pending";
       })
       .addCase(getActivityCategories.rejected, (state, action) => {
-        state.status = "failed";
+        state.categoryStatus = "failed";
       })
   },
 });

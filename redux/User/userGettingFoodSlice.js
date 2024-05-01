@@ -20,6 +20,24 @@ export const getFoods = createAsyncThunk(
   }
 );
 
+export const getFilteredFoods = createAsyncThunk(
+  "user/getFilteredFood",
+  async ({ filteredData, page }, { rejectWithValue }) => {
+    try {
+      const response = await foodAndActivityApi.post(
+        `/food?page=${page - 1}&size=20`,
+        JSON.stringify(filteredData)
+      );
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const getFoodCategories = createAsyncThunk(
   "user/categories/food",
   async (_, { rejectWithValue }) => {
@@ -38,7 +56,9 @@ export const getFoodCategories = createAsyncThunk(
 export const userGettingFoodSlice = createSlice({
   name: "userGettingFoodSlice",
   initialState: {
-    status: "idle",
+    foodStatus: "idle",
+    filteredFoodStatus: "idle",
+    categoryStatus: "idle", 
     error: null,
     nullFilteredData: {
       name: "",
@@ -84,24 +104,47 @@ export const userGettingFoodSlice = createSlice({
     setIsReset: (state) => {
       state.isReset = !state.isReset;
     },
+    setStatusNull: (state) => {
+      state.foodStatus = "idle";
+      state.filteredFoodStatus = "idle";
+      state.categoryStatus = "idle";
+    },  
   },
   extraReducers: (builder) => {
     builder
       .addCase(getFoods.fulfilled, (state, action) => {
         state.foods = action.payload.content;
         state.totalPage = action.payload.totalPages;
-        state.status = "succeeded";
+        state.foodStatus = "succeeded";
       })
-      .addCase(getFoods.rejected, (state, action) => {
-        state.status = "failed";
+      .addCase(getFoods.pending, (state) => {
+        state.foodStatus = "pending";
+      })
+      .addCase(getFoods.rejected, (state) => {
+        state.foodStatus = "failed";
+      })
+
+      .addCase(getFilteredFoods.fulfilled, (state, action) => {
+        state.foods = action.payload.content;
+        state.totalPage = action.payload.totalPages;
+        state.filteredFoodStatus = "succeeded";
+      })
+      .addCase(getFilteredFoods.pending, (state) => {
+        state.filteredFoodStatus = "pending";
+      })
+      .addCase(getFilteredFoods.rejected, (state) => {
+        state.filteredFoodStatus = "failed";
       })
 
       .addCase(getFoodCategories.fulfilled, (state, action) => {
         state.foodCategories = action.payload;
-        state.status = "succeeded";
+        state.categoryStatus = "succeeded";
       })
-      .addCase(getFoodCategories.rejected, (state, action) => {
-        state.status = "failed";
+      .addCase(getFoodCategories.pending, (state) => {
+        state.categoryStatus = "pending";
+      })
+      .addCase(getFoodCategories.rejected, (state) => {
+        state.categoryStatus = "failed";
       })
 
   },

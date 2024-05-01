@@ -4,9 +4,12 @@ import {
   ScrollView,
   ToastAndroid,
   TouchableOpacity,
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
 } from "react-native";
 
-import { StyleSheet, Text, View } from "react-native";
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
@@ -14,7 +17,7 @@ import {
 
 import { DataTable, TextInput } from "react-native-paper";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toolsActions } from "../../../../../redux/Tools/toolsSlice";
 import {
@@ -45,6 +48,11 @@ export default function FoodModal() {
   const mass = useSelector((state) => state.userAddingFood.foodRecord.mass);
   const id = useSelector((state) => state.userAddingFood.foodRecord.food.id);
 
+  const foodStatus = useSelector((state) => state.userGettingFood.foodStatus);
+  const foodAddingStatus = useSelector(
+    (state) => state.userAddingFood.addingStatus
+  );
+
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
   const handleRowPress = (rowData, rowIndex) => {
@@ -66,7 +74,6 @@ export default function FoodModal() {
       dispatch(userAddingFoodActions.setRefresh());
       dispatch(getUserCalorieInfo());
       dispatch(userAddingFoodActions.setFoodRecordNull());
-      onCloseModal();
     } else {
       ToastAndroid.show(
         "You must fill the amount area and choose a food from the table. You can't enter negative value.",
@@ -76,8 +83,15 @@ export default function FoodModal() {
   };
 
   const openModal = () => {
+    dispatch(userGettingFoodActions.setStatusNull());
     dispatch(toolsActions.setFoodFilterModalVisible(true));
   };
+
+  useEffect(() => {
+    if (foodAddingStatus === "succeeded") {
+      onCloseModal();
+    }
+  }, [foodAddingStatus]);
 
   return (
     <Modal
@@ -101,31 +115,37 @@ export default function FoodModal() {
             </DataTable.Title>
             <DataTable.Title style={styles.category}>Category</DataTable.Title>
           </DataTable.Header>
-          <ScrollView style={{ height: DEVICE_HEIGHT / 4.5 }}>
-            {foods.map((item, index) => (
-              <TouchableOpacity
-                key={Math.random()}
-                onPress={() => handleRowPress(item, index)}
-              >
-                <DataTable.Row
-                  style={{
-                    backgroundColor:
-                      selectedRowIndex === index ? "lightblue" : "white",
-                  }}
-                >
-                  <DataTable.Cell style={styles.name}>
-                    {item.name}
-                  </DataTable.Cell>
-                  <DataTable.Cell style={styles.calorie}>
-                    {item.calories}
-                  </DataTable.Cell>
-                  <DataTable.Cell style={styles.category}>
-                    {item.foodCategoryDto.name}
-                  </DataTable.Cell>
-                </DataTable.Row>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+          <View style={styles.tableContainer}>
+            {foodStatus === "pending" ? (
+              <ActivityIndicator size="large" />
+            ) : (
+              <ScrollView style={{ height: DEVICE_HEIGHT / 4.5 }}>
+                {foods.map((item, index) => (
+                  <TouchableOpacity
+                    key={Math.random()}
+                    onPress={() => handleRowPress(item, index)}
+                  >
+                    <DataTable.Row
+                      style={{
+                        backgroundColor:
+                          selectedRowIndex === index ? "lightblue" : "white",
+                      }}
+                    >
+                      <DataTable.Cell style={styles.name}>
+                        {item.name}
+                      </DataTable.Cell>
+                      <DataTable.Cell style={styles.calorie}>
+                        {item.calories}
+                      </DataTable.Cell>
+                      <DataTable.Cell style={styles.category}>
+                        {item.foodCategoryDto.name}
+                      </DataTable.Cell>
+                    </DataTable.Row>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            )}
+          </View>
         </DataTable>
         <View style={styles.addingPart}>
           <TextInput
@@ -145,9 +165,17 @@ export default function FoodModal() {
                 color: "#fff1fc",
               }}
             >
-              <View>
+              {foodAddingStatus === "pending" ? (
+                <ActivityIndicator
+                  color="#fff"
+                  style={{
+                    width: DEVICE_WIDTH / 6,
+                    height: DEVICE_HEIGHT / 20,
+                  }}
+                />
+              ) : (
                 <Text style={styles.buttonText}>ADD</Text>
-              </View>
+              )}
             </Pressable>
           </View>
         </View>
@@ -165,6 +193,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingHorizontal: 30,
     paddingTop: DEVICE_HEIGHT / 30,
+  },
+  tableContainer: {
+    height: DEVICE_HEIGHT / 4.5,
+    justifyContent: "center",
   },
   blurContainer: {
     position: "absolute",

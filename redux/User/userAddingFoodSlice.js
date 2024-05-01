@@ -23,7 +23,7 @@ export const addingFoodRecord = createAsyncThunk(
 export const userAddingFoodSlice = createSlice({
   name: "userAddingFood",
   initialState: {
-    status: "idle",
+    addingStatus: "idle",
     error: null,
     isOpen: false,
     foodRecord: {
@@ -47,6 +47,9 @@ export const userAddingFoodSlice = createSlice({
     setRefresh: (state) => {
       state.refresh = !state.refresh;
     },
+    setStatusNull: (state) => {
+      state.addingStatus = "idle";
+    },
     setFoodRecordNull: (state) => {
       state.foodRecord = {
         food: {
@@ -58,16 +61,16 @@ export const userAddingFoodSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addingFoodRecord.fulfilled, (state, action) => {
+      .addCase(addingFoodRecord.fulfilled, (state) => {
         state.refresh = !state.refresh;
         state.isOpen = false;
-        state.status = "succeeded";
+        state.addingStatus = "succeeded";
       })
       .addCase(addingFoodRecord.pending, (state) => {
-        state.status = "pending";
+        state.addingStatus = "pending";
       })
-      .addCase(addingFoodRecord.rejected, (state, action) => {
-        state.status = "failed";
+      .addCase(addingFoodRecord.rejected, (state) => {
+        state.addingStatus = "failed";
       });
   },
 });

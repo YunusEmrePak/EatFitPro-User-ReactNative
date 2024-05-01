@@ -14,7 +14,9 @@ import { toolsActions } from "../../../../../redux/Tools/toolsSlice";
 import {
   getActivities,
   getActivityCategories,
+  userGettingActivityActions,
 } from "../../../../../redux/User/userGettingActivitySlice";
+import { userAddingActivityActions } from "../../../../../redux/User/userAddingActivitySlice";
 
 // kamil.aslan548@hotmail.com
 
@@ -35,6 +37,8 @@ export default function ActivityTable() {
 
   const openModal = () => {
     dispatch(toolsActions.setActivityModalVisible());
+    dispatch(userGettingActivityActions.setStatusNull())
+    dispatch(userAddingActivityActions.setStatusNull())
     dispatch(getActivities({ filteredData: nullFilteredData, page: 1 }));
     dispatch(getActivityCategories());
   };

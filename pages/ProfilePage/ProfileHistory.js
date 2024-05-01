@@ -1,23 +1,31 @@
-import { Ionicons } from "@expo/vector-icons";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import FilterButton from "../../components/Common/FilterButton";
 import Header from "../../components/Common/Header";
 import HistoryFilter from "../../components/ProfileItems/History/HistoryFilter";
 import HistoryList from "../../components/ProfileItems/History/HistoryList";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 import { toolsActions } from "../../redux/Tools/toolsSlice";
-import FilterButton from "../../components/Common/FilterButton";
+import { userCalorieHistoryActions } from "../../redux/User/userCalorieHistorySlice";
 
 export default function ProfileHistory() {
   const dispatch = useDispatch();
 
+  const historyStatus = useSelector(
+    (state) => state.userCalorieHistory.historyStatus
+  );
+
   const openModal = () => {
+    dispatch(userCalorieHistoryActions.setStatusNull())
     dispatch(toolsActions.setFilterModalVisible(true));
   };
   return (
     <View
-      style={{ alignItems: "center", justifyContent: "flex-start", height: DEVICE_HEIGHT }}
+      style={{
+        alignItems: "center",
+        justifyContent: "flex-start",
+        height: DEVICE_HEIGHT,
+      }}
     >
       {/* <Header title="History" /> */}
       <Header title="EatFitPro" />
@@ -25,7 +33,11 @@ export default function ProfileHistory() {
         <Text style={styles.text}>History</Text>
         <FilterButton onPress={openModal} />
       </View>
-      <HistoryList />
+      {historyStatus === "pending" ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <HistoryList />
+      )}
       <HistoryFilter />
     </View>
   );

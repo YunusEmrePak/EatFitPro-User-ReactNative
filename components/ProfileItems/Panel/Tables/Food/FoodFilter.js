@@ -1,4 +1,4 @@
-import { Modal, Pressable } from "react-native";
+import { ActivityIndicator, Modal, Pressable } from "react-native";
 
 import { StyleSheet, Text, View } from "react-native";
 import {
@@ -9,10 +9,11 @@ import {
 import { TextInput } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toolsActions } from "../../../../../redux/Tools/toolsSlice";
 import {
+  getFilteredFoods,
   getFoods,
   userGettingFoodActions,
 } from "../../../../../redux/User/userGettingFoodSlice";
@@ -35,6 +36,10 @@ export default function FoodFilter() {
   const name = useSelector((state) => state.userGettingFood.filteredData.name);
   const isReset = useSelector((state) => state.userGettingFood.isReset);
 
+  const filteredFoodStatus = useSelector(
+    (state) => state.userGettingFood.filteredFoodStatus
+  );
+
   const dropdownList = foodCategories.map((item) => ({
     label: item.name,
     value: item.name,
@@ -43,18 +48,25 @@ export default function FoodFilter() {
   const [showDropDown, setShowDropDown] = useState(false);
 
   const onCloseModal = () => {
-    dispatch(toolsActions.setFoodFilterModalVisible());
+    if (filteredFoodStatus !== "pending") {
+      dispatch(toolsActions.setFoodFilterModalVisible());
+    }
   };
 
   const filterHandler = () => {
-    dispatch(getFoods({ filteredData: filteredData, page: 1 }));
-    dispatch(toolsActions.setFoodFilterModalVisible());
+    dispatch(getFilteredFoods({ filteredData: filteredData, page: 1 }));
   };
 
   const resetFilter = () => {
     dispatch(userGettingFoodActions.setFilteredDataNull());
     dispatch(userGettingFoodActions.setIsReset());
   };
+
+  useEffect(() => {
+    if (filteredFoodStatus === "succeeded") {
+      dispatch(toolsActions.setFoodFilterModalVisible());
+    }
+  }, [filteredFoodStatus]);
 
   return (
     <Modal
@@ -119,7 +131,17 @@ export default function FoodFilter() {
                         color: "#fff1fc",
                       }}
                     >
-                      <Text style={styles.buttonText}>Apply Filter</Text>
+                      {filteredFoodStatus === "pending" ? (
+                        <ActivityIndicator
+                          color="#fff"
+                          style={{
+                            width: DEVICE_WIDTH / 4,
+                            height: DEVICE_HEIGHT / 22,
+                          }}
+                        />
+                      ) : (
+                        <Text style={styles.buttonText}>Apply Filter</Text>
+                      )}
                     </Pressable>
                   </View>
                 </View>

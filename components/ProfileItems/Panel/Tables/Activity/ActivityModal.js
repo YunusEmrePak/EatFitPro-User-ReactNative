@@ -13,7 +13,7 @@ import {
   DEVICE_WIDTH,
 } from "../../../../../constants/constants";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toolsActions } from "../../../../../redux/Tools/toolsSlice";
 import {
@@ -27,6 +27,7 @@ import Blur from "../../../../Common/Blur";
 import FilterButton from "../../../../Common/FilterButton";
 import Header from "../../../../Common/Header";
 import ActivityFilter from "./ActivityFilter";
+import { ActivityIndicator } from "react-native";
 // kamil.aslan548@hotmail.com
 
 export default function ActivityModal() {
@@ -53,6 +54,12 @@ export default function ActivityModal() {
   );
   const bodyTemp = useSelector(
     (state) => state.userAddingActivity.activityRecord.bodyTemp
+  );
+  const activityStatus = useSelector(
+    (state) => state.userGettingActivity.activityStatus
+  );
+  const activityAddingStatus = useSelector(
+    (state) => state.userAddingActivity.addingStatus
   );
 
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
@@ -82,7 +89,7 @@ export default function ActivityModal() {
       dispatch(userAddingActivityActions.setRefresh());
       dispatch(getUserCalorieInfo());
       dispatch(userAddingActivityActions.setActivityRecordNull());
-      onCloseModal();
+      // onCloseModal();
     } else {
       ToastAndroid.show(
         "You must fill all areas and choose an activity from the table. You can't enter negative values.",
@@ -92,8 +99,15 @@ export default function ActivityModal() {
   };
 
   const openModal = () => {
+    dispatch(userGettingActivityActions.setStatusNull());
     dispatch(toolsActions.setActivityFilterModalVisible(true));
   };
+
+  useEffect(() => {
+    if (activityAddingStatus === "succeeded") {
+      onCloseModal();
+    }
+  }, [activityAddingStatus]);
 
   return (
     <Modal
@@ -114,28 +128,34 @@ export default function ActivityModal() {
             <DataTable.Title style={styles.name}>Name</DataTable.Title>
             <DataTable.Title style={styles.category}>Category</DataTable.Title>
           </DataTable.Header>
-          <ScrollView style={{ height: DEVICE_HEIGHT / 4.5 }}>
-            {activities.map((item, index) => (
-              <TouchableOpacity
-                key={Math.random()}
-                onPress={() => handleRowPress(item, index)}
-              >
-                <DataTable.Row
-                  style={{
-                    backgroundColor:
-                      selectedRowIndex === index ? "lightblue" : "white",
-                  }}
-                >
-                  <DataTable.Cell style={styles.name}>
-                    {item.name}
-                  </DataTable.Cell>
-                  <DataTable.Cell style={styles.category}>
-                    {item.activityCategoryDto.name}
-                  </DataTable.Cell>
-                </DataTable.Row>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+          <View style={styles.tableContainer}>
+            {activityStatus === "pending" ? (
+              <ActivityIndicator size="large" />
+            ) : (
+              <ScrollView style={{ height: DEVICE_HEIGHT / 4.5 }}>
+                {activities.map((item, index) => (
+                  <TouchableOpacity
+                    key={Math.random()}
+                    onPress={() => handleRowPress(item, index)}
+                  >
+                    <DataTable.Row
+                      style={{
+                        backgroundColor:
+                          selectedRowIndex === index ? "lightblue" : "white",
+                      }}
+                    >
+                      <DataTable.Cell style={styles.name}>
+                        {item.name}
+                      </DataTable.Cell>
+                      <DataTable.Cell style={styles.category}>
+                        {item.activityCategoryDto.name}
+                      </DataTable.Cell>
+                    </DataTable.Row>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            )}
+          </View>
         </DataTable>
         <View style={styles.addingPart}>
           <View style={styles.inputs}>
@@ -187,7 +207,17 @@ export default function ActivityModal() {
                 color: "#fff1fc",
               }}
             >
-              <Text style={styles.buttonText}>ADD</Text>
+              {activityAddingStatus === "pending" ? (
+                <ActivityIndicator
+                  color="#fff"
+                  style={{
+                    width: DEVICE_WIDTH / 6,
+                    height: DEVICE_HEIGHT / 20,
+                  }}
+                />
+              ) : (
+                <Text style={styles.buttonText}>ADD</Text>
+              )}
             </Pressable>
           </View>
         </View>
@@ -205,6 +235,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingHorizontal: 30,
     paddingTop: DEVICE_HEIGHT / 30,
+  },
+  tableContainer: {
+    height: DEVICE_HEIGHT / 4.5,
+    justifyContent: "center",
   },
   blurContainer: {
     position: "absolute",

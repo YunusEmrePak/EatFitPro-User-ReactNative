@@ -1,11 +1,4 @@
-import {
-  Button,
-  Modal,
-  Pressable,
-  ScrollView,
-  ToastAndroid,
-  TouchableOpacity,
-} from "react-native";
+import { ActivityIndicator, Modal, Pressable } from "react-native";
 
 import { StyleSheet, Text, View } from "react-native";
 import {
@@ -13,35 +6,20 @@ import {
   DEVICE_WIDTH,
 } from "../../../../../constants/constants";
 
+import { TextInput } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
-import { DataTable, TextInput } from "react-native-paper";
-import Pagination from "react-native-pagination";
 
-import { Octicons } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toolsActions } from "../../../../../redux/Tools/toolsSlice";
-import { useState } from "react";
-import {
-  getFoods,
-  userGettingFoodActions,
-} from "../../../../../redux/User/userGettingFoodSlice";
-import {
-  addingFoodRecord,
-  userAddingFoodActions,
-} from "../../../../../redux/User/userAddingFoodSlice";
 
 import { Provider } from "react-native-paper";
-import {
-  getUserCalorieInfo,
-  getUserInfo,
-} from "../../../../../redux/User/userInformationSlice";
-import Header from "../../../../Common/Header";
 // kamil.aslan548@hotmail.com
 
-import { Ionicons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native";
 import {
   getActivities,
+  getFilteredActivities,
   userGettingActivityActions,
 } from "../../../../../redux/User/userGettingActivitySlice";
 
@@ -57,17 +35,14 @@ export default function ActivityFilter() {
   const activityCategories = useSelector(
     (state) => state.userGettingActivity.activityCategories
   );
-  const activities = useSelector(
-    (state) => state.userGettingActivity.activities
-  );
   const category = useSelector((state) => state.userGettingActivity.category);
 
   const name = useSelector(
     (state) => state.userGettingActivity.filteredData.name
   );
 
-  const activityCategoryName = useSelector(
-    (state) => state.userGettingActivity.filteredData.activityCategoryName
+  const filteredActivityStatus = useSelector(
+    (state) => state.userGettingActivity.filteredActivityStatus
   );
 
   const dropdownList = activityCategories.map((item) => ({
@@ -78,18 +53,25 @@ export default function ActivityFilter() {
   const [showDropDown, setShowDropDown] = useState(false);
 
   const onCloseModal = () => {
-    dispatch(toolsActions.setActivityFilterModalVisible());
+    if (filteredActivityStatus !== "pending") {
+      dispatch(toolsActions.setActivityFilterModalVisible());
+    }
   };
 
   const filterHandler = () => {
-    dispatch(getActivities({ filteredData: filteredData, page: 1 }));
+    dispatch(getFilteredActivities({ filteredData: filteredData, page: 1 }));
     dispatch(userGettingActivityActions.setPageNumber(1));
-    dispatch(toolsActions.setActivityFilterModalVisible());
   };
 
   const resetFilter = () => {
     dispatch(userGettingActivityActions.setFilteredDataNull());
   };
+
+  useEffect(() => {
+    if (filteredActivityStatus === "succeeded") {
+      dispatch(toolsActions.setActivityFilterModalVisible());
+    }
+  }, [filteredActivityStatus]);
 
   return (
     <Modal
@@ -164,7 +146,17 @@ export default function ActivityFilter() {
                         color: "#fff1fc",
                       }}
                     >
-                      <Text style={styles.buttonText}>Apply Filter</Text>
+                      {filteredActivityStatus === "pending" ? (
+                        <ActivityIndicator
+                          color="#fff"
+                          style={{
+                            width: DEVICE_WIDTH / 4,
+                            height: DEVICE_HEIGHT / 22,
+                          }}
+                        />
+                      ) : (
+                        <Text style={styles.buttonText}>Apply Filter</Text>
+                      )}
                     </Pressable>
                   </View>
                 </View>

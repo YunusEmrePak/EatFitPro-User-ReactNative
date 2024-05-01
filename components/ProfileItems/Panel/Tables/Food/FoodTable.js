@@ -14,7 +14,9 @@ import FoodModal from "./FoodModal";
 import {
   getFoodCategories,
   getFoods,
+  userGettingFoodActions,
 } from "../../../../../redux/User/userGettingFoodSlice";
+import { userAddingFoodActions } from "../../../../../redux/User/userAddingFoodSlice";
 
 // kamil.aslan548@hotmail.com
 
@@ -33,10 +35,11 @@ export default function FoodTable() {
 
   const openModal = () => {
     dispatch(toolsActions.setFoodModalVisible());
+    dispatch(userGettingFoodActions.setStatusNull());
+    dispatch(userAddingFoodActions.setStatusNull());
     dispatch(getFoods({ filteredData: nullFilteredData, page: 1 }));
     dispatch(getFoodCategories());
   };
-  
 
   return (
     <View style={styles.container}>

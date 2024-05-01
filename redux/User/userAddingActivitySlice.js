@@ -23,7 +23,7 @@ export const addingActivityRecord = createAsyncThunk(
 export const userAddingActivitySlice = createSlice({
   name: "userAddingActivity",
   initialState: {
-    status: "idle",
+    addingStatus: "idle",
     error: null,
     isOpen: false,
     activityRecord: {
@@ -61,19 +61,22 @@ export const userAddingActivitySlice = createSlice({
     setRefresh: (state) => {
       state.refresh = !state.refresh;
     },
+    setStatusNull: (state) => {
+      state.addingStatus = "idle";
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(addingActivityRecord.fulfilled, (state, action) => {
         state.refresh = !state.refresh;
         state.isOpen = false;
-        state.status = "succeeded";
+        state.addingStatus = "succeeded";
       })
       .addCase(addingActivityRecord.pending, (state) => {
-        state.status = "pending";
+        state.addingStatus = "pending";
       })
       .addCase(addingActivityRecord.rejected, (state, action) => {
-        state.status = "failed";
+        state.addingStatus = "failed";
       });
   },
 });

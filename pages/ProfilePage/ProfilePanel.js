@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PagerView from "react-native-pager-view";
@@ -75,7 +75,7 @@ export default function ProfilePanel() {
         keyboardShouldPersistTaps="handled"
       >
         <Title title="Today" />
-        <CalorieCards />
+        <CalorieCards />      
         <Title title="Daily Goal" />
         <DailyGoal />
         <Title title="Today's Record" />

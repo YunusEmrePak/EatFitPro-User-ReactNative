@@ -23,7 +23,7 @@ import {
   getUserInfo,
 } from "../../redux/User/userInformationSlice";
 import { getHistory } from "../../redux/User/userCalorieHistorySlice";
-import { getLeaderboard } from "../../redux/User/userAddGoalSlice";
+import { getLeaderboard, getUserGoal } from "../../redux/User/userAddGoalSlice";
 
 const Tab = createBottomTabNavigator();
 
@@ -83,6 +83,7 @@ export default function ProfilePage({ navigation }) {
 
   const pressPanelHandler = () => {
     dispatch(getUserCalorieInfo());
+    dispatch(getUserGoal())
   };
 
   const pressHistoryHandler = () => {

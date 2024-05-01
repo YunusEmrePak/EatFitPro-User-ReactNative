@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Pressable,
   StyleSheet,
   Text,
@@ -10,10 +11,11 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { format } from "date-fns";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Modal, TextInput } from "react-native-paper";
 import { toolsActions } from "../../../redux/Tools/toolsSlice";
 import {
+  getFilteredHistory,
   getHistory,
   userCalorieHistoryActions,
 } from "../../../redux/User/userCalorieHistorySlice";
@@ -38,15 +40,25 @@ export default function HistoryFilter() {
     (state) => state.userCalorieHistory.dateString
   );
 
+  const filteredHistoryStatus = useSelector(
+    (state) => state.userCalorieHistory.filteredHistoryStatus
+  );
+
   const filterHandler = () => {
-    dispatch(getHistory({ filteredData: filteredData, page: 1 }));
-    dispatch(userCalorieHistoryActions.setPageNumber(1));
+    dispatch(getFilteredHistory({ filteredData: filteredData, page: 1 }));
     dispatch(userCalorieHistoryActions.setClicked());
-    dispatch(toolsActions.setFilterModalVisible(false));
   };
 
+  useEffect(() => {
+    if (filteredHistoryStatus === "succeeded") {
+      dispatch(toolsActions.setFilterModalVisible(false));
+    }
+  }, [filteredHistoryStatus]);
+
   const onCloseModal = () => {
-    dispatch(toolsActions.setFilterModalVisible(false));
+    if (filteredHistoryStatus !== "pending") {
+      dispatch(toolsActions.setFilterModalVisible(false));
+    }
   };
 
   const resetFilter = () => {
@@ -169,7 +181,17 @@ export default function HistoryFilter() {
                       color: "#fff1fc",
                     }}
                   >
-                    <Text style={styles.buttonText}>Apply Filter</Text>
+                    {filteredHistoryStatus === "pending" ? (
+                      <ActivityIndicator
+                        color="#fff"
+                        style={{
+                          width: DEVICE_WIDTH / 4,
+                          height: DEVICE_HEIGHT / 24,
+                        }}
+                      />
+                    ) : (
+                      <Text style={styles.buttonText}>Apply Filter</Text>
+                    )}
                   </Pressable>
                 </View>
               </View>

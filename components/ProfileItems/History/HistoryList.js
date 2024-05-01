@@ -23,14 +23,14 @@ export default function HistoryList() {
     (state) => state.userCalorieHistory.filteredData
   );
 
-  useEffect(() => {
-    dispatch(
-      getHistory({
-        filteredData: filteredData,
-        page: 1,
-      })
-    );
-  }, [isClicked]);
+  // useEffect(() => {
+  //   dispatch(
+  //     getHistory({
+  //       filteredData: filteredData,
+  //       page: 1,
+  //     })
+  //   );
+  // }, [isClicked]);
 
   return (
     <View style={styles.container}>
