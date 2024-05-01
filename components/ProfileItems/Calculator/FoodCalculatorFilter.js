@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toolsActions } from "../../../redux/Tools/toolsSlice";
 import {
   getFilteredFoodsCalculator,
-  userFoodCalorieCalculatorActions
+  userFoodCalorieCalculatorActions,
 } from "../../../redux/User/userFoodCalorieCalculatorSlice";
 
 export default function FoodCalculatorFilter() {
@@ -82,11 +82,17 @@ export default function FoodCalculatorFilter() {
               <View style={styles.top}>
                 <Text style={styles.title}>Filter Foods</Text>
                 <View style={styles.resetButtonContainer}>
-                  <Pressable onPress={resetFilter}>
-                    <View style={styles.resetButton}>
+                  <View style={styles.resetButton}>
+                    <Pressable
+                      onPress={resetFilter}
+                      style={({ pressed }) => pressed && styles.pressedItem}
+                      android_ripple={{
+                        color: "#687770",
+                      }}
+                    >
                       <Text style={styles.resetButtonText}>Reset Filter</Text>
-                    </View>
-                  </Pressable>
+                    </Pressable>
+                  </View>
                 </View>
               </View>
               <View style={styles.filterPart}>

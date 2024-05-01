@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toolsActions } from "../../../redux/Tools/toolsSlice";
 import {
   getFilteredActivitiesCalculator,
-  userActivityCalorieCalculatorActions
+  userActivityCalorieCalculatorActions,
 } from "../../../redux/User/userActivityCalorieCalculatorSlice";
 
 export default function ActivityCalculatorFilter() {
@@ -54,7 +54,9 @@ export default function ActivityCalculatorFilter() {
   };
 
   const filterHandler = () => {
-    dispatch(getFilteredActivitiesCalculator({ filteredData: filteredData, page: 1 }));
+    dispatch(
+      getFilteredActivitiesCalculator({ filteredData: filteredData, page: 1 })
+    );
   };
 
   const resetFilter = () => {
@@ -83,11 +85,17 @@ export default function ActivityCalculatorFilter() {
               <View style={styles.top}>
                 <Text style={styles.title}>Filter Activities</Text>
                 <View style={styles.resetButtonContainer}>
-                  <Pressable onPress={resetFilter}>
-                    <View style={styles.resetButton}>
+                  <View style={styles.resetButton}>
+                    <Pressable
+                      onPress={resetFilter}
+                      style={({ pressed }) => pressed && styles.pressedItem}
+                      android_ripple={{
+                        color: "#687770",
+                      }}
+                    >
                       <Text style={styles.resetButtonText}>Reset Filter</Text>
-                    </View>
-                  </Pressable>
+                    </Pressable>
+                  </View>
                 </View>
               </View>
               <View style={styles.filterPart}>

@@ -13,6 +13,7 @@ import userAddGoalSlice from "../redux/User/userAddGoalSlice";
 import userFoodCalorieCalculatorSlice from "../redux/User/userFoodCalorieCalculatorSlice";
 import userActivityCalorieCalculatorSlice from "../redux/User/userActivityCalorieCalculatorSlice";
 import userCalorieGraphSlice from "../redux/User/userCalorieGraphSlice";
+import userCaloriePredictorSlice from "../redux/User/userCaloriePredictorSlice";
 
 export const store = configureStore({
   reducer: {
@@ -30,5 +31,6 @@ export const store = configureStore({
     userFoodCalculator: userFoodCalorieCalculatorSlice,
     userActivityCalculator: userActivityCalorieCalculatorSlice,
     userCalorieGraph: userCalorieGraphSlice,
+    userCaloriePredictor: userCaloriePredictorSlice,
   },
 });

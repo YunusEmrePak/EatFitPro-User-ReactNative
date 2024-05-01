@@ -19,8 +19,6 @@ export default function ProfileHistory() {
     (state) => state.userCalorieHistory.userHistory.content
   );
 
-  console.log(info);
-
   const openModal = () => {
     dispatch(userCalorieHistoryActions.setStatusNull());
     dispatch(toolsActions.setFilterModalVisible(true));

@@ -13,6 +13,7 @@ export const toolsSlice = createSlice({
     activityFilterModal: false,
     foodCalculationFilterModal: false,
     activityCalculationFilterModal: false,
+    predictionModal: false,
   },
   reducers: {
     setTableName: (state, action) => {
@@ -38,6 +39,9 @@ export const toolsSlice = createSlice({
     },
     setActivityCalculationFilterModalVisible: (state) => {
       state.activityCalculationFilterModal = !state.activityCalculationFilterModal;
+    },
+    setPredictionModalVisible: (state) => {
+      state.predictionModal = !state.predictionModal;
     },
   },
 });

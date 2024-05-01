@@ -84,11 +84,17 @@ export default function FoodFilter() {
               <View style={styles.top}>
                 <Text style={styles.title}>Filter Foods</Text>
                 <View style={styles.resetButtonContainer}>
-                  <Pressable onPress={resetFilter}>
-                    <View style={styles.resetButton}>
+                  <View style={styles.resetButton}>
+                    <Pressable
+                      onPress={resetFilter}
+                      style={({ pressed }) => pressed && styles.pressedItem}
+                      android_ripple={{
+                        color: "#687770",
+                      }}
+                    >
                       <Text style={styles.resetButtonText}>Reset Filter</Text>
-                    </View>
-                  </Pressable>
+                    </Pressable>
+                  </View>
                 </View>
               </View>
               <View style={styles.filterPart}>

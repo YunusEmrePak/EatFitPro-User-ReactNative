@@ -7,7 +7,7 @@ export const getHistory = createAsyncThunk(
   async ({ filteredData, page }, { rejectWithValue }) => {
     try { 
       const response = await userApi.post(
-        `/history/assignment`,
+        `/history/assignment?page=${0}&size=3`,
         JSON.stringify(filteredData)
       );
       return response.data;
@@ -25,7 +25,7 @@ export const getFilteredHistory = createAsyncThunk(
   async ({ filteredData, page }, { rejectWithValue }) => {
     try { 
       const response = await userApi.post(
-        `/history/assignment`,
+        `/history/assignment?page=${0}&size=3`,
         JSON.stringify(filteredData)
       );
       return response.data;
