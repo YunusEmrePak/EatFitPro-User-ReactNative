@@ -71,7 +71,7 @@ export const getGoalUserCalorieInfo = createAsyncThunk(
     try {
       const response = await userApi.get("/assignment");
       return response.data;
-    } catch (error) {
+    } catch (error) { 
       if (!error.response) {
         throw error;
       }

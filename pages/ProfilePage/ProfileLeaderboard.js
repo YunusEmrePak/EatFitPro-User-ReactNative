@@ -9,9 +9,9 @@ import { getLeaderboard } from "../../redux/User/userAddGoalSlice";
 export default function ProfileLeaderboard() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getLeaderboard(1));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getLeaderboard(1));
+  // }, []);
 
   return (
     <View style={styles.container}>

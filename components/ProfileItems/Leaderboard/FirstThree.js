@@ -1,4 +1,11 @@
-import { Image, ImageBackground, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 
 import boyAvatar from "../../../assets/images/ProfileImages/boyAvatar.png";
@@ -7,79 +14,85 @@ import bg from "../../../assets/images/ProfileImages/leaderboardBg.png";
 import Logo from "../../../assets/images/Logos/Logo.png";
 
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 export default function FirstThree({ leaderboard }) {
+  const leaderboardStatus = useSelector(
+    (state) => state.userAddGoal.getLeaderboardStatus
+  );
+
   return (
-    <View style={styles.half}>
-      <ImageBackground source={bg}>
-        <View style={styles.headerContainer}>
-          <Image source={Logo} alt="Logo" style={styles.logo} />
-          <Text style={styles.title}>Leaderboard</Text>
-        </View>
-        <View style={styles.firstThree}>
-          <View style={styles.second}>
-            <View style={styles.photo2}>
-              <FontAwesome5 name="crown" size={24} color="#C0C0C0" />
-              <Image
-                source={leaderboard[1].gender ? girlAvatar : boyAvatar}
-                style={styles.icon2}
-              />
-              <View style={[styles.queue, styles.queueSecond]}>
-                <Text style={styles.queueText}>2</Text>
+    // <View style={styles.half}>
+    //   <ImageBackground source={bg}>
+    //     <View style={styles.headerContainer}>
+    //       <Image source={Logo} alt="Logo" style={styles.logo} />
+    //       <Text style={styles.title}>Leaderboard</Text>
+    //     </View>
+          <View style={styles.firstThree}>
+            <View style={styles.second}>
+              <View style={styles.photo2}>
+                <FontAwesome5 name="crown" size={24} color="#C0C0C0" />
+                <Image
+                  source={leaderboardStatus === "succeeded" && (leaderboard[1].gender ? girlAvatar : boyAvatar)}
+                  style={styles.icon2}
+                />
+                <View style={[styles.queue, styles.queueSecond]}>
+                  <Text style={styles.queueText}>2</Text>
+                </View>
+              </View>
+              <View>
+                <Text style={styles.name}>
+                  {leaderboardStatus === "succeeded" && (leaderboard[1].name + " " + leaderboard[1].surname)}
+                </Text>
+              </View>
+              <View>
+                <Text style={styles.score}>{leaderboardStatus === "succeeded" && (leaderboard[1].score)}</Text>
               </View>
             </View>
-            <View>
-              <Text style={styles.name}>
-                {leaderboard[1].name + " " + leaderboard[1].surname}
-              </Text>
-            </View>
-            <View>
-              <Text style={styles.score}>{leaderboard[1].score}</Text>
-            </View>
-          </View>
-          <View style={styles.first}>
-            <View style={styles.photo2}>
-              <FontAwesome5 name="crown" size={24} color="#ffd700" />
-              <Image
-                source={leaderboard[0].gender ? girlAvatar : boyAvatar}
-                style={[styles.icon2, styles.icon1]}
-              />
-              <View style={[styles.queue, styles.queueFirst]}>
-                <Text style={styles.queueText}>1</Text>
+            <View style={styles.first}>
+              <View style={styles.photo2}>
+                <FontAwesome5 name="crown" size={24} color="#ffd700" />
+                <Image
+                  source={leaderboardStatus === "succeeded" && (leaderboard[0].gender ? girlAvatar : boyAvatar)}
+                  style={[styles.icon2, styles.icon1]}
+                />
+                <View style={[styles.queue, styles.queueFirst]}>
+                  <Text style={styles.queueText}>1</Text>
+                </View>
+              </View>
+              <View>
+                <Text style={styles.name}>
+                  {leaderboardStatus === "succeeded" && (leaderboard[0].name + " " + leaderboard[0].surname)}
+                </Text>
+              </View>
+              <View>
+                <Text style={styles.score}>{leaderboardStatus === "succeeded" && (leaderboard[0].score)}</Text>
               </View>
             </View>
-            <View>
-              <Text style={styles.name}>
-                {leaderboard[0].name + " " + leaderboard[0].surname}
-              </Text>
-            </View>
-            <View>
-              <Text style={styles.score}>{leaderboard[0].score}</Text>
-            </View>
-          </View>
-          <View style={styles.third}>
-            <View style={styles.photo2}>
-              <FontAwesome5 name="crown" size={24} color="#CD7F32" />
-              <Image
-                source={leaderboard[2].gender ? girlAvatar : boyAvatar}
-                style={[styles.icon3, styles.icon2]}
-              />
-              <View style={[styles.queue, styles.queueThird]}>
-                <Text style={styles.queueText}>3</Text>
+            <View style={styles.third}>
+              <View style={styles.photo2}>
+                <FontAwesome5 name="crown" size={24} color="#CD7F32" />
+                <Image
+                  source={leaderboardStatus === "succeeded" && (leaderboard[2].gender ? girlAvatar : boyAvatar)}
+                  style={[styles.icon3, styles.icon2]}
+                />
+                <View style={[styles.queue, styles.queueThird]}>
+                  <Text style={styles.queueText}>3</Text>
+                </View>
+              </View>
+              <View>
+                <Text style={styles.name}>
+                  {leaderboardStatus === "succeeded" && (leaderboard[2].name + " " + leaderboard[2].surname)}
+                </Text>
+              </View>
+              <View>
+                <Text style={styles.score}>{leaderboardStatus === "succeeded" && (leaderboard[2].score)}</Text>
               </View>
             </View>
-            <View>
-              <Text style={styles.name}>
-                {leaderboard[2].name + " " + leaderboard[2].surname}
-              </Text>
-            </View>
-            <View>
-              <Text style={styles.score}>{leaderboard[2].score}</Text>
-            </View>
           </View>
-        </View>
-      </ImageBackground>
-    </View>
+        
+    //   </ImageBackground>
+    // </View>
   );
 }
 

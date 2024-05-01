@@ -17,7 +17,10 @@ import {
   getFoodCategoriesCalculator,
   getFoodsCalculator,
 } from "../../redux/User/userFoodCalorieCalculatorSlice";
-import { getActivitiesCalculator, getActivityCategoriesCalculator } from "../../redux/User/userActivityCalorieCalculatorSlice";
+import {
+  getActivitiesCalculator,
+  getActivityCategoriesCalculator,
+} from "../../redux/User/userActivityCalorieCalculatorSlice";
 import {
   getUserCalorieInfo,
   getUserInfo,
@@ -67,7 +70,9 @@ export default function ProfilePage({ navigation }) {
     (state) => state.userCalorieHistory.filteredData
   );
 
-  const pressLeaderboardHandler = () => {};
+  const pressLeaderboardHandler = () => {
+    dispatch(getLeaderboard(1));
+  };
 
   const pressCalculatorHandler = () => {
     dispatch(getFoodsCalculator({ filteredData: filteredFoodData, page: 1 }));
@@ -83,7 +88,7 @@ export default function ProfilePage({ navigation }) {
 
   const pressPanelHandler = () => {
     dispatch(getUserCalorieInfo());
-    dispatch(getUserGoal())
+    dispatch(getUserGoal());
   };
 
   const pressHistoryHandler = () => {
