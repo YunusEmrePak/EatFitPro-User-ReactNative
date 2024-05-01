@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Pressable,
   ScrollView,
   ToastAndroid,
@@ -46,6 +47,13 @@ export default function ActivityCalculator() {
     (state) => state.userActivityCalculator.activityRecord.bodyTemp
   );
 
+  const activityStatus = useSelector(
+    (state) => state.userActivityCalculator.activityStatus
+  );
+  const calculateStatus = useSelector(
+    (state) => state.userActivityCalculator.calculateStatus
+  );
+
   const [selectedRowIndex, setSelectedRowIndex] = useState(null);
 
   const handleRowPress = (rowData, rowIndex) => {
@@ -69,6 +77,8 @@ export default function ActivityCalculator() {
     if (duration && id && duration > 0 && heartRate > 0 && bodyTemp > 0) {
       dispatch(activityCalculator(activityRecord));
       dispatch(userActivityCalorieCalculatorActions.setRefresh());
+      setSelectedRowIndex(-1);
+      dispatch(userActivityCalorieCalculatorActions.setActivityRecordNull());
     } else {
       ToastAndroid.show(
         "You must fill all areas and choose an activity from the table. You can't enter negative values.",
@@ -93,38 +103,45 @@ export default function ActivityCalculator() {
             <DataTable.Title style={styles.name}>Name</DataTable.Title>
             <DataTable.Title style={styles.category}>Category</DataTable.Title>
           </DataTable.Header>
-          <ScrollView
-            style={{ height: DEVICE_HEIGHT / 4.5 }}
-            nestedScrollEnabled={true}
-            keyboardShouldPersistTaps="handled"
-          >
-            {activities.map((item, index) => (
-              <TouchableOpacity
-                key={Math.random()}
-                onPress={() => handleRowPress(item, index)}
+          <View style={styles.tableContainer}>
+            {activityStatus === "pending" ? (
+              <ActivityIndicator size="large" />
+            ) : (
+              <ScrollView
+                style={{ height: DEVICE_HEIGHT / 4.5 }}
+                nestedScrollEnabled={true}
+                keyboardShouldPersistTaps="handled"
               >
-                <DataTable.Row
-                  style={{
-                    backgroundColor:
-                      selectedRowIndex === index ? "lightblue" : "white",
-                  }}
-                >
-                  <DataTable.Cell style={styles.name}>
-                    {item.name}
-                  </DataTable.Cell>
-                  <DataTable.Cell style={styles.category}>
-                    {item.activityCategoryDto.name}
-                  </DataTable.Cell>
-                </DataTable.Row>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+                {activities.map((item, index) => (
+                  <TouchableOpacity
+                    key={Math.random()}
+                    onPress={() => handleRowPress(item, index)}
+                  >
+                    <DataTable.Row
+                      style={{
+                        backgroundColor:
+                          selectedRowIndex === index ? "lightblue" : "white",
+                      }}
+                    >
+                      <DataTable.Cell style={styles.name}>
+                        {item.name}
+                      </DataTable.Cell>
+                      <DataTable.Cell style={styles.category}>
+                        {item.activityCategoryDto.name}
+                      </DataTable.Cell>
+                    </DataTable.Row>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            )}
+          </View>
         </DataTable>
         <View style={styles.addingPart}>
           <View style={styles.inputs}>
             <TextInput
               label="Duration (min)"
               keyboardType="numeric"
+              value={duration}
               onChangeText={(text) =>
                 dispatch(
                   userActivityCalorieCalculatorActions.setActivityCalculatorDuration(
@@ -172,7 +189,17 @@ export default function ActivityCalculator() {
                 color: "#fff1fc",
               }}
             >
-              <Text style={styles.buttonText}>Calculate</Text>
+              {calculateStatus === "pending" ? (
+                <ActivityIndicator
+                  color="#fff"
+                  style={{
+                    width: DEVICE_WIDTH / 5,
+                    height: DEVICE_HEIGHT / 20,
+                  }}
+                />
+              ) : (
+                <Text style={styles.buttonText}>Calculate</Text>
+              )}
             </Pressable>
           </View>
         </View>
@@ -195,6 +222,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingHorizontal: 30,
     marginBottom: DEVICE_HEIGHT / 2.5,
+  },
+  tableContainer: {
+    height: DEVICE_HEIGHT / 3.7,
+    justifyContent: "center",
   },
   blurContainer: {
     position: "absolute",

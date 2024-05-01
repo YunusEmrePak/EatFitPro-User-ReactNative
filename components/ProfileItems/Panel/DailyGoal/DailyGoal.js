@@ -31,10 +31,6 @@ export default function DailyGoal() {
   const dispatch = useDispatch();
   const [isFlipped, setIsFlipped] = useState(false);
   const flipAnimation = useRef(new Animated.Value(0)).current;
-  const setGoal = useSelector((state) => state.userAddGoal.setGoal);
-  const userInformation = useSelector(
-    (state) => state.userAddGoal.userInformation
-  );
   const dailyGoal = useSelector((state) => state.userAddGoal.dailyGoal);
   const calorieBalance = useSelector(
     (state) => state.userAddGoal.calorieBalance
@@ -161,6 +157,6 @@ const styles = StyleSheet.create({
   },
   infoText: {
     marginLeft: DEVICE_WIDTH / 80,
-    fontSize: DEVICE_WIDTH / 28
+    fontSize: DEVICE_WIDTH / 28,
   },
 });

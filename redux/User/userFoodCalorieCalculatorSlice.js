@@ -39,6 +39,24 @@ export const getFoodsCalculator = createAsyncThunk(
   }
 );
 
+export const getFilteredFoodsCalculator = createAsyncThunk(
+  "user/getFilteredFood/calculator",
+  async ({ filteredData, page }, { rejectWithValue }) => {
+    try {
+      const response = await foodAndActivityApi.post(
+        `/food?page=${page - 1}&size=20`,
+        JSON.stringify(filteredData)
+      );
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const getFoodCategoriesCalculator = createAsyncThunk(
   "user/categories/food/calculator",
   async (_, { rejectWithValue }) => {
@@ -57,7 +75,9 @@ export const getFoodCategoriesCalculator = createAsyncThunk(
 export const userFoodCalorieCalculatorSlice = createSlice({
   name: "userFoodCalculator",
   initialState: {
-    status: "idle",
+    foodStatus: "idle",
+    filteredFoodStatus: "idle",
+    calculateStatus: "idle",
     error: null,
     isOpen: false,
     foodRecord: {
@@ -125,8 +145,13 @@ export const userFoodCalorieCalculatorSlice = createSlice({
     setCategory: (state, action) => {
       state.category = action.payload;
     },
-    setResultNone: (state, action) => {
+    setResultNone: (state) => {
       state.calculationResult = 0;
+    },
+    setStatusNull: (state) => {
+      state.foodStatus = "idle";
+      state.filteredFoodStatus = "idle";
+      state.calculateStatus = "idle";
     },
   },
   extraReducers: (builder) => {
@@ -134,32 +159,43 @@ export const userFoodCalorieCalculatorSlice = createSlice({
       .addCase(foodCalculator.fulfilled, (state, action) => {
         state.refresh = !state.refresh;
         state.calculationResult = action.payload;
-        state.status = "succeeded";
+        state.calculateStatus = "succeeded";
       })
       .addCase(foodCalculator.pending, (state) => {
-        state.status = "pending";
+        state.calculateStatus = "pending";
       })
       .addCase(foodCalculator.rejected, (state, action) => {
-        state.status = "failed";
+        state.calculateStatus = "failed";
       })
 
       .addCase(getFoodsCalculator.fulfilled, (state, action) => {
         state.foods = action.payload.content;
-
         state.totalPage = action.payload.totalPages;
-        state.status = "succeeded";
+        state.foodStatus = "succeeded";
+      })
+      .addCase(getFoodsCalculator.pending, (state, action) => {
+        state.foodStatus = "pending";
       })
       .addCase(getFoodsCalculator.rejected, (state, action) => {
-        state.status = "failed";
+        state.foodStatus = "failed";
+      })
+
+      .addCase(getFilteredFoodsCalculator.fulfilled, (state, action) => {
+        state.foods = action.payload.content;
+        state.totalPage = action.payload.totalPages;
+        state.filteredFoodStatus = "succeeded";
+      })
+      .addCase(getFilteredFoodsCalculator.pending, (state, action) => {
+        state.filteredFoodStatus = "pending";
+      })
+      .addCase(getFilteredFoodsCalculator.rejected, (state, action) => {
+        state.filteredFoodStatus = "failed";
       })
 
       .addCase(getFoodCategoriesCalculator.fulfilled, (state, action) => {
         state.foodCategories = action.payload;
-        state.status = "succeeded";
       })
-      .addCase(getFoodCategoriesCalculator.rejected, (state, action) => {
-        state.status = "failed";
-      });
+      .addCase(getFoodCategoriesCalculator.rejected, (state, action) => {});
   },
 });
 

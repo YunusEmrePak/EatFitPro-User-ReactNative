@@ -231,6 +231,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderRadius: DEVICE_WIDTH / 30,
+    overflow: "hidden",
   },
   buttonText: {
     fontSize: DEVICE_WIDTH / 25,

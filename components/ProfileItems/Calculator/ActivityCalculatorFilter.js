@@ -1,4 +1,4 @@
-import { Modal, Pressable } from "react-native";
+import { ActivityIndicator, Modal, Pressable } from "react-native";
 
 import { StyleSheet, Text, View } from "react-native";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
@@ -6,18 +6,14 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 import { TextInput } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TouchableWithoutFeedback } from "react-native";
 import { Provider } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { toolsActions } from "../../../redux/Tools/toolsSlice";
 import {
-  getFoodsCalculator,
-  userFoodCalorieCalculatorActions,
-} from "../../../redux/User/userFoodCalorieCalculatorSlice";
-import {
-  getActivitiesCalculator,
-  userActivityCalorieCalculatorActions,
+  getFilteredActivitiesCalculator,
+  userActivityCalorieCalculatorActions
 } from "../../../redux/User/userActivityCalorieCalculatorSlice";
 
 export default function ActivityCalculatorFilter() {
@@ -34,10 +30,14 @@ export default function ActivityCalculatorFilter() {
   );
 
   const activityCategories = useSelector(
-    (state) => state.userGettingActivity.activityCategories
+    (state) => state.userActivityCalculator.activityCategories
   );
   const name = useSelector(
     (state) => state.userActivityCalculator.filteredData.name
+  );
+
+  const filteredActivityStatus = useSelector(
+    (state) => state.userActivityCalculator.filteredActivityStatus
   );
 
   const dropdownList = activityCategories.map((item) => ({
@@ -48,17 +48,24 @@ export default function ActivityCalculatorFilter() {
   const [showDropDown, setShowDropDown] = useState(false);
 
   const onCloseModal = () => {
-    dispatch(toolsActions.setActivityCalculationFilterModalVisible());
+    if (filteredActivityStatus !== "pending") {
+      dispatch(toolsActions.setActivityCalculationFilterModalVisible());
+    }
   };
 
   const filterHandler = () => {
-    dispatch(getActivitiesCalculator({ filteredData: filteredData, page: 1 }));
-    dispatch(toolsActions.setActivityCalculationFilterModalVisible());
+    dispatch(getFilteredActivitiesCalculator({ filteredData: filteredData, page: 1 }));
   };
 
   const resetFilter = () => {
     dispatch(userActivityCalorieCalculatorActions.setFilteredDataNull());
   };
+
+  useEffect(() => {
+    if (filteredActivityStatus === "succeeded") {
+      dispatch(toolsActions.setActivityCalculationFilterModalVisible());
+    }
+  }, [filteredActivityStatus]);
 
   return (
     <Modal
@@ -139,7 +146,17 @@ export default function ActivityCalculatorFilter() {
                         color: "#fff1fc",
                       }}
                     >
-                      <Text style={styles.buttonText}>Apply Filter</Text>
+                      {filteredActivityStatus === "pending" ? (
+                        <ActivityIndicator
+                          color="#fff"
+                          style={{
+                            width: DEVICE_WIDTH / 4,
+                            height: DEVICE_HEIGHT / 22,
+                          }}
+                        />
+                      ) : (
+                        <Text style={styles.buttonText}>Apply Filter</Text>
+                      )}
                     </Pressable>
                   </View>
                 </View>

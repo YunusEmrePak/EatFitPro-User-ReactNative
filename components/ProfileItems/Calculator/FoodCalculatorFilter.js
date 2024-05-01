@@ -1,4 +1,4 @@
-import { Modal, Pressable } from "react-native";
+import { ActivityIndicator, Modal, Pressable } from "react-native";
 
 import { StyleSheet, Text, View } from "react-native";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
@@ -6,14 +6,14 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 import { TextInput } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TouchableWithoutFeedback } from "react-native";
 import { Provider } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { toolsActions } from "../../../redux/Tools/toolsSlice";
 import {
-  getFoodsCalculator,
-  userFoodCalorieCalculatorActions,
+  getFilteredFoodsCalculator,
+  userFoodCalorieCalculatorActions
 } from "../../../redux/User/userFoodCalorieCalculatorSlice";
 
 export default function FoodCalculatorFilter() {
@@ -33,6 +33,10 @@ export default function FoodCalculatorFilter() {
     (state) => state.userFoodCalculator.filteredData.name
   );
 
+  const filteredFoodStatus = useSelector(
+    (state) => state.userFoodCalculator.filteredFoodStatus
+  );
+
   const dropdownList = foodCategories.map((item) => ({
     label: item.name,
     value: item.name,
@@ -41,17 +45,26 @@ export default function FoodCalculatorFilter() {
   const [showDropDown, setShowDropDown] = useState(false);
 
   const onCloseModal = () => {
-    dispatch(toolsActions.setFoodCalculationFilterModalVisible());
+    if (filteredFoodStatus !== "pending") {
+      dispatch(toolsActions.setFoodCalculationFilterModalVisible());
+    }
   };
 
   const filterHandler = () => {
-    dispatch(getFoodsCalculator({ filteredData: filteredData, page: 1 }));
-    dispatch(toolsActions.setFoodCalculationFilterModalVisible());
+    dispatch(
+      getFilteredFoodsCalculator({ filteredData: filteredData, page: 1 })
+    );
   };
 
   const resetFilter = () => {
     dispatch(userFoodCalorieCalculatorActions.setFilteredDataNull());
   };
+
+  useEffect(() => {
+    if (filteredFoodStatus === "succeeded") {
+      dispatch(toolsActions.setFoodCalculationFilterModalVisible());
+    }
+  }, [filteredFoodStatus]);
 
   return (
     <Modal
@@ -133,7 +146,17 @@ export default function FoodCalculatorFilter() {
                         color: "#fff1fc",
                       }}
                     >
-                      <Text style={styles.buttonText}>Apply Filter</Text>
+                      {filteredFoodStatus === "pending" ? (
+                        <ActivityIndicator
+                          color="#fff"
+                          style={{
+                            width: DEVICE_WIDTH / 4,
+                            height: DEVICE_HEIGHT / 22,
+                          }}
+                        />
+                      ) : (
+                        <Text style={styles.buttonText}>Apply Filter</Text>
+                      )}
                     </Pressable>
                   </View>
                 </View>

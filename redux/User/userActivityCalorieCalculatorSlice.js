@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import userApi from "../apis/userApi";
 import foodAndActivityApi from "../apis/foodAndActivityApi";
+import userApi from "../apis/userApi";
 
 export const activityCalculator = createAsyncThunk(
   "user/activityCalculator",
@@ -39,6 +39,24 @@ export const getActivitiesCalculator = createAsyncThunk(
   }
 );
 
+export const getFilteredActivitiesCalculator = createAsyncThunk(
+  "user/getFilteredActivityy",
+  async ({ filteredData, page }, { rejectWithValue }) => {
+    try {
+      const response = await foodAndActivityApi.post(
+        `/activity?page=${page - 1}&size=20`,
+        JSON.stringify(filteredData)
+      );
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const getActivityCategoriesCalculator = createAsyncThunk(
   "user/categories/activityy",
   async (_, { rejectWithValue }) => {
@@ -57,7 +75,9 @@ export const getActivityCategoriesCalculator = createAsyncThunk(
 export const userActivityCalorieCalculatorSlice = createSlice({
   name: "userActivityCalorieCalculatorSlice",
   initialState: {
-    status: "idle",
+    activityStatus: "idle",
+    filteredActivityStatus: "idle",
+    calculateStatus: "idle",
     error: null,
     activityRecord: {
       activityId: null,
@@ -130,36 +150,55 @@ export const userActivityCalorieCalculatorSlice = createSlice({
     setResultNone: (state, action) => {
       state.calculationResult = 0;
     },
+    setStatusNull: (state) => {
+      state.activityStatus = "idle";
+      state.filteredActivityStatus = "idle";
+      state.calculateStatus = "idle";
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(activityCalculator.fulfilled, (state, action) => {
         state.refresh = !state.refresh;
         state.calculationResult = action.payload;
-        state.status = "succeeded";
+        state.calculateStatus = "succeeded";
       })
       .addCase(activityCalculator.pending, (state) => {
-        state.status = "pending";
+        state.calculateStatus = "pending";
       })
       .addCase(activityCalculator.rejected, (state, action) => {
-        state.status = "failed";
+        state.calculateStatus = "failed";
       })
 
       .addCase(getActivitiesCalculator.fulfilled, (state, action) => {
         state.activities = action.payload.content;
         state.totalPage = action.payload.totalPages;
-        state.status = "succeeded";
+        state.activityStatus = "succeeded";
+      })
+      .addCase(getActivitiesCalculator.pending, (state, action) => {
+        state.activityStatus = "pending";
       })
       .addCase(getActivitiesCalculator.rejected, (state, action) => {
-        state.status = "failed";
+        state.activityStatus = "failed";
+      })
+
+      .addCase(getFilteredActivitiesCalculator.fulfilled, (state, action) => {
+        state.activities = action.payload.content;
+        state.totalPage = action.payload.totalPages;
+        state.filteredActivityStatus = "succeeded";
+      })
+      .addCase(getFilteredActivitiesCalculator.pending, (state, action) => {
+        state.filteredActivityStatus = "pending";
+      })
+      .addCase(getFilteredActivitiesCalculator.rejected, (state, action) => {
+        state.filteredActivityStatus = "failed";
       })
 
       .addCase(getActivityCategoriesCalculator.fulfilled, (state, action) => {
         state.activityCategories = action.payload;
-        state.status = "succeeded";
       })
       .addCase(getActivityCategoriesCalculator.rejected, (state, action) => {
-        state.status = "failed";
+        state.activityCategories = [];
       });
   },
 });

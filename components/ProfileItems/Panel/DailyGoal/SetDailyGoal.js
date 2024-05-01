@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Pressable, ToastAndroid } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, Pressable, ToastAndroid, ActivityIndicator } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../../constants/constants";
@@ -15,29 +15,12 @@ export default function SetDailyGoal({ onPress }) {
   const dispatch = useDispatch();
 
   const setGoal = useSelector((state) => state.userAddGoal.setGoal);
-  const userInformation = useSelector(
-    (state) => state.userAddGoal.userInformation
-  );
-  const dailyGoal = useSelector((state) => state.userAddGoal.dailyGoal);
-  const calorieBalance = useSelector(
-    (state) => state.userAddGoal.calorieBalance
-  );
+  const addGoalStatus = useSelector((state) => state.userAddGoal.addGoalStatus);
 
-  const token = useSelector((state) => state.signIn.token);
-
-  const refresh = useSelector((state) => state.userAddGoal.refresh);
-
-  const [isClicked, setIsClicked] = useState(false);
-  const [isClickedToSetButton, setIsClickedToSetButton] = useState(false);
-
-  const setGoalHandler = (event) => {
-    // onPress()
-    // event.stopPropagation();
+  const setGoalHandler = () => {
     dispatch(userAddGoalActions.setRefresh());
     if (setGoal.trim() !== "" && setGoal != 0) {
       dispatch(setUserGoal(setGoal));
-      // setIsClickedToSetButton((prev) => !prev);
-      onPress();
     } else {
       ToastAndroid.show(
         "Daily goal must not be empty or 0.",
@@ -45,6 +28,12 @@ export default function SetDailyGoal({ onPress }) {
       );
     }
   };
+
+  useEffect(() => {
+    if (addGoalStatus === "succeeded") {
+      onPress();
+    }
+  }, [addGoalStatus]);
 
   return (
     <LinearGradient
@@ -73,9 +62,27 @@ export default function SetDailyGoal({ onPress }) {
           value={setGoal.toString()}
         />
       </View>
-      <Pressable style={styles.set} onPress={setGoalHandler}>
-        <Text style={styles.setText}>Set Goal</Text>
-      </Pressable>
+      <View style={styles.set}>
+        <Pressable
+          onPress={setGoalHandler}
+          style={({ pressed }) => pressed && styles.pressedItem}
+          android_ripple={{
+            color: "#fff1fc",
+          }}
+        >
+          {addGoalStatus === "pending" ? (
+            <ActivityIndicator
+              color="#fff"
+              style={{
+                width: DEVICE_WIDTH / 4,
+                height: DEVICE_HEIGHT / 22,
+              }}
+            />
+          ) : (
+            <Text style={styles.setText}>Set Goal</Text>
+          )}
+        </Pressable>
+      </View>
     </LinearGradient>
   );
 }
@@ -109,15 +116,27 @@ const styles = StyleSheet.create({
   goalInput: {
     width: DEVICE_WIDTH / 4.5,
     height: DEVICE_HEIGHT / 25,
-    borderRadius: DEVICE_WIDTH / 10
+    borderRadius: DEVICE_WIDTH / 10,
   },
   set: {
     backgroundColor: "#680770",
-    paddingHorizontal: DEVICE_WIDTH / 25,
-    paddingVertical: DEVICE_HEIGHT / 120,
+    width: DEVICE_WIDTH / 6,
+    height: DEVICE_HEIGHT / 28,
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
     borderRadius: DEVICE_WIDTH / 40,
+    overflow: "hidden",
   },
   setText: {
     color: "white",
+    fontSize: DEVICE_WIDTH / 28,
+    textAlign: "center",
+    width: DEVICE_WIDTH / 6,
+    height: DEVICE_HEIGHT / 28,
+    marginTop: DEVICE_HEIGHT / 56,
+  },
+  pressedItem: {
+    opacity: 0.8,
   },
 });
