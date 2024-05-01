@@ -118,7 +118,7 @@ export default function FoodModal() {
           <View style={styles.tableContainer}>
             {foodStatus === "pending" ? (
               <ActivityIndicator size="large" />
-            ) : (
+            ) : foods.length !== 0 ? (
               <ScrollView style={{ height: DEVICE_HEIGHT / 4.5 }}>
                 {foods.map((item, index) => (
                   <TouchableOpacity
@@ -129,6 +129,7 @@ export default function FoodModal() {
                       style={{
                         backgroundColor:
                           selectedRowIndex === index ? "lightblue" : "white",
+                          width: DEVICE_WIDTH / 1.17,
                       }}
                     >
                       <DataTable.Cell style={styles.name}>
@@ -144,6 +145,14 @@ export default function FoodModal() {
                   </TouchableOpacity>
                 ))}
               </ScrollView>
+            ) : (
+              <Text
+                style={{
+                  fontSize: DEVICE_WIDTH / 25,
+                }}
+              >
+                No results found.
+              </Text>
             )}
           </View>
         </DataTable>
@@ -197,6 +206,7 @@ const styles = StyleSheet.create({
   tableContainer: {
     height: DEVICE_HEIGHT / 4.5,
     justifyContent: "center",
+    alignItems: "center",
   },
   blurContainer: {
     position: "absolute",

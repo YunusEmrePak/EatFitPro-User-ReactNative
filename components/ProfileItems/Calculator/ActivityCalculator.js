@@ -106,7 +106,7 @@ export default function ActivityCalculator() {
           <View style={styles.tableContainer}>
             {activityStatus === "pending" ? (
               <ActivityIndicator size="large" />
-            ) : (
+            ) : activities.length !== 0 ? (
               <ScrollView
                 style={{ height: DEVICE_HEIGHT / 4.5 }}
                 nestedScrollEnabled={true}
@@ -121,6 +121,7 @@ export default function ActivityCalculator() {
                       style={{
                         backgroundColor:
                           selectedRowIndex === index ? "lightblue" : "white",
+                        width: DEVICE_WIDTH / 1.17,
                       }}
                     >
                       <DataTable.Cell style={styles.name}>
@@ -133,6 +134,14 @@ export default function ActivityCalculator() {
                   </TouchableOpacity>
                 ))}
               </ScrollView>
+            ) : (
+              <Text
+                style={{
+                  fontSize: DEVICE_WIDTH / 25,
+                }}
+              >
+                No results found.
+              </Text>
             )}
           </View>
         </DataTable>
@@ -226,6 +235,7 @@ const styles = StyleSheet.create({
   tableContainer: {
     height: DEVICE_HEIGHT / 3.7,
     justifyContent: "center",
+    alignItems: "center",
   },
   blurContainer: {
     position: "absolute",

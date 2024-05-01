@@ -15,8 +15,14 @@ export default function ProfileHistory() {
     (state) => state.userCalorieHistory.historyStatus
   );
 
+  const info = useSelector(
+    (state) => state.userCalorieHistory.userHistory.content
+  );
+
+  console.log(info);
+
   const openModal = () => {
-    dispatch(userCalorieHistoryActions.setStatusNull())
+    dispatch(userCalorieHistoryActions.setStatusNull());
     dispatch(toolsActions.setFilterModalVisible(true));
   };
   return (
@@ -35,8 +41,14 @@ export default function ProfileHistory() {
       </View>
       {historyStatus === "pending" ? (
         <ActivityIndicator size="large" />
-      ) : (
+      ) : info.length !== 0 ? (
         <HistoryList />
+      ) : (
+        <Text
+          style={{ fontSize: DEVICE_WIDTH / 20, marginTop: DEVICE_HEIGHT / 60 }}
+        >
+          No results found.
+        </Text>
       )}
       <HistoryFilter />
     </View>

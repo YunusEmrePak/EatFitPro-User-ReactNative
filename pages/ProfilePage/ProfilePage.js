@@ -16,10 +16,12 @@ import ProfileUser from "./ProfileUser";
 import {
   getFoodCategoriesCalculator,
   getFoodsCalculator,
+  userFoodCalorieCalculatorActions,
 } from "../../redux/User/userFoodCalorieCalculatorSlice";
 import {
   getActivitiesCalculator,
   getActivityCategoriesCalculator,
+  userActivityCalorieCalculatorActions,
 } from "../../redux/User/userActivityCalorieCalculatorSlice";
 import {
   getUserCalorieInfo,
@@ -84,6 +86,8 @@ export default function ProfilePage({ navigation }) {
       })
     );
     dispatch(getActivityCategoriesCalculator());
+    dispatch(userFoodCalorieCalculatorActions.setResultNone());
+    dispatch(userActivityCalorieCalculatorActions.setResultNone());
   };
 
   const pressPanelHandler = () => {
