@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import { TextInput } from "react-native-paper";
 
 import { useEffect, useRef } from "react";
@@ -20,6 +20,8 @@ export default function SignInForm({ navigation }) {
   const password = useSelector(
     (state) => state.signIn.userInformation.password
   );
+
+  const status = useSelector((state) => state.signIn.status);
 
   const passwordRef = useRef(null);
 
@@ -96,7 +98,17 @@ export default function SignInForm({ navigation }) {
             color: "#fff1fc",
           }}
         >
-          <Text style={styles.signInButtonText}>Sign In</Text>
+          {status === "pending" ? (
+            <ActivityIndicator
+              color="#fff"
+              style={{
+                width: DEVICE_WIDTH / 1.5,
+                height: DEVICE_HEIGHT / 20,
+              }}
+            />
+          ) : (
+            <Text style={styles.signInButtonText}>Sign In</Text>
+          )}
         </Pressable>
       </View>
     </View>

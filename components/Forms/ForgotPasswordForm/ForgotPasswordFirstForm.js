@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import {
   TextInput
 } from "react-native-paper";
@@ -74,7 +74,18 @@ export default function ForgotPasswordFirstForm({ navigation }) {
             color: "#fff1fc",
           }}
         >
-          <Text style={styles.signUpButtonText}>SEND CODE</Text>
+          {emailStatus === "pending" ? (
+            <ActivityIndicator
+              color="#fff"
+              style={{
+                width: DEVICE_WIDTH / 1.5,
+                height: DEVICE_HEIGHT / 20,
+              }}
+            />
+          ) : (
+            <Text style={styles.signUpButtonText}>SEND CODE</Text>
+          )}
+          
         </Pressable>
       </View>
     </View>

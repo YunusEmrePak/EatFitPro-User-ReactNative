@@ -29,6 +29,7 @@ import {
 } from "../../redux/User/userInformationSlice";
 import { getHistory } from "../../redux/User/userCalorieHistorySlice";
 import { getLeaderboard, getUserGoal } from "../../redux/User/userAddGoalSlice";
+import { signInActions } from "../../redux/SignIn/signInSlice";
 
 const Tab = createBottomTabNavigator();
 
@@ -111,7 +112,8 @@ export default function ProfilePage({ navigation }) {
   useEffect(() => {
     const backAction = () => {
       if (backPressCount.current === 1) {
-        BackHandler.exitApp();
+        dispatch(signInActions.signOut());
+        navigation.navigate("Introduction");
       } else {
         ToastAndroid.show("Press back again to exit", ToastAndroid.SHORT);
         backPressCount.current += 1;

@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import {
   TextInput
 } from "react-native-paper";
@@ -60,6 +60,12 @@ export default function SignUpSecondForm({ navigation }) {
       );
       navigation.navigate("SignUpVerify");
     }
+    else {
+      ToastAndroid.show(
+        "Email not found. Please enter a valid email.",
+        ToastAndroid.SHORT
+      );
+    }
   }, [signUpStatus]);
 
   return (
@@ -110,7 +116,18 @@ export default function SignUpSecondForm({ navigation }) {
             color: "#fff1fc",
           }}
         >
-          <Text style={styles.signUpButtonText}>SIGN UP</Text>
+          {signUpStatus === "pending" ? (
+            <ActivityIndicator
+              color="#fff"
+              style={{
+                width: DEVICE_WIDTH / 1.5,
+                height: DEVICE_HEIGHT / 20,
+              }}
+            />
+          ) : (
+            <Text style={styles.signUpButtonText}>SIGN UP</Text>
+          )}
+          
         </Pressable>
       </View>
     </View>

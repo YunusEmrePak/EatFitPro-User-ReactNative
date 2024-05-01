@@ -115,6 +115,10 @@ export const userAddGoalSlice = createSlice({
     setPageNumber: (state, action) => {
       state.pageNumber = action.payload;
     },
+    setStatusNull: (state, action) => {
+      state.addGoalStatus = "idle";
+    },
+    
   },
   extraReducers: (builder) => {
     builder

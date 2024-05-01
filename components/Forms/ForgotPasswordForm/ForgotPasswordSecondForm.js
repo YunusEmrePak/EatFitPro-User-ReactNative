@@ -1,7 +1,12 @@
-import { Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import {
-  TextInput
-} from "react-native-paper";
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  View,
+} from "react-native";
+import { TextInput } from "react-native-paper";
 
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -127,7 +132,17 @@ export default function ForgotPasswordSecondForm({ navigation }) {
             color: "#fff1fc",
           }}
         >
-          <Text style={styles.signUpButtonText}>CHANGE PASSWORD</Text>
+          {changeStatus === "pending" ? (
+            <ActivityIndicator
+              color="#fff"
+              style={{
+                width: DEVICE_WIDTH / 1.5,
+                height: DEVICE_HEIGHT / 20,
+              }}
+            />
+          ) : (
+            <Text style={styles.signUpButtonText}>CHANGE PASSWORD</Text>
+          )}
         </Pressable>
       </View>
     </View>

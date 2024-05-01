@@ -32,6 +32,7 @@ export default function SetDailyGoal({ onPress }) {
   useEffect(() => {
     if (addGoalStatus === "succeeded") {
       onPress();
+      dispatch(userAddGoalActions.setStatusNull())
     }
   }, [addGoalStatus]);
 

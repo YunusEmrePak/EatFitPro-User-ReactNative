@@ -1,14 +1,19 @@
-import { Pressable, StyleSheet, Text, ToastAndroid, View } from "react-native";
 import {
-  TextInput
-} from "react-native-paper";
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  View,
+} from "react-native";
+import { TextInput } from "react-native-paper";
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 import {
   signUpActions,
-  signUpActivate
+  signUpActivate,
 } from "../../../redux/SignIn/signUpSlice";
 
 export default function SignUpVerifyForm({ navigation }) {
@@ -92,7 +97,17 @@ export default function SignUpVerifyForm({ navigation }) {
             color: "#fff1fc",
           }}
         >
-          <Text style={styles.signUpButtonText}>SIGN UP</Text>
+          {verifyStatus === "pending" ? (
+            <ActivityIndicator
+              color="#fff"
+              style={{
+                width: DEVICE_WIDTH / 1.5,
+                height: DEVICE_HEIGHT / 20,
+              }}
+            />
+          ) : (
+            <Text style={styles.signUpButtonText}>SIGN UP</Text>
+          )}
         </Pressable>
       </View>
     </View>
