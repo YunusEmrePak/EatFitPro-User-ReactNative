@@ -1,18 +1,25 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 
+import {
+  Feather,
+  FontAwesome5,
+  MaterialCommunityIcons,
+  Octicons,
+} from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { Feather } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { Octicons } from "@expo/vector-icons";
-
-import weight from "../../../assets/images/ProfileImages/weight.png";
-import height from "../../../assets/images/ProfileImages/height.png";
-import age from "../../../assets/images/ProfileImages/age2.png";
+import { useDispatch } from "react-redux";
+import { toolsActions } from "../../../redux/Tools/toolsSlice";
+import { getUserInfo } from "../../../redux/User/userInformationSlice";
 
 export default function UserInformation({ age, height, weight }) {
+  const dispatch = useDispatch();
+
+  const openModal = () => {
+    dispatch(getUserInfo())
+    dispatch(toolsActions.setUserInformationModalVisible());
+  };
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -55,7 +62,9 @@ export default function UserInformation({ age, height, weight }) {
             </View>
           </View>
           <View style={styles.bottom}>
-            <Feather name="edit" size={24} color="white" />
+            <Pressable onPress={openModal}>
+              <Feather name="edit" size={24} color="white" />
+            </Pressable>
           </View>
         </View>
       </LinearGradient>

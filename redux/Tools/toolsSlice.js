@@ -14,6 +14,8 @@ export const toolsSlice = createSlice({
     foodCalculationFilterModal: false,
     activityCalculationFilterModal: false,
     predictionModal: false,
+    userNameModal: false,
+    userInformationModal: false,
   },
   reducers: {
     setTableName: (state, action) => {
@@ -42,6 +44,12 @@ export const toolsSlice = createSlice({
     },
     setPredictionModalVisible: (state) => {
       state.predictionModal = !state.predictionModal;
+    },
+    setUserNameModalVisible: (state) => {
+      state.userNameModal = !state.userNameModal;
+    },
+    setUserInformationModalVisible: (state) => {
+      state.userInformationModal = !state.userInformationModal;
     },
   },
 });

@@ -36,6 +36,17 @@ import DailyGoal from "../../components/ProfileItems/Panel/DailyGoal/DailyGoal";
 import Prediction from "../../components/ProfileItems/Panel/Prediction/Prediction";
 import Blur from "../../components/Common/Blur";
 
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart,
+} from "react-native-chart-kit";
+import Graph from "../../components/ProfileItems/Panel/Graph/Graph";
+import { getUserGraphs } from "../../redux/User/userCalorieGraphSlice";
+
 // kamil.aslan548@hotmail.com
 
 export default function ProfilePanel() {
@@ -58,7 +69,9 @@ export default function ProfilePanel() {
     (state) => state.userActivityCalculator.filteredData
   );
 
-  const isPredictionModalVisible = useSelector((state) => state.tools.predictionModal);
+  const isPredictionModalVisible = useSelector(
+    (state) => state.tools.predictionModal
+  );
 
   useEffect(() => {
     if (token && (refreshFood || refreshActivity)) {
@@ -74,6 +87,7 @@ export default function ProfilePanel() {
       );
       dispatch(getActivityCategoriesCalculator());
       dispatch(getUserGoal());
+      dispatch(getUserGraphs());
     }
   }, [token, refreshFood, refreshActivity]);
 
@@ -86,8 +100,9 @@ export default function ProfilePanel() {
         contentContainerStyle={styles.scrollView}
         keyboardShouldPersistTaps="handled"
       >
+        {/* <Graph /> */}
         <Title title="Today" />
-        <CalorieCards /> 
+        <CalorieCards />
         <Title title="Prediction" />
         <Prediction />
         <Title title="Daily Goal" />

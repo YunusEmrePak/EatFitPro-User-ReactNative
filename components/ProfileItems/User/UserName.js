@@ -1,12 +1,22 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 
-import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
+import { useDispatch } from "react-redux";
 import boyAvatar from "../../../assets/images/ProfileImages/boyAvatar.png";
+import { toolsActions } from "../../../redux/Tools/toolsSlice";
+import { getUserInfo } from "../../../redux/User/userInformationSlice";
 
 export default function UserName({ name, surname, email }) {
+  const dispatch = useDispatch()
+
+  const openModal = () => {
+    dispatch(getUserInfo())
+    dispatch(toolsActions.setUserNameModalVisible())
+  }
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -18,7 +28,9 @@ export default function UserName({ name, surname, email }) {
         <View style={styles.outBox}>
           <View style={styles.top}>
             <Image source={boyAvatar} style={styles.avatar} />
-            <Feather name="edit" size={24} color="white" />
+            <Pressable onPress={openModal}>
+              <Feather name="edit" size={24} color="white" />
+            </Pressable>
           </View>
           <View style={styles.bottom}>
             <View>
@@ -39,14 +51,14 @@ const styles = StyleSheet.create({
     width: DEVICE_WIDTH,
     height: DEVICE_HEIGHT / 5,
     marginBottom: DEVICE_HEIGHT / 15,
-    marginLeft: DEVICE_WIDTH / 10
+    marginLeft: DEVICE_WIDTH / 10,
   },
   outBox: {
     width: DEVICE_WIDTH / 1.5,
     height: DEVICE_HEIGHT / 4.5,
     borderRadius: DEVICE_WIDTH / 20,
     padding: DEVICE_WIDTH / 80,
-    // 
+    //
   },
   top: {
     flexDirection: "row",

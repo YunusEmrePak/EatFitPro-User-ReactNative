@@ -11,6 +11,9 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 import UserName from "../../components/ProfileItems/User/UserName";
 import UserInformation from "../../components/ProfileItems/User/UserInformation";
 import { useEffect } from "react";
+import UserNameModal from "../../components/ProfileItems/User/UserNameModal";
+import Blur from "../../components/Common/Blur";
+import UserInformationModal from "../../components/ProfileItems/User/UserInformationModal";
 
 const commonStyle = {
   iconSize: DEVICE_WIDTH / 16,
@@ -20,6 +23,7 @@ export default function ProfileUser({ navigation }) {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.signIn.token);
+  const isModalVisible = useSelector((state) => state.tools.userNameModal);
 
   const userInformation = useSelector(
     (state) => state.userInformation.userInformation
@@ -33,6 +37,7 @@ export default function ProfileUser({ navigation }) {
   return (
     <View>
       {/* <Header title="Profile" /> */}
+      {/* {isModalVisible && <Blur />} */}
       <Header title="EatFitPro" />
       <View style={styles.safeArea}>
         <View style={styles.container}>
@@ -71,6 +76,8 @@ export default function ProfileUser({ navigation }) {
           </Pressable>
         </View>
       </View>
+      <UserNameModal />
+      <UserInformationModal />
     </View>
   );
 }
@@ -78,9 +85,10 @@ export default function ProfileUser({ navigation }) {
 const styles = StyleSheet.create({
   safeArea: {
     justifyContent: "space-between",
-    height: DEVICE_HEIGHT / 1.25,
+    height: DEVICE_HEIGHT,
     alignItems: "center",
     paddingHorizontal: DEVICE_WIDTH / 20,
+    paddingBottom: DEVICE_HEIGHT / 5
   },
   container: {
     marginTop: DEVICE_HEIGHT / 20,

@@ -5,9 +5,9 @@ import userApi from "../apis/userApi";
 export const getHistory = createAsyncThunk(
   "user/history/calorie",
   async ({ filteredData, page }, { rejectWithValue }) => {
-    try { 
+    try {
       const response = await userApi.post(
-        `/history/assignment?page=${0}&size=3`,
+        `/history/assignment?page=${page - 1}&size=3`,
         JSON.stringify(filteredData)
       );
       return response.data;
@@ -23,9 +23,9 @@ export const getHistory = createAsyncThunk(
 export const getFilteredHistory = createAsyncThunk(
   "user/filteredHistory/calorie",
   async ({ filteredData, page }, { rejectWithValue }) => {
-    try { 
+    try {
       const response = await userApi.post(
-        `/history/assignment?page=${0}&size=3`,
+        `/history/assignment?page=${page - 1}&size=3`,
         JSON.stringify(filteredData)
       );
       return response.data;
@@ -59,10 +59,11 @@ export const userCalorieHistorySlice = createSlice({
     totalPage: 0,
     isClicked: false,
     dateString: "",
+    isEnded: false,
   },
   reducers: {
     setPageNumber: (state, action) => {
-      state.pageNumber = action.payload;
+      state.pageNumber = state.pageNumber + 1;
     },
     setFoodName: (state, action) => {
       state.filteredData.foodName = action.payload;
@@ -88,16 +89,19 @@ export const userCalorieHistorySlice = createSlice({
     setDateString: (state, action) => {
       state.dateString = action.payload;
     },
-    
+    setIsEnded: (state, action) => {
+      state.isEnded = !state.isEnded;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getHistory.fulfilled, (state, action) => {
-        state.userHistory = action.payload;
+        state.userHistory = action.payload.content;
+        // state.userHistory = state.userHistory.concat(action.payload.content);
         state.totalPage = action.payload.totalPages;
         state.historyStatus = "succeeded";
       })
-      .addCase(getHistory.pending, state => {
+      .addCase(getHistory.pending, (state) => {
         state.historyStatus = "pending";
       })
       .addCase(getHistory.rejected, (state) => {
@@ -109,12 +113,12 @@ export const userCalorieHistorySlice = createSlice({
         state.totalPage = action.payload.totalPages;
         state.filteredHistoryStatus = "succeeded";
       })
-      .addCase(getFilteredHistory.pending, state => {
+      .addCase(getFilteredHistory.pending, (state) => {
         state.filteredHistoryStatus = "pending";
       })
       .addCase(getFilteredHistory.rejected, (state) => {
         state.filteredHistoryStatus = "failed";
-      })
+      });
   },
 });
 

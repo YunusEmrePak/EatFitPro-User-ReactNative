@@ -7,6 +7,7 @@ import HistoryList from "../../components/ProfileItems/History/HistoryList";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/constants";
 import { toolsActions } from "../../redux/Tools/toolsSlice";
 import { userCalorieHistoryActions } from "../../redux/User/userCalorieHistorySlice";
+import { useEffect } from "react";
 
 export default function ProfileHistory() {
   const dispatch = useDispatch();
@@ -16,13 +17,14 @@ export default function ProfileHistory() {
   );
 
   const info = useSelector(
-    (state) => state.userCalorieHistory.userHistory.content
+    (state) => state.userCalorieHistory.userHistory
   );
 
   const openModal = () => {
     dispatch(userCalorieHistoryActions.setStatusNull());
     dispatch(toolsActions.setFilterModalVisible(true));
   };
+
   return (
     <View
       style={{
@@ -37,9 +39,10 @@ export default function ProfileHistory() {
         <Text style={styles.text}>History</Text>
         <FilterButton onPress={openModal} />
       </View>
-      {historyStatus === "pending" ? (
+      <HistoryList />
+      {/* {historyStatus === "pending" ? (
         <ActivityIndicator size="large" />
-      ) : info.length !== 0 ? (
+      ) : info ? (
         <HistoryList />
       ) : (
         <Text
@@ -47,7 +50,7 @@ export default function ProfileHistory() {
         >
           No results found.
         </Text>
-      )}
+      )} */}
       <HistoryFilter />
     </View>
   );
