@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Pressable,
   StyleSheet,
   Text,
@@ -10,7 +11,7 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
   
   import { Modal, TextInput } from "react-native-paper";
 import { toolsActions } from "../../../redux/Tools/toolsSlice";
-import { setUpdatedInformation, userInformationActions } from "../../../redux/User/userInformationSlice";
+import { getUserInfo, setUpdatedInformation, userInformationActions } from "../../../redux/User/userInformationSlice";
 import { useEffect } from "react";
   
   export default function UserInformationModal() {
@@ -42,6 +43,7 @@ import { useEffect } from "react";
     useEffect(() => {
       if (updatedUserInformationStatus === "succeeded") {
         dispatch(toolsActions.setUserInformationModalVisible(false));
+        dispatch(getUserInfo())
       }
     }, [updatedUserInformationStatus]);
   
@@ -109,18 +111,18 @@ import { useEffect } from "react";
                         color: "#fff1fc",
                       }}
                     >
-                      {/* {updatedUserInformationStatus === "pending" ? (
-                        <ActivityIndicator
-                          color="#fff"
-                          style={{
-                            width: DEVICE_WIDTH / 4,
-                            height: DEVICE_HEIGHT / 24,
-                          }}
-                        />
-                      ) : (
-                        <Text style={styles.buttonText}>Apply Filter</Text>
-                      )} */}
+                      {updatedUserInformationStatus === "pending" ? (
+                      <ActivityIndicator
+                        color="#fff"
+                        style={{
+                          width: DEVICE_WIDTH / 4,
+                          height: DEVICE_HEIGHT / 24,
+                        }}
+                      />
+                    ) : (
                       <Text style={styles.buttonText}>Update</Text>
+                    )}
+                      {/* <Text style={styles.buttonText}>Update</Text> */}
                     </Pressable>
                   </View>
                 </View>

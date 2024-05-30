@@ -35,6 +35,7 @@ export default function SignUpSecondForm({ navigation }) {
   ];
 
   const signUpHandler = () => {
+    console.log(userInformation)
     if (
       length.trim() !== "" &&
       weight.trim() !== "" &&
@@ -53,6 +54,7 @@ export default function SignUpSecondForm({ navigation }) {
   // kamil.aslan548@hotmail.com
 
   useEffect(() => {
+    console.log(signUpStatus)
     if (signUpStatus === "succeeded") {
       ToastAndroid.show(
         "We send a confirmation code to your mail box.",

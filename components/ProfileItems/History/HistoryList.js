@@ -1,6 +1,6 @@
-import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { DEVICE_HEIGHT } from "../../../constants/constants";
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 import HistoryListItem from "./HistoryListItem";
 import {
   getHistory,
@@ -48,6 +48,7 @@ export default function HistoryList() {
       {historyStatus === "pending" ? (
         <ActivityIndicator size="large" />
       ) : (
+        (info.length === 0) ? <Text style={{fontSize: DEVICE_WIDTH / 20}}>Couldn't find any data.</Text> :
         <FlatList
           data={info}
           renderItem={(item) => <HistoryListItem data={item.item} />}

@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Pressable,
   StyleSheet,
   Text,
@@ -11,7 +12,9 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/constants";
 import { Modal, TextInput } from "react-native-paper";
 import { toolsActions } from "../../../redux/Tools/toolsSlice";
 import {
+  getUserInfo,
   setUpdatedInformation,
+  setUpdatedName,
   userInformationActions,
 } from "../../../redux/User/userInformationSlice";
 import { useEffect } from "react";
@@ -33,8 +36,8 @@ export default function UserNameModal() {
   );
   const isModalVisible = useSelector((state) => state.tools.userNameModal);
 
-  const updatedUserInformationStatus = useSelector(
-    (state) => state.userInformation.updatedUserInformationStatus
+  const updatedUserNameStatus = useSelector(
+    (state) => state.userInformation.updatedUserNameStatus
   );
 
   const updatedUserInformation = useSelector(
@@ -42,17 +45,18 @@ export default function UserNameModal() {
   );
 
   const updateInformation = () => {
-    dispatch(setUpdatedInformation(updatedUserInformation));
+    dispatch(setUpdatedName(updatedUserInformation));
   };
 
   useEffect(() => {
-    if (updatedUserInformationStatus === "succeeded") {
+    if (updatedUserNameStatus === "succeeded") {
       dispatch(toolsActions.setUserNameModalVisible(false));
+      dispatch(getUserInfo())
     }
-  }, [updatedUserInformationStatus]);
+  }, [updatedUserNameStatus]);
 
   const onCloseModal = () => {
-    if (updatedUserInformationStatus !== "pending") {
+    if (updatedUserNameStatus !== "pending") {
       dispatch(toolsActions.setUserNameModalVisible(false));
     }
   };
@@ -112,7 +116,7 @@ export default function UserNameModal() {
                       color: "#fff1fc",
                     }}
                   >
-                    {updatedUserInformationStatus === "pending" ? (
+                    {updatedUserNameStatus === "pending" ? (
                       <ActivityIndicator
                         color="#fff"
                         style={{

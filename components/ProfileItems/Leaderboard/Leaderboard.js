@@ -26,9 +26,6 @@ import Logo from "../../../assets/images/Logos/Logo.png";
 export default function Leaderboard() {
   const dispatch = useDispatch();
 
-  //   const pageNumber = useSelector((state) => state.userAddGoal.pageNumber);
-  //   const totalPage = useSelector((state) => state.userAddGoal.totalPage);
-
   const leaderboard = useSelector((state) => state.userAddGoal.leaderboard);
   const leaderboardStatus = useSelector(
     (state) => state.userAddGoal.getLeaderboardStatus
@@ -43,7 +40,8 @@ export default function Leaderboard() {
             <Text style={styles.title}>Leaderboard</Text>
           </View>
           {leaderboardStatus === "succeeded" ? (
-            <FirstThree leaderboard={leaderboard} />
+            leaderboard.length !== 0  ? 
+            <FirstThree leaderboard={leaderboard} /> : <Text style={{fontSize: DEVICE_WIDTH / 20, color: "#fff", textAlign: "center", marginBottom: DEVICE_HEIGHT / 10}}>Coulnd't find any user.</Text>
           ) : (
             <ActivityIndicator size="large" style={{marginBottom: DEVICE_HEIGHT / 4.78}} />
           )}

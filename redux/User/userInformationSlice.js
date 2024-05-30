@@ -46,6 +46,21 @@ export const setUpdatedInformation = createAsyncThunk(
     }
   }
 );
+ 
+export const setUpdatedName = createAsyncThunk(
+  "user/userUpdatedName",
+  async (userUpdatedInformation, { rejectWithValue }) => {
+    try {
+      const response = await userApi.post("/update", JSON.stringify(userUpdatedInformation));
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const userInformationSlice = createSlice({
   name: "userInformation",
@@ -53,6 +68,7 @@ export const userInformationSlice = createSlice({
     infoStatus: "idle",
     calorieStatus: "idle",
     updatedUserInformationStatus: "idle",
+    updatedUserNameStatus: "idle",
     error: null,
     userInformation: {},
     userCalorieInformation: {},
@@ -127,6 +143,16 @@ export const userInformationSlice = createSlice({
       })
       .addCase(setUpdatedInformation.rejected, (state) => {
         state.updatedUserInformationStatus = "failed";
+      })
+
+      .addCase(setUpdatedName.fulfilled, (state) => {
+        state.updatedUserNameStatus = "succeeded";
+      })
+      .addCase(setUpdatedName.pending, (state) => {
+        state.updatedUserNameStatus = "pending";
+      })
+      .addCase(setUpdatedName.rejected, (state) => {
+        state.updatedUserNameStatus = "failed";
       });
   },
 });
